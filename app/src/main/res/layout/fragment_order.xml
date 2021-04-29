@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.fragment.OrderFragment">
+
+    <com.scwang.smart.refresh.layout.SmartRefreshLayout
+        android:id="@+id/refreshLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/light_grey">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/light_grey">
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/parent_user_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/circleAvatar"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginBottom="16dp"
+                    android:src="@drawable/ic_place_holder"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.094"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.0" />
+
+                <TextView
+                    android:id="@+id/tv_nickName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="32dp"
+                    android:layout_marginTop="6dp"
+                    android:text="未登录填写"
+                    android:textColor="@color/black"
+                    android:textSize="16sp"
+                    app:layout_constraintStart_toEndOf="@+id/circleAvatar"
+                    app:layout_constraintTop_toTopOf="@+id/circleAvatar" />
+
+                <TextView
+                    android:id="@+id/disIntegral"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_set_all_radius"
+                    android:gravity="center"
+                    android:paddingStart="7dp"
+                    android:paddingTop="2dp"
+                    android:paddingEnd="7dp"
+                    android:paddingBottom="1dp"
+                    android:text="0"
+                    android:textColor="@color/black"
+                    app:layout_constraintBottom_toBottomOf="@+id/circleAvatar"
+                    app:layout_constraintStart_toStartOf="@+id/tv_nickName"
+                    app:drawableStartCompat="@drawable/ic_integral_24" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cardView_release"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardBackgroundColor="@color/white"
+                android:elevation="100dp"
+                app:cardCornerRadius="10dp"
+                android:layout_margin="16dp"
+                android:layout_below="@id/parent_user_layout">
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+                    <TextView
+                        android:id="@+id/tv_releaseTitle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/my_release_order"
+                        android:textColor="@color/black"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="16dp"
+                        android:textSize="18sp"/>
+                    <TextView
+                        android:id="@+id/viewAll"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/View_all"
+                        android:gravity="center"
+                        android:textSize="12sp"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignBaseline="@+id/tv_releaseTitle"
+                        app:drawableEndCompat="@drawable/ic_baseline_chevron_right_24" />
+
+                    <LinearLayout
+                        android:id="@+id/horizontalOptions"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="15dp"
+                        android:layout_marginBottom="16dp"
+                        android:layout_below="@+id/tv_releaseTitle">
+
+                        <TextView
+                            android:id="@+id/tv_ToBeReceivedOrder"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:text="@string/to_be_received_order"
+                            app:drawableTopCompat="@drawable/ic_waiting_received_order" />
+                        <TextView
+                            android:id="@+id/tv_ToBeSendOrder"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:text="@string/Order_toBeSend"
+                            app:drawableTopCompat="@drawable/ic_to_be_send" />
+                        <TextView
+                            android:id="@+id/tv_ToBeReceived"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:text="@string/To_be_received"
+                            app:drawableTopCompat="@drawable/ic_waiting_received_things" />
+                        <TextView
+                            android:id="@+id/tv_ToBeComment"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:text="@string/To_be_Comment"
+                            app:drawableTopCompat="@drawable/ic_to_be_comment" />
+                    </LinearLayout>
+                </RelativeLayout>
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cardView_progress"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardBackgroundColor="@color/white"
+                android:elevation="100dp"
+                app:cardCornerRadius="10dp"
+                android:layout_margin="16dp"
+                android:layout_below="@+id/cardView_release">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/tv_recentProgress"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/receive_my_order"
+                        android:textColor="@color/black"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="16dp"
+                        android:layout_marginBottom="8dp"
+                        android:textSize="18sp"/>
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/tv_recentProgress">
+
+                        <TextView
+                            android:id="@+id/hintPlaceHolder"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/no_find_new_order"
+                            android:layout_marginBottom="16dp"
+                            android:layout_centerInParent="true"
+                            android:visibility="visible"
+                            app:drawableTopCompat="@drawable/ic_no_find_order" />
+
+                        <include
+                            android:id="@+id/bestNewOrder"
+                            android:visibility="gone"
+                            layout="@layout/item_order_info_message"/>
+                    </RelativeLayout>
+                </RelativeLayout>
+            </androidx.cardview.widget.CardView>
+        </RelativeLayout>
+    </com.scwang.smart.refresh.layout.SmartRefreshLayout>
+</FrameLayout>

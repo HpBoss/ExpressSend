@@ -1,0 +1,36 @@
+/build
+# 过滤所有的.iml后缀的文件
+*.iml
+# 过滤掉.gradle文件夹
+.gradle
+# 过滤掉local.properties文件
+/local.properties
+
+/.idea/libraries
+/.idea/modules.xml
+/.idea/workspace.xml
+.DS_Store
+/.idea
+/captures
+.externalNativeBuild
+*/build
+*/*.iml
+
+# Built application files
+*.apk
+*.ap_
+
+# Files for the ART/Dalvik VM
+*.dex
+
+# Java class files
+*.class
+
+# Generated files
+bin/
+gen/
+out/
+
+# Gradle files
+.gradle/
+build/

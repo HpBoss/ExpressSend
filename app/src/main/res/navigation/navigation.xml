@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation"
+    app:startDestination="@id/navigation_index">
+    <keep_state_fragment
+        android:id="@+id/navigation_index"
+        android:name="com.noah.express_send.ui.fragment.IndexFragment"
+        android:label="@string/icon_index"
+        tools:layout="@layout/fragment_index" />
+    <keep_state_fragment
+        android:id="@+id/navigation_message"
+        android:name="com.noah.express_send.ui.fragment.MessageFragment"
+        android:label="@string/icon_message"
+        tools:layout="@layout/fragment_message" />
+    <keep_state_fragment
+        android:id="@+id/navigation_history"
+        android:name="com.noah.express_send.ui.fragment.OrderFragment"
+        android:label="@string/icon_order"
+        tools:layout="@layout/fragment_order" />
+</navigation>

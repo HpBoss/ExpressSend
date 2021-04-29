@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="purple_200">#FFBB86FC</color>
+    <color name="purple_500">#FF6200EE</color>
+    <color name="purple_700">#FF3700B3</color>
+    <color name="blue_364">#FF2364B0</color>
+    <color name="teal_200">#FF03DAC5</color>
+    <color name="teal_700">#FF018786</color>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="grey">#BEBEBE</color>
+    <color name="transparent_black">#66000000</color>
+    <color name="light_grey">#F0F0F0</color>
+    <color name="red_checked_color">#FF4C39</color>
+    <color name="red_normal_color">#935656</color>
+    <color name="colorMainBlue">#39C2D0</color>
+    <color name="colorYellow">#FFA500</color>
+
+    <!--custom theme-->
+    <color name="sl_custom_primary">#3F51B5</color>
+    <color name="sl_custom_primary_dark">#303F9F</color>
+
+    <color name="sl_toolbar_bg_custom">#3F51B5</color>
+    <color name="sl_toolbar_title_custom">@android:color/white</color>
+    <color name="sl_toolbar_done_custom">#FF4081</color>
+
+    <color name="sl_folder_item_bg_custom">@android:color/white</color>
+    <color name="sl_folder_item_name_custom">#FF222222</color>
+    <color name="sl_folder_item_size_custom">#FF979A9E</color>
+    <color name="sl_folder_item_divider_custom">#FFBCBFC5</color>
+
+    <color name="sl_detail_bg_custom">#88FF4081</color>
+    <color name="sl_detail_toolbar_bg_custom">#FF111111</color>
+    <color name="sl_detail_toolbar_title_custom">#FF6300</color>
+</resources>

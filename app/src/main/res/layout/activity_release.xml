@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/light_grey"
+    tools:context=".ui.activity.ReleaseActivity">
+
+    <LinearLayout
+        android:id="@+id/line1"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/release_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/blue_364"
+            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
+
+            <TextView
+                android:id="@+id/tv_topTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAlignment="center"
+                android:layout_gravity="center"
+                android:text="@string/release"
+                android:textColor="@color/white"
+                android:textSize="18sp"/>
+            <ImageView
+                android:id="@+id/iconBack"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_baseline_arrow_back_24"/>
+        </androidx.appcompat.widget.Toolbar>
+    </LinearLayout>
+
+
+    <RelativeLayout
+        android:id="@+id/parent_recycleView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/line1"
+        android:background="@color/white">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycleView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"/>
+    </RelativeLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/parent_business"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:layout_below="@id/parent_recycleView"
+        android:layout_marginTop="5dp">
+
+        <ImageView
+            android:id="@+id/icon_release"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp"
+            android:src="@drawable/ic_detailed_address"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_item_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_toEndOf="@+id/icon_release"
+            android:text="详细地址"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            app:layout_constraintBottom_toBottomOf="@+id/icon_release"
+            app:layout_constraintStart_toEndOf="@+id/icon_release"
+            app:layout_constraintTop_toTopOf="@+id/icon_release" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <View
+        android:id="@+id/divider"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/light_grey"
+        android:layout_below="@+id/parent_business"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:layout_below="@id/divider">
+
+        <EditText
+            android:id="@+id/detail_address"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:autofillHints=""
+            android:layout_weight="1"
+            android:background="@color/white"
+            android:gravity="center|start"
+            android:hint="请输入驿站的详细地址"
+            android:inputType="text"
+            android:maxLines="2"
+            android:paddingStart="50dp"
+            android:textSize="14sp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            tools:ignore="RtlSymmetry" />
+        <View
+            android:layout_width="1dp"
+            android:layout_height="35dp"
+            android:layout_gravity="center"
+            android:background="@color/light_grey"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"/>
+        <TextView
+            android:id="@+id/title_address"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:gravity="center"
+            android:textSize="16sp"
+            android:layout_gravity="center"
+            android:text="地址簿"
+            android:layout_marginEnd="16dp"
+            android:textColor="@color/grey"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/parent_btn_release"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:background="@color/white"
+        android:layout_alignParentBottom="true">
+
+        <Button
+            android:id="@+id/btn_release"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:textSize="16sp"
+            android:background="@drawable/rectangle_button_light"
+            android:text="确认发布"/>
+
+    </LinearLayout>
+</RelativeLayout>

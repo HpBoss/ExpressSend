@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <group android:id="@+id/group1">
+        <item
+            android:id="@+id/navIntegral"
+            android:icon="@drawable/ic_integral"
+            android:title="@string/icon_integral"
+            app:actionLayout="@layout/right_layout_integral" />
+        <item
+            android:id="@+id/navCall"
+            android:icon="@drawable/ic_call"
+            android:title="@string/icon_call"
+            app:actionLayout="@layout/right_layout_call" />
+    </group>
+
+    <group android:id="@+id/group2">
+        <item
+            android:id="@+id/navSchool"
+            android:icon="@drawable/ic_school"
+            android:title="@string/icon_school"
+            app:actionLayout="@layout/right_layout_school" />
+        <item
+            android:id="@+id/navDormitory"
+            android:icon="@drawable/ic_dormitory"
+            android:title="@string/icon_address"
+            app:actionLayout="@layout/right_layout_dormitory" />
+        <item
+            android:id="@+id/navRoomNumber"
+            android:icon="@drawable/ic_room_number"
+            android:title="@string/icon_room_number"
+            app:actionLayout="@layout/right_layout_room_number" />
+    </group>
+
+</menu>

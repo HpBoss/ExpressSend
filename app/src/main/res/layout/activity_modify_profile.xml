@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/light_grey"
+    tools:context=".ui.activity.ModifyProfileActivity">
+
+    <Toolbar
+        android:id="@+id/order_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/blue_364">
+
+        <TextView
+            android:id="@+id/tvCancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="取消"
+            android:textSize="16sp"
+            android:textColor="@color/white"/>
+        <TextView
+            android:id="@+id/modifyTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            android:textColor="@color/white"
+            android:layout_gravity="center"/>
+        <TextView
+            android:id="@+id/tvCompleted"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:text="完成"
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            android:layout_marginEnd="16dp"
+            tools:ignore="RtlHardcoded" />
+    </Toolbar>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginTop="16dp"
+        android:background="@color/white">
+
+        <EditText
+            android:id="@+id/editText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:background="@null"
+            android:layout_weight="1"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:focusableInTouchMode="true"
+            android:focusable="true"
+            android:maxLines="1"
+            android:layout_gravity="center_vertical"/>
+        <ImageView
+            android:id="@+id/btnCleanUp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_clean_up"
+            android:layout_marginEnd="16dp"
+            android:layout_gravity="center_vertical"
+            android:contentDescription="@string/todo" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tvSurplus"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="35"
+        android:layout_gravity="right"
+        android:layout_marginEnd="16dp"
+        android:layout_marginTop="8dp"
+        tools:ignore="RtlHardcoded" />
+
+</LinearLayout>

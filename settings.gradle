@@ -1,0 +1,6 @@
+include ':im'
+include ':database'
+include ':priceKeyboard'
+include ':internet'
+include ':app'
+rootProject.name = "ExpressSend"

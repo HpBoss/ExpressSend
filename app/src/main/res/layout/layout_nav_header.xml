@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="220dp"
+    android:padding="10dp"
+    android:background="@drawable/nav_background">
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/iconImage"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_centerInParent="true"
+        android:layout_marginStart="16dp"
+        android:src="@drawable/ic_place_holder"
+        app:layout_constraintBottom_toTopOf="@+id/userName"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.65" />
+
+    <TextView
+        android:id="@+id/mailText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="4dp"
+        android:text="请添加邮箱"
+        android:textColor="#FFF"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/userName" />
+
+    <TextView
+        android:id="@+id/userName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/mailText"
+        android:text="请设置昵称"
+        android:textColor="#FFF"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toTopOf="@+id/mailText"
+        app:layout_constraintStart_toStartOf="@+id/iconImage" />
+
+    <Button
+        android:id="@+id/btn_edit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/white"
+        android:drawableLeft="@drawable/ic_edit"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
+        android:text="编辑资料"
+        android:textColor="@color/black"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="@+id/mailText"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/userName" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
