@@ -68,10 +68,10 @@ class IndexFragment : BaseFragment(), IOrderInfo{
                 bundle.putInt("value", 0)
                 val intent = Intent(activity, ReleaseActivity::class.java)
                 startActivity(intent.putExtras(bundle))
-                requireActivity().overridePendingTransition(
+                /*requireActivity().overridePendingTransition(
                     R.anim.translate_right_in,
                     R.anim.translate_left_out
-                )
+                )*/
             } else {
                 Toast.makeText(requireContext(), "当前积分不足", Toast.LENGTH_SHORT).show()
             }

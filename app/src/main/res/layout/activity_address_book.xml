@@ -8,40 +8,37 @@
     android:background="@color/light_grey"
     tools:context=".ui.activity.AddressBookActivity">
 
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/create_address_toolbar"
+    <include
+        android:id="@+id/actionBar"
+        android:layout_height="wrap_content"
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:background="@color/blue_364"
-        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-        app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_baseline_arrow_back_24"/>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="@string/address_book"
-            android:textColor="@color/white"
-            android:textSize="18sp"/>
-    </androidx.appcompat.widget.Toolbar>
+        android:layout_alignParentTop="true"
+        layout="@layout/item_action_bar" />
 
     <RelativeLayout
         android:id="@+id/parent_recycleView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/create_address_toolbar"
-        android:background="@color/white">
+        android:layout_height="match_parent"
+        android:layout_below="@+id/actionBar"
+        android:layout_above="@+id/parent_btn_create_address"
+        android:background="@color/light_grey">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycleView"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"/>
+            android:layout_height="match_parent"
+            android:overScrollMode="never" />
     </RelativeLayout>
+
+    <TextView
+        android:id="@+id/hintPlaceHolder"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/no_save_address_hint"
+        android:layout_marginBottom="16dp"
+        android:layout_centerInParent="true"
+        android:visibility="gone"
+        app:drawableTopCompat="@drawable/ic_no_find_order" />
 
     <LinearLayout
         android:id="@+id/parent_btn_create_address"
@@ -57,7 +54,7 @@
             android:layout_marginTop="10dp"
             android:layout_marginStart="16dp"
             android:layout_marginEnd="16dp"
-            android:textSize="16sp"
+            android:textSize="18sp"
             android:background="@drawable/rectangle_button_light"
             android:text="@string/create_address"/>
 

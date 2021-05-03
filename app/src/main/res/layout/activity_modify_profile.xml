@@ -18,7 +18,7 @@
             android:id="@+id/tvCancel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="取消"
+            android:text="@string/cancel"
             android:textSize="16sp"
             android:textColor="@color/white"/>
         <TextView
@@ -33,7 +33,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="right"
-            android:text="完成"
+            android:text="@string/complete"
             android:textColor="@color/white"
             android:textSize="16sp"
             android:layout_marginEnd="16dp"
@@ -72,10 +72,21 @@
         android:id="@+id/tvSurplus"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="35"
+        android:text="@string/_30"
         android:layout_gravity="right"
         android:layout_marginEnd="16dp"
         android:layout_marginTop="8dp"
         tools:ignore="RtlHardcoded" />
 
+    <TextView
+        android:id="@+id/tvSchoolName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right"
+        android:layout_marginEnd="16dp"
+        android:layout_marginTop="8dp"
+        tools:ignore="RtlHardcoded"
+        android:visibility="gone"
+        android:textColor="@color/black"
+        app:drawableStartCompat="@drawable/ic_address_location" />
 </LinearLayout>

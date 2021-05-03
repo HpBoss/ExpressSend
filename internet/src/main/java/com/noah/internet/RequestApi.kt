@@ -84,4 +84,13 @@ interface RequestApi {
         @Path("id") oid: String?,
         @Path("phoneNum") phoneNum: String?
     ): BackResultData<*>
+
+    @GET(Constant.GET_PERSONAL_ADDRESS_BOOK)
+    suspend fun getPersonalAddressBook(@Path("phoneNum") phoneNum: String?): BackResultData<ArrayList<ResponseAddressBook>>
+
+    @DELETE(Constant.DELETE_ADDRESS_BOOK)
+    suspend fun deleteAddressBook(@Path("id") id: String?): BackResultData<*>
+
+    @PUT(Constant.EDIT_ADDRESS_BOOK)
+    suspend fun editAddressBook(@Path("id") id: String?): BackResultData<*>
 }

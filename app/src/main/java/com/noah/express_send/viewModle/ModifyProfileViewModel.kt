@@ -28,8 +28,6 @@ class ModifyProfileViewModel(application: Application) : BaseViewModel(applicati
     }
 
     val num: LiveData<Int> = _num
-    var isUpdateSuccess = MutableLiveData<Boolean>()
-
     fun reduceOne() {
         if (_num.value == 0) return
         _num.value = _num.value?.minus(1)
@@ -52,11 +50,11 @@ class ModifyProfileViewModel(application: Application) : BaseViewModel(applicati
         _num.value = _num.value?.plus(1)
     }
 
+    var isUpdateSuccess = MutableLiveData<Boolean>()
     fun updateUserProfile(phoneNum: String?, requestUserEntity: RequestUserEntity) {
         viewModelScope.launch {
             isUpdateSuccess.value =
                 modifyProfileRepository.updateUserProfile(phoneNum, requestUserEntity).resultCode == Constant.CODE_SUCCESS
         }
     }
-
 }

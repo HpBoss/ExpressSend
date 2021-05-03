@@ -34,4 +34,8 @@ object Constant {
     const val QUERY_RECEIVED = "order/queryReceived/{phoneNum}"
     const val QUERY_TO_BE_FETCH = "order/queryToBeFetch/{phoneNum}"
     const val QUERY_TO_BE_COMMENT = "order/queryToBeComment/{phoneNum}"
+
+    const val GET_PERSONAL_ADDRESS_BOOK = "address/getPersonalAddressBook/{phoneNum}"
+    const val DELETE_ADDRESS_BOOK = "address/deleteAddressBook/{id}"
+    const val EDIT_ADDRESS_BOOK = "address/editAddressBook/{id}"
 }

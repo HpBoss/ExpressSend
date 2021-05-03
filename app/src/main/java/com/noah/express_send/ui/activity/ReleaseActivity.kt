@@ -1,5 +1,6 @@
 package com.noah.express_send.ui.activity
 
+import android.content.Intent
 import android.os.Handler
 import android.os.Looper
 import android.widget.Toast
@@ -63,6 +64,10 @@ class ReleaseActivity : BaseActivity(), IReleaseInfo,
     override fun initData() {
         iconBack.setOnClickListener {
             onBackPressed()
+        }
+
+        btn_addressBook.setOnClickListener {
+            startActivity(Intent(this, AddressBookActivity::class.java))
         }
 
         promptDialog = PromptDialog(this)

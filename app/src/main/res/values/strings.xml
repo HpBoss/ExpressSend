@@ -60,4 +60,14 @@
     <string name="create_address">新建地址</string>
     <string name="delete_address">删除</string>
     <string name="edit_address">编辑</string>
+    <string name="sure_release">确认发布</string>
+    <string name="sure">确认</string>
+    <string name="action_bar_title">标题</string>
+    <string name="create_address_title">新建地址</string>
+    <string name="edit_address_title">编辑地址</string>
+    <string name="key_mode">mode</string>
+    <string name="schoolNameHint">学校名称（例如：四川师范大学）</string>
+    <string name="detailNameHint">详细地址（例如：xxx驿站或者xxx旁）</string>
+    <string name="no_save_address_hint">未保存地址信息</string>
+    <string name="_30">30</string>
 </resources>

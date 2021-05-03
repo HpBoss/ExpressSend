@@ -37,7 +37,8 @@
         android:theme="@style/Theme.ExpressSend"
         android:usesCleartextTraffic="true"
         tools:targetApi="m">
-        <activity android:name=".ui.activity.AddressBookActivity"></activity>
+        <activity android:name=".ui.activity.EditAddressActivity"></activity>
+        <activity android:name=".ui.activity.AddressBookActivity" />
         <activity android:name=".ui.activity.CommentActivity" />
         <activity android:name=".ui.activity.ChatActivity" />
         <activity android:name=".ui.activity.ModifyProfileActivity" />
@@ -57,9 +58,7 @@
 
         <meta-data
             android:name="design_width_in_dp"
-            android:value="420"/>
-
-        <!-- Required SDK 核心功能 -->
+            android:value="420" /> <!-- Required SDK 核心功能 -->
         <!-- 可配置android:process参数将PushService放在其他进程中 -->
         <!-- 如果JCore使用的是2.0.0及以上版本可移除本配置 -->
         <service
