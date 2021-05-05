@@ -13,5 +13,5 @@ data class ResponseOrderOfUser(
     val toBeSendNum: Int,
     val toBeFetchNum: Int,
     val toBeCommentNum: Int,
-    val bestNewOrderEntity: BestNewOrderEntity? = null
+    val bestNewOrderEntities: ArrayList<BestNewOrderEntity>
 )

@@ -20,10 +20,17 @@ class OrderModelView(application: Application) : BaseViewModel(application) {
     }
 
     val responseOrderEntity = MutableLiveData<ResponseOrderOfUser>()
-
     fun getOrderOfUserInfo(phoneNum: String?) {
         viewModelScope.launch {
             responseOrderEntity.value = orderRepository.getOrderOfUserInfo(phoneNum).data
+        }
+    }
+
+    val isSuccessDeliveryOrder = MutableLiveData<Boolean>()
+    fun deliveryOrder(oid: String?) {
+        viewModelScope.launch {
+            isSuccessDeliveryOrder.value =
+                orderRepository.deliveryOrder(oid).resultCode == Constant.CODE_SUCCESS
         }
     }
 }

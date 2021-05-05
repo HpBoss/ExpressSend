@@ -13,11 +13,7 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <View
-            android:id="@+id/status_bar_view"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:background="@color/blue_364"/>
+        <include layout="@layout/item_status_bar"/>
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"

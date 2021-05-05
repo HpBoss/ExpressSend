@@ -17,7 +17,7 @@ data class BestNewOrderEntity(
     val express: String? = null,
     val typeName: String? = null,
     val weight: String? = null,
-    val detailAddress: String? = null,
+    val addressName: String? = null,
     val stateName: String? = null,
     val phoneNum: String? = null,
     val payIntegralNum: Int? = null,

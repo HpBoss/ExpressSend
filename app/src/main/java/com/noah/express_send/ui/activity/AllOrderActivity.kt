@@ -3,6 +3,7 @@ package com.noah.express_send.ui.activity
 import android.content.Intent
 import android.graphics.Bitmap
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.TextView
 import android.widget.Toast
@@ -26,6 +27,7 @@ import com.noah.internet.response.BestNewOrderEntity
 import com.scwang.smart.refresh.footer.ClassicsFooter
 import kotlinx.android.synthetic.main.activity_all_order.*
 import kotlinx.android.synthetic.main.activity_all_order.refreshLayout
+import kotlinx.android.synthetic.main.item_status_bar.*
 import me.leefeng.promptlibrary.PromptDialog
 
 class AllOrderActivity : BaseActivity(), IOrderOperate {
@@ -51,8 +53,8 @@ class AllOrderActivity : BaseActivity(), IOrderOperate {
 
     override fun initView() {
         immersionBar {
-            statusBarColor(R.color.blue_364)
-            fitsSystemWindows(true)
+            statusBarView(status_bar_view)
+            statusBarDarkFont(false)
         }
         orderBack.setOnClickListener {
             onBackPressed()
@@ -85,15 +87,6 @@ class AllOrderActivity : BaseActivity(), IOrderOperate {
             initOrderInfo(it)
             adapter.notifyDataSetChanged()
         })
-        allOrderViewModel.isSuccessDeliveryOrder.observe(this, {
-            if (!it) {
-                promptDialog.showError("派送订单失败")
-                return@observe
-            }
-            changeOrderState.visibility = View.GONE
-            disOrderState.text = resources.getString(R.string.to_be_served)
-            promptDialog.showSuccess("派送订单成功")
-        })
         allOrderViewModel.isCancelOrderSuccess.observe(this, {
             if (!it) {
                 promptDialog.showError("取消订单失败")
@@ -125,6 +118,11 @@ class AllOrderActivity : BaseActivity(), IOrderOperate {
         listenTabLayout()
     }
 
+    override fun onStart() {
+        super.onStart()
+        loadPageData(tableLayout.selectedTabPosition)
+    }
+
     private fun listenTabLayout() {
         tableLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab?) {
@@ -139,7 +137,6 @@ class AllOrderActivity : BaseActivity(), IOrderOperate {
     private fun initRefreshLayout() {
         refreshLayout.setRefreshHeader(CustomHeader(this))
         refreshLayout.setHeaderHeight(60F)
-        refreshLayout.setRefreshFooter(ClassicsFooter(this))
 
         // 下拉刷新
         refreshLayout.setOnRefreshListener {
@@ -152,22 +149,12 @@ class AllOrderActivity : BaseActivity(), IOrderOperate {
                 Toast.makeText(this, resources.getString(R.string.network_invalid), Toast.LENGTH_SHORT).show()
             }
         }
-        // 底部上滑加载更多
-        refreshLayout.setOnLoadMoreListener {
-            if (NetWorkAvailableUtil.isNetworkAvailable(this)) {
-                // 添加新数据到list中, 并通知到界面
-                refreshLayout.finishLoadMore() // 获取到正确数据就调用此段代码
-            } else {
-                refreshLayout.finishLoadMore(false)
-                Toast.makeText(this, resources.getString(R.string.network_invalid), Toast.LENGTH_SHORT).show()
-            }
-        }
     }
 
     private fun initRecycleView() {
         val layoutManager = LinearLayoutManager(this)
         recycleView.layoutManager = layoutManager
-        adapter = AllOrderAdapter(orderInfoList, this, this, curUser?.phoneNum)
+        adapter = AllOrderAdapter(orderInfoList, this, this)
         recycleView.adapter = adapter
     }
 
@@ -181,7 +168,7 @@ class AllOrderActivity : BaseActivity(), IOrderOperate {
     private fun loadPageData(page: Int) {
         if (curUser == null) curUser = allOrderViewModel.queryIsLoginUser() ?: return
         when(page) {
-            0 ->{allOrderViewModel.getAllOrderOfUserInfo(curUser?.phoneNum)}
+            0 -> {allOrderViewModel.getAllOrderOfUserInfo(curUser?.phoneNum)}
             1 -> {allOrderViewModel.queryToBeReceive(curUser?.phoneNum)}
             2 -> {allOrderViewModel.queryToBeSend(curUser?.phoneNum)}
             3 -> {allOrderViewModel.queryToBeFetch(curUser?.phoneNum)}
@@ -199,13 +186,6 @@ class AllOrderActivity : BaseActivity(), IOrderOperate {
         promptDialog.showLoading("")
         allOrderViewModel.confirmOrder(oid)
         this.position = position
-    }
-
-    override fun deliveryOrder(changeOrderState: TextView, disOrderState: TextView, oid: String?) {
-        promptDialog.showLoading("")
-        allOrderViewModel.deliveryOrder(oid)
-        this.changeOrderState = changeOrderState
-        this.disOrderState = disOrderState
     }
 
     override fun commentOrder(orderInfo: BestNewOrderEntity) {

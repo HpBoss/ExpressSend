@@ -7,6 +7,7 @@ package com.noah.internet
  */
 object Constant {
     const val CODE_SUCCESS = 200
+    const val CODE_FAILURE = 0
     const val BASE_URL = "http://192.168.31.222:9090/"
     const val LOGIN_API = "sign/signIn"
     const val SIGN_OUT = "sign/signOut/{phoneNum}"
@@ -38,4 +39,5 @@ object Constant {
     const val GET_PERSONAL_ADDRESS_BOOK = "address/getPersonalAddressBook/{phoneNum}"
     const val DELETE_ADDRESS_BOOK = "address/deleteAddressBook/{id}"
     const val EDIT_ADDRESS_BOOK = "address/editAddressBook/{id}"
+    const val CREATE_ADDRESS_BOOK = "address/createAddressBook"
 }

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="NodeProgressView">
+        <attr name="progressUnreachedColor" format="color"/>
+        <attr name="progressReachedColor" format="color"/>
+        <attr name="progressStrokeWidth" format="dimension"/>
+        <attr name="progressStage" format="integer"/>
+        <attr name="progressRadius" format="dimension"/>
+    </declare-styleable>
+</resources>

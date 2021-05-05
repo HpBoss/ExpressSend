@@ -27,13 +27,6 @@ class AllOrderViewModel(application: Application) : BaseViewModel(application) {
         }
     }
 
-    val isSuccessDeliveryOrder = MutableLiveData<Boolean>()
-    fun deliveryOrder(oid: String?) {
-        viewModelScope.launch {
-            isSuccessDeliveryOrder.value = allOrderRepository.deliveryOrder(oid).resultCode == Constant.CODE_SUCCESS
-        }
-    }
-
     val isSuccessCommentOrder = MutableLiveData<Boolean>()
     fun commentOrder(id: String?) {
         viewModelScope.launch {

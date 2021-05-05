@@ -15,10 +15,14 @@ import kotlinx.android.synthetic.main.dialog_pay_integral.*
  * @Date: 4/24/21 14:52
  * @Description:
  */
-class PayIntegralDialog constructor(context: Context, themeResId: Int, maxValue: Int) :
+class PayIntegralDialog constructor(
+    context: Context,
+    themeResId: Int,
+    private var maxValue: Int?,
+    private val value: Int?
+) :
     Dialog(context, themeResId) {
 
-    private var max = maxValue
     private var clickCompleteInputIntegral: IClickCompleteInputIntegral? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,12 +32,14 @@ class PayIntegralDialog constructor(context: Context, themeResId: Int, maxValue:
         window.setWindowAnimations(R.style.main_menu_animStyle)
         window.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
 
-        if (max == 0) max = 5
-        slider.valueTo = max.toFloat()
         initListenSlide()
     }
 
     private fun initListenSlide() {
+        if (maxValue == 0) maxValue = 5
+        slider.valueTo = maxValue!!.toFloat()
+        slider.value = value!!.toFloat()
+        res_payIntegral.text = value.toInt().toString()
         slider.addOnChangeListener { _, value, _ ->
             res_payIntegral.text = value.toInt().toString()
         }

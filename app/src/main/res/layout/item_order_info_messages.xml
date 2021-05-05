@@ -2,17 +2,16 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
     <androidx.cardview.widget.CardView
         style="@style/Widget.MaterialComponents.CardView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="5dp"
-        android:layout_marginEnd="16dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
         android:layout_marginBottom="16dp"
         android:background="@color/light_grey"
         app:cardCornerRadius="10dp">
@@ -213,6 +212,7 @@
                 android:text="联系"
                 android:textColor="@color/blue_364"
                 android:textSize="12sp"
+                android:visibility="invisible"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/btn_changeOrderState"
                 app:layout_constraintTop_toBottomOf="@+id/linearLayout2" />
@@ -286,7 +286,6 @@
                         tools:layout_editor_absoluteX="60dp"
                         tools:layout_editor_absoluteY="92dp" />
                 </LinearLayout>
-
             </LinearLayout>
 
             <TextView
@@ -300,18 +299,15 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="@+id/linearLayout2" />
 
-            <View
-                android:id="@+id/horizontalDividing"
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="16dp"
-                android:layout_marginEnd="8dp"
+            <ImageView
+                android:id="@+id/iv_entryOrder"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:visibility="gone"
-                android:background="@color/light_grey"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/linearLayout2" />
+                app:layout_constraintBottom_toBottomOf="@+id/tv_orderState"
+                app:layout_constraintEnd_toEndOf="@+id/tv_orderState"
+                app:layout_constraintTop_toTopOf="@+id/tv_orderState"
+                app:srcCompat="@drawable/ic_right_entry" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
 </RelativeLayout>

@@ -61,7 +61,7 @@
         android:textColor="@color/black"
         android:layout_toEndOf="@+id/title_payIntegral"
         android:layout_below="@+id/dialog_titleParent"
-        android:text="1"/>
+        android:text="0"/>
 
     <com.google.android.material.slider.Slider
         android:id="@+id/slider"

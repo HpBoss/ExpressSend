@@ -9,6 +9,7 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="grey">#BEBEBE</color>
+    <color name="darkGray">#A9A9A9</color>
     <color name="transparent_black">#66000000</color>
     <color name="light_grey">#F0F0F0</color>
     <color name="red_checked_color">#FF4C39</color>
@@ -32,4 +33,5 @@
     <color name="sl_detail_bg_custom">#88FF4081</color>
     <color name="sl_detail_toolbar_bg_custom">#FF111111</color>
     <color name="sl_detail_toolbar_title_custom">#FF6300</color>
+    <color name="lightGreen">#6AE382</color>
 </resources>

@@ -9,10 +9,17 @@
     tools:context=".ui.activity.AddressBookActivity">
 
     <include
-        android:id="@+id/actionBar"
+        android:id="@+id/placeholder_status_bar"
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
         android:layout_alignParentTop="true"
+        layout="@layout/item_status_bar"/>
+
+    <include
+        android:id="@+id/actionBar"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_below="@+id/placeholder_status_bar"
         layout="@layout/item_action_bar" />
 
     <RelativeLayout

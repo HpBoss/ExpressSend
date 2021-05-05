@@ -37,12 +37,16 @@
     <string name="no_nickname">无昵称</string>
     <string name="contact_he">联系他</string>
     <string name="receive_order">接受订单</string>
+    <string name="modify_order">修改订单</string>
     <string name="cancel">取消</string>
     <string name="in_delivery">派送中</string>
     <string name="to_be_served">待送达</string>
     <string name="release_loading">发布中…</string>
+    <string name="modify_loading">修改中…</string>
     <string name="release_success">发布成功</string>
-    <string name="release_fail">发布失败</string>
+    <string name="release_failure">发布失败</string>
+    <string name="modify_success">修改成功</string>
+    <string name="modify_failure">修改失败</string>
     <string name="incomplete_information">信息填写不全</string>
     <string name="Order_toBeSend">待派送</string>
     <string name="receive_my_order">接收的订单</string>
@@ -60,7 +64,12 @@
     <string name="create_address">新建地址</string>
     <string name="delete_address">删除</string>
     <string name="edit_address">编辑</string>
+    <string name="edit_success">编辑成功</string>
+    <string name="edit_failure">编辑失败</string>
+    <string name="create_success">创建成功</string>
+    <string name="create_failure">该地址已存在</string>
     <string name="sure_release">确认发布</string>
+    <string name="sure_modify">确认修改</string>
     <string name="sure">确认</string>
     <string name="action_bar_title">标题</string>
     <string name="create_address_title">新建地址</string>
@@ -70,4 +79,9 @@
     <string name="detailNameHint">详细地址（例如：xxx驿站或者xxx旁）</string>
     <string name="no_save_address_hint">未保存地址信息</string>
     <string name="_30">30</string>
+    <string name="content_no_write">内容未填写!</string>
+    <string name="order_details">订单详情</string>
+    <string name="comment">评论</string>
+    <string name="no_release_comment">未发表任何评论</string>
+    <string name="pay_integral_set_wrong">支付积分设置错误</string>
 </resources>

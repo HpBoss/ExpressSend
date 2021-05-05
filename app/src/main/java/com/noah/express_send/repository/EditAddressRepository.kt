@@ -8,6 +8,9 @@ import com.noah.internet.RetrofitClient
  * @Description:
  */
 class EditAddressRepository {
-    suspend fun editAddressBook(id: String) =
-        RetrofitClient.instance!!.service.editAddressBook(id)
+    suspend fun editAddressBook(id: String, addressName: String) =
+        RetrofitClient.instance!!.service.editAddressBook(id, addressName)
+
+    suspend fun createAddressBook(phoneNum: String?, addressName: String) =
+        RetrofitClient.instance!!.service.createAddressBook(phoneNum, addressName)
 }

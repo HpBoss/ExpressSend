@@ -33,13 +33,17 @@ class AddressBookAdapter(
             parent,
             false
         )
-        return ViewHolder(view)
+        val viewHolder = ViewHolder(view)
+        viewHolder.itemView.setOnClickListener {
+            iAddressOperate.choiceAddressBook(addressList[viewHolder.adapterPosition])
+        }
+        return viewHolder
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val addressInfo = addressList[position]
         holder.tvSchoolName.text = addressInfo.schoolName
-        holder.tvDetailAddress.text = addressInfo.detailName
+        holder.tvDetailAddress.text = addressInfo.addressName
         holder.btnDelete.setOnClickListener {
             iAddressOperate.deleteAddress(position, addressInfo.id)
         }

@@ -13,7 +13,6 @@ import com.bumptech.glide.request.RequestOptions
 import com.noah.express_send.R
 import com.noah.express_send.ui.adapter.io.IOrderInfo
 import com.noah.internet.response.ResponseOrderEntity
-import org.w3c.dom.Text
 import java.util.ArrayList
 
 /**
@@ -52,7 +51,7 @@ class IndexFragmentAdapter(
         holder.tvBrand.text = orderInfo.express
         holder.tvClassify.text = orderInfo.typeName
         holder.tvWeight.text = orderInfo.weight
-        holder.tvDetailAddress.text = orderInfo.detailAddress
+        holder.tvDetailAddress.text = orderInfo.addressName
         holder.tvDormitory.text = orderInfo.dormitory
         holder.tvPayIntegralNum.text = mContext.getString(R.string.payIntegralNum, orderInfo.payIntegralNum)
 

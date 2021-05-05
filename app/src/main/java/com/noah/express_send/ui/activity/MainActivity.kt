@@ -38,6 +38,7 @@ import com.noah.express_send.utils.UnreadMsgUtil
 import com.noah.express_send.viewModle.MainViewModel
 import de.hdodenhof.circleimageview.CircleImageView
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.item_status_bar.*
 import kotlinx.android.synthetic.main.layout_nav_header.*
 import kotlinx.android.synthetic.main.right_layout_call.*
 import kotlinx.android.synthetic.main.right_layout_dormitory.*

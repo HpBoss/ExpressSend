@@ -6,6 +6,7 @@ import androidx.lifecycle.viewModelScope
 import com.noah.express_send.repository.EditAddressRepository
 import com.noah.express_send.ui.base.BaseViewModel
 import com.noah.internet.Constant
+import com.noah.internet.response.ResponseAddressBook
 import kotlinx.coroutines.launch
 
 /**
@@ -14,15 +15,23 @@ import kotlinx.coroutines.launch
  * @Description:
  */
 class EditAddressViewModel(application: Application) : BaseViewModel(application) {
-    private val editProfileViewModel by lazy { 
+    private val editProfileViewModel by lazy {
         EditAddressRepository()
     }
 
     var isSuccessEditAddressBook = MutableLiveData<Boolean>()
-    fun editAddressBook(id: String) {
+    fun editAddressBook(id: String, addressName: String) {
         viewModelScope.launch {
             isSuccessEditAddressBook.value =
-                editProfileViewModel.editAddressBook(id).resultCode == Constant.CODE_SUCCESS
+                editProfileViewModel.editAddressBook(id, addressName).resultCode == Constant.CODE_SUCCESS
+        }
+    }
+
+    var isSuccessCreateAddressBook = MutableLiveData<Boolean>()
+    fun createAddressBook(phoneNum: String?, addressName: String) {
+        viewModelScope.launch {
+            isSuccessCreateAddressBook.value =
+                editProfileViewModel.createAddressBook(phoneNum, addressName).resultCode == Constant.CODE_SUCCESS
         }
     }
 }

@@ -10,4 +10,5 @@ import com.noah.internet.response.ResponseAddressBook
 interface IAddressOperate {
     fun deleteAddress(position: Int, id: Int)
     fun editAddress(position: Int, responseAddressBook: ResponseAddressBook)
+    fun choiceAddressBook(addressBook: ResponseAddressBook)
 }

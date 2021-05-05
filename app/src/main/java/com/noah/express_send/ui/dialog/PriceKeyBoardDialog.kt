@@ -1,4 +1,4 @@
-package com.noah.express_send.ui.view
+package com.noah.express_send.ui.dialog
 
 import android.annotation.SuppressLint
 import android.app.Activity

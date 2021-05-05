@@ -22,6 +22,7 @@ import com.noah.express_send.ui.adapter.io.IOpenModify
 import com.noah.express_send.viewModle.EditProfileViewModel
 import kotlinx.android.synthetic.main.activity_edit_profile.*
 import kotlinx.android.synthetic.main.item_profile_view.*
+import kotlinx.android.synthetic.main.item_status_bar.*
 import me.leefeng.promptlibrary.PromptDialog
 import okhttp3.MediaType
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
@@ -51,7 +52,7 @@ class EditProfileActivity : AppCompatActivity(), IOpenModify {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_edit_profile)
         immersionBar {
-            statusBarView(status_bar_views)
+            statusBarView(status_bar_view)
             statusBarDarkFont(false)
         }
         initView()

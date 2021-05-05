@@ -13,7 +13,6 @@ import com.noah.express_send.R
 import com.noah.express_send.ui.adapter.io.IOrderOperate
 import com.noah.internet.response.BestNewOrderEntity
 import de.hdodenhof.circleimageview.CircleImageView
-import org.w3c.dom.Text
 
 /**
  * @Auther: 何飘
@@ -23,8 +22,7 @@ import org.w3c.dom.Text
 class AllOrderAdapter(
     private val orderInfoList: List<BestNewOrderEntity>,
     private val mContext: Context,
-    private val iOrderOperate: IOrderOperate,
-    private val phoneNum: String?
+    private val iOrderOperate: IOrderOperate
 ) : RecyclerView.Adapter<AllOrderAdapter.ViewHolder>() {
 
     inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
@@ -39,6 +37,7 @@ class AllOrderAdapter(
         val tvNickName: TextView = view.findViewById(R.id.tv_nickNameRight)
         val imgAvatarUrl: CircleImageView = view.findViewById(R.id.avatar)
         val tvPayIntegralNum: TextView = view.findViewById(R.id.tv_payIntegralNum)
+        val tvOperateTime: TextView = view.findViewById(R.id.tv_operateTime)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -56,8 +55,9 @@ class AllOrderAdapter(
         holder.tvTypeName.text = orderInfo.typeName
         holder.tvWeight.text = orderInfo.weight
         holder.tvDormitory.text = orderInfo.dormitory
-        holder.tvDetailAddress.text = orderInfo.detailAddress
+        holder.tvDetailAddress.text = orderInfo.addressName
         holder.tvOrderState.text = orderInfo.stateName
+        holder.tvOperateTime.text = orderInfo.operateTime
         holder.tvPayIntegralNum.text = mContext.getString(R.string.payIntegralNum, orderInfo.payIntegralNum)
         if (orderInfo.nickName == null) {
             holder.tvNickName.text = mContext.resources.getString(R.string.no_nickname)

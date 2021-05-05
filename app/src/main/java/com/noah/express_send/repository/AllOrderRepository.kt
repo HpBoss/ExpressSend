@@ -11,9 +11,6 @@ class AllOrderRepository {
     suspend fun getAllOrderOfUserInfo(phoneNum: String?) =
         RetrofitClient.instance!!.service.getAllOrderOfUserInfo(phoneNum)
 
-    suspend fun deliveryOrder(oid: String?) =
-        RetrofitClient.instance!!.service.deliveryOrder(oid)
-
     suspend fun queryToBeReceive(phoneNum: String?) =
         RetrofitClient.instance!!.service.queryToBeReceive(phoneNum)
 

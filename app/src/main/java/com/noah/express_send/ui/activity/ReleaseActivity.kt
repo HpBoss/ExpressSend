@@ -3,6 +3,7 @@ package com.noah.express_send.ui.activity
 import android.content.Intent
 import android.os.Handler
 import android.os.Looper
+import android.util.Log
 import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -15,11 +16,15 @@ import com.noah.express_send.ui.adapter.ReleaseAdapter
 import com.noah.express_send.ui.adapter.io.IReleaseInfo
 import com.noah.express_send.ui.base.BaseActivity
 import com.noah.express_send.ui.dialog.PayIntegralDialog
-import com.noah.express_send.ui.view.PriceKeyBoardDialog
+import com.noah.express_send.ui.dialog.PriceKeyBoardDialog
+import com.noah.express_send.utils.VariableName
 import com.noah.express_send.viewModle.ReleaseViewModel
 import com.noah.internet.request.RequestOrderEntity
 import com.noah.internet.response.BestNewOrderEntity
+import com.noah.internet.response.ResponseAddressBook
 import kotlinx.android.synthetic.main.activity_release.*
+import kotlinx.android.synthetic.main.item_action_bar.*
+import kotlinx.android.synthetic.main.item_status_bar.*
 import me.leefeng.promptlibrary.PromptDialog
 
 class ReleaseActivity : BaseActivity(), IReleaseInfo,
@@ -32,8 +37,18 @@ class ReleaseActivity : BaseActivity(), IReleaseInfo,
     private lateinit var promptDialog: PromptDialog
     private var orderInfo: BestNewOrderEntity? = null
     private var maxPayIntegralNum: Int? = null
+    private var mode: Int = RELEASE_ORDER
+    private lateinit var loadingMsg: String
+    private lateinit var resultSuccessMsg: String
+    private lateinit var resultFailureMsg: String
+    private var oldIntegralNum: Int? = 0
     private val releaseViewModel by lazy {
         ViewModelProvider(this).get(ReleaseViewModel::class.java)
+    }
+
+    companion object {
+        const val RELEASE_ORDER = 0
+        const val MODIFY_ORDER = 1
     }
 
     override fun isSetSoftInputMode() = true
@@ -44,12 +59,20 @@ class ReleaseActivity : BaseActivity(), IReleaseInfo,
 
     override fun initView() {
         immersionBar {
-            statusBarColor(R.color.blue_364)
-            fitsSystemWindows(true)
+            statusBarView(status_bar_view)
+            statusBarDarkFont(false)
         }
-        val mode = intent.getIntExtra("mode", 0)
-        if (mode == 1) { // 当mode为1时，表示当前页面在进行订单修改任务
-            btn_release.text = "确认修改"
+        actionBar_title.text = getString(R.string.release)
+        loadingMsg = getString(R.string.release_loading)
+        resultSuccessMsg = getString(R.string.release_success)
+        resultFailureMsg = getString(R.string.release_failure)
+        mode = intent.getIntExtra("mode", RELEASE_ORDER)
+        if (mode == MODIFY_ORDER) { // 当mode为1时，表示当前页面在进行订单修改任务
+            btn_release.text = getString(R.string.sure_modify)
+            actionBar_title.text = getString(R.string.modify_order)
+            loadingMsg = getString(R.string.modify_loading)
+            resultSuccessMsg = getString(R.string.modify_success)
+            resultFailureMsg = getString(R.string.modify_failure)
             orderInfo = intent.getParcelableExtra<BestNewOrderEntity>("orderInfo")
         }
         init(orderInfo)
@@ -62,12 +85,12 @@ class ReleaseActivity : BaseActivity(), IReleaseInfo,
     }
 
     override fun initData() {
-        iconBack.setOnClickListener {
+        back.setOnClickListener {
             onBackPressed()
         }
 
         btn_addressBook.setOnClickListener {
-            startActivity(Intent(this, AddressBookActivity::class.java))
+            startActivityForResult(Intent(this, AddressBookActivity::class.java), 10)
         }
 
         promptDialog = PromptDialog(this)
@@ -79,28 +102,30 @@ class ReleaseActivity : BaseActivity(), IReleaseInfo,
                     resultList.add(element.hints)
                 }
             }
-            if (resultList.size == 4 && detail_address.text.toString().isNotBlank()) {
-                resultList.add(detail_address.text.toString())
+            if (resultList.size == 4 && et_addressName.text.toString().isNotBlank()) {
+                resultList.add(et_addressName.text.toString())
                 // 提交resultList
                 val user = releaseViewModel.queryIsLoginUser()
                 val requestOrderEntity = RequestOrderEntity(
+                    orderInfo?.oid,
                     user?.phoneNum,
                     resultList[0],
+                    user?.schoolName,
                     resultList[1],
                     resultList[2],
                     resultList[3].substring(0, resultList[3].length - 2).toInt(),
                     resultList[4]
                 )
                 releaseViewModel.releasePersonalOrder(requestOrderEntity)
-                promptDialog.showLoading(getString(R.string.release_loading))
+                promptDialog.showLoading(loadingMsg)
                 releaseViewModel.isReleaseSuccess.observe(this, Observer {
                     if (it) {
-                        promptDialog.showSuccess(getString(R.string.release_success))
+                        promptDialog.showSuccess(resultSuccessMsg)
                         Handler(Looper.getMainLooper()).postDelayed({
                             onBackPressed()
                         }, 1000)
                     } else {
-                        promptDialog.showError(getString(R.string.release_fail))
+                        promptDialog.showError(resultFailureMsg)
                     }
                 })
             } else {
@@ -123,8 +148,24 @@ class ReleaseActivity : BaseActivity(), IReleaseInfo,
             releaseList.add(ReleaseInfo(R.drawable.ic_weight, "预估重量", orderInfo.weight!!))
             releaseList.add(
                 ReleaseInfo(
-                    R.drawable.ic_integral_16, "支付积分", orderInfo.payIntegralNum.toString())
+                    R.drawable.ic_integral_16,
+                    "支付积分",
+                    getString(R.string.payIntegralNum, orderInfo.payIntegralNum)
+                )
             )
+            oldIntegralNum = orderInfo.payIntegralNum
+            et_addressName.text.clear()
+            et_addressName.text.insert(0, orderInfo.addressName)
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == 10 && resultCode == RESULT_OK) {
+            val addressBook =
+                data?.getParcelableExtra<ResponseAddressBook>(VariableName.ADDRESS_BOOK)
+            et_addressName.text.clear()
+            et_addressName.text.insert(0, addressBook?.addressName)
         }
     }
 
@@ -152,16 +193,23 @@ class ReleaseActivity : BaseActivity(), IReleaseInfo,
     }
 
     override fun startSetPayIntegralNum() {
-        payIntegralDialog = PayIntegralDialog(this, R.style.ReleaseDialog, 5)
+        payIntegralDialog = PayIntegralDialog(
+            this,
+            R.style.ReleaseDialog,
+            releaseViewModel.queryIsLoginUser()?.integralNum,
+            oldIntegralNum
+        )
         payIntegralDialog.setIClickCompleteInputIntegral(this)
         payIntegralDialog.show()
     }
 
     override fun clickComplete(integralNum: Int) {
         if (integralNum == 0 || (maxPayIntegralNum != null && integralNum > maxPayIntegralNum!!)) {
-            Toast.makeText(this, "支付积分设置错误", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, getString(R.string.pay_integral_set_wrong), Toast.LENGTH_SHORT)
+                .show()
         } else {
             releaseList[3].hints = getString(R.string.payIntegralNum, integralNum)
+            oldIntegralNum = integralNum
             adapter.notifyItemChanged(3)
         }
     }

@@ -8,6 +8,8 @@
     android:background="@color/light_grey"
     tools:context=".ui.activity.ModifyProfileActivity">
 
+    <include layout="@layout/item_status_bar"/>
+
     <Toolbar
         android:id="@+id/order_toolbar"
         android:layout_width="match_parent"

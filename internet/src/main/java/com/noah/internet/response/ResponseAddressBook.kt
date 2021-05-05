@@ -13,5 +13,5 @@ data class ResponseAddressBook(
     val id: Int,
     val uid: Int,
     val schoolName: String,
-    val detailName: String
+    val addressName: String
 ) : Parcelable

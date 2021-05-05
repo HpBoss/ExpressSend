@@ -1,50 +1,59 @@
 package com.noah.express_send.ui.fragment
 
 import android.content.Intent
-import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
+import android.widget.LinearLayout
 import android.widget.Toast
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.RecyclerView
+import androidx.viewpager2.widget.ViewPager2
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.RequestOptions
 import com.noah.database.User
 import com.noah.express_send.R
 import com.noah.express_send.ui.activity.AllOrderActivity
+import com.noah.express_send.ui.activity.OrderDetailsActivity
+import com.noah.express_send.ui.adapter.OrderPagerAdapter
+import com.noah.express_send.ui.adapter.io.IOrderDetails
+import com.noah.express_send.ui.base.BaseFragment
 import com.noah.express_send.ui.view.CustomHeader
+import com.noah.express_send.ui.view.OrderInfoView
 import com.noah.express_send.utils.NetWorkAvailableUtil
 import com.noah.express_send.viewModle.OrderModelView
+import com.noah.internet.response.BestNewOrderEntity
 import com.noah.internet.response.ResponseOrderOfUser
 import kotlinx.android.synthetic.main.fragment_order.*
 import kotlinx.android.synthetic.main.fragment_order.view.*
 import kotlinx.android.synthetic.main.item_order_info_message.*
+import kotlinx.android.synthetic.main.item_order_info_message.btn_changeOrderState
+import kotlinx.android.synthetic.main.item_order_info_message.tv_orderState
+import kotlinx.android.synthetic.main.item_order_info_messages.*
+import me.leefeng.promptlibrary.PromptDialog
 import q.rorbin.badgeview.Badge
 import q.rorbin.badgeview.QBadgeView
 
-class OrderFragment : Fragment(), View.OnClickListener {
-    private lateinit var oid: String
+
+class OrderFragment : BaseFragment(), View.OnClickListener, IOrderDetails {
+    private var mCurrentItem = 0
     private var curUser: User? = null
+    private var viewList = ArrayList<View>()
     private val badges by lazy {
         ArrayList<Badge>()
+    }
+
+    private val promptDialog by lazy {
+        PromptDialog(requireActivity())
     }
 
     private val orderModelView by lazy {
         ViewModelProvider(this).get(OrderModelView::class.java)
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.fragment_order, container, false)
-    }
+    override fun getLayoutId() = R.layout.fragment_order
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
+    override fun initView() {
         viewAll.setOnClickListener(this)
         tv_ToBeSendOrder.setOnClickListener(this)
         tv_ToBeComment.setOnClickListener(this)
@@ -53,53 +62,75 @@ class OrderFragment : Fragment(), View.OnClickListener {
         initObserver()
         initRefreshLayout()
         initBadgeTextView()
+        // 去除viewPager2边缘的阴影（在xml中设置overScrollMode为never无效）
+        val child: View = viewPager.getChildAt(0)
+        (child as? RecyclerView)?.overScrollMode = View.OVER_SCROLL_NEVER
+    }
+
+    override fun initData() {
+        orderModelView.isSuccessDeliveryOrder.observe(this, {
+            if (!it) {
+                promptDialog.showError("派送订单失败")
+                return@observe
+            }
+            btn_changeOrderState.visibility = View.GONE
+            tv_orderState.text = "已派单"
+            promptDialog.showSuccess("派送订单成功")
+        })
+    }
+
+    private fun createIndicator(size: Int) {
+        indicate.removeAllViews()
+        var view: View
+        var count: Int = size
+        if (size > 4) {
+            count = 4
+        }
+        for (i in 0 until count) {
+            //创建底部指示器(小圆点)
+            view = View(requireContext())
+            view.setBackgroundResource(R.drawable.indicator)
+            view.isEnabled = false
+            //设置宽高
+            val layoutParams = LinearLayout.LayoutParams(15, 15)
+            //设置间隔
+            if (i != 0) {
+                layoutParams.leftMargin = 30
+            }
+            //添加到LinearLayout
+            indicate.addView(view, layoutParams)
+        }
     }
 
     private fun initObserver() {
         orderModelView.responseOrderEntity.observe(viewLifecycleOwner, Observer {
             if (it == null) return@Observer
             refreshBadgeData(it)
-            btn_changeOrderState.visibility = View.INVISIBLE
-            btn_funcOperate.visibility = View.INVISIBLE
-            if (it.bestNewOrderEntity == null) {
-                hintPlaceHolder.visibility = View.VISIBLE
-                bestNewOrder.visibility = View.GONE
-            } else {
-                hintPlaceHolder.visibility = View.GONE
-                bestNewOrder.visibility = View.VISIBLE
-                tv_orderState.text = it.bestNewOrderEntity!!.stateName
-                tv_express.text = it.bestNewOrderEntity!!.express
-                tv_address.text = it.bestNewOrderEntity!!.detailAddress
-                tv_nickNameRight.text = it.bestNewOrderEntity!!.nickName
-                tv_weights.text = it.bestNewOrderEntity!!.weight
-                tv_typeName.text = it.bestNewOrderEntity!!.typeName
-                tv_payIntegralNum.text =
-                    getString(R.string.payIntegralNum, it.bestNewOrderEntity!!.payIntegralNum)
-                dormitory.text = it.bestNewOrderEntity!!.dormitory
-                oid = it.bestNewOrderEntity!!.oid.toString()
-                tv_operateTime.visibility = View.VISIBLE
-                tv_operateTime.text = it.bestNewOrderEntity!!.operateTime
-
-                Glide.with(requireActivity()).load(it.bestNewOrderEntity!!.avatarUrl)
-                    .apply(RequestOptions().diskCacheStrategy(DiskCacheStrategy.RESOURCE))
-                    .preload()
-                Glide.with(requireActivity()).load(it.bestNewOrderEntity!!.avatarUrl)
-                    .placeholder(R.drawable.ic_place_holder)
-                    .apply(RequestOptions().diskCacheStrategy(DiskCacheStrategy.RESOURCE))
-                    .into(avatar)
-                when(it.bestNewOrderEntity!!.stateName) {
-                    getString(R.string.toBeReceive) ->{
-                        if (curUser?.phoneNum == it.bestNewOrderEntity!!.phoneNum) {
-                            tv_orderState.text = getString(R.string.sending)
-                        } else {
-                            tv_orderState.text = getString(R.string.toBeSend)
-                        }
-                    }
+            createIndicator(it.bestNewOrderEntities.size)
+            indicate.getChildAt(mCurrentItem).isEnabled = true
+            hintPlaceHolder.visibility = View.GONE
+            viewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
+                override fun onPageSelected(position: Int) {
+                    indicate.getChildAt(mCurrentItem).isEnabled = false
+                    indicate.getChildAt(position).isEnabled = true
+                    mCurrentItem = position
                 }
-            }
+            })
+            viewPager.adapter = OrderPagerAdapter(it.bestNewOrderEntities, requireContext(), this)
             // 刷新成功关闭refresh
             refreshLayout.finishRefresh()
         })
+    }
+
+    private fun addOrderInfoData(listData: ArrayList<BestNewOrderEntity>?) {
+        if (listData != null) {
+            for (bestNewOrderEntity in listData) {
+                val orderInfoView = OrderInfoView(bestNewOrderEntity, requireContext())
+                orderInfoView.initView()
+                orderInfoView.loadData()
+                viewList.add(orderInfoView.getView())
+            }
+        }
     }
 
     private fun refreshBadgeData(responseOrderOfUser: ResponseOrderOfUser) {
@@ -137,6 +168,7 @@ class OrderFragment : Fragment(), View.OnClickListener {
         // activity跳转回来时，页面可以自动刷新
         refreshAllPageInfo()
     }
+
     private fun refreshAllPageInfo() {
         curUser = orderModelView.queryIsLoginUser()
         if (curUser != null) {
@@ -181,7 +213,11 @@ class OrderFragment : Fragment(), View.OnClickListener {
                 refreshLayout.finishRefresh()
             } else {
                 refreshLayout.finishRefresh(false)
-                Toast.makeText(context, requireContext().resources.getString(R.string.network_invalid), Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    context,
+                    requireContext().resources.getString(R.string.network_invalid),
+                    Toast.LENGTH_SHORT
+                ).show()
             }
         }
     }
@@ -201,5 +237,16 @@ class OrderFragment : Fragment(), View.OnClickListener {
             R.anim.translate_right_in,
             R.anim.translate_left_out
         )*/
+    }
+
+    override fun entryOrderDetails(bestNewOrderEntity: BestNewOrderEntity) {
+        val intent = Intent(requireActivity(), OrderDetailsActivity::class.java)
+        intent.putExtra("bestNewOrderEntity", bestNewOrderEntity)
+        startActivity(intent)
+    }
+
+    override fun startDeliverOrder(bestNewOrderEntity: BestNewOrderEntity) {
+        promptDialog.showLoading("")
+        orderModelView.deliveryOrder(bestNewOrderEntity.oid.toString())
     }
 }

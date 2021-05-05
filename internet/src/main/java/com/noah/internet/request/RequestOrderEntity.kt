@@ -6,6 +6,6 @@ package com.noah.internet.request
  * @Description:
  */
 data class RequestOrderEntity(
-    val phoneNum: String? = null, val express: String,
-    val typeName: String, val weight: String, val payIntegralNum: Int, val detailAddress: String
+    val id: Long? = null, val phoneNum: String? = null, val express: String, val schoolName: String?,
+    val typeName: String, val weight: String, val payIntegralNum: Int, val addressName: String
 )

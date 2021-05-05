@@ -4,13 +4,10 @@ import com.noah.internet.RetrofitClient
 
 /**
  * @Auther: 何飘
- * @Date: 4/3/21 16:31
+ * @Date: 5/5/21 01:25
  * @Description:
  */
-class OrderRepository {
-    suspend fun getOrderOfUserInfo(phoneNum: String?) =
-        RetrofitClient.instance!!.service.getOrderOfUserInfo(phoneNum)
-
+class OrderDetailsRepository {
     suspend fun deliveryOrder(oid: String?) =
         RetrofitClient.instance!!.service.deliveryOrder(oid)
 }

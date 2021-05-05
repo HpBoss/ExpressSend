@@ -1,10 +1,8 @@
 package com.noah.express_send.ui.activity
 
 import android.content.Intent
-import android.util.Log
 import android.view.View
 import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.gyf.immersionbar.ktx.immersionBar
 import com.noah.express_send.R
@@ -16,6 +14,7 @@ import com.noah.express_send.viewModle.AddressBookViewModel
 import com.noah.internet.response.ResponseAddressBook
 import kotlinx.android.synthetic.main.activity_address_book.*
 import kotlinx.android.synthetic.main.item_action_bar.*
+import kotlinx.android.synthetic.main.item_status_bar.*
 import me.leefeng.promptlibrary.PromptDialog
 import kotlin.properties.Delegates
 
@@ -37,8 +36,8 @@ class AddressBookActivity : BaseActivity(), IAddressOperate {
 
     override fun initView() {
         immersionBar {
-            statusBarColor(R.color.blue_364)
-            fitsSystemWindows(true)
+            statusBarView(status_bar_view)
+            statusBarDarkFont(false)
         }
         actionBar_title.text = getString(R.string.address_book)
         back.setOnClickListener {
@@ -91,5 +90,12 @@ class AddressBookActivity : BaseActivity(), IAddressOperate {
         intent.putExtra(getString(R.string.key_mode), VariableName.EDIT_ADDRESS)
         intent.putExtra(VariableName.ADDRESS_BOOK, responseAddressBook)
         startActivity(intent)
+    }
+
+    override fun choiceAddressBook(addressBook: ResponseAddressBook) {
+        val intent = Intent()
+        intent.putExtra(VariableName.ADDRESS_BOOK, addressBook)
+        setResult(RESULT_OK, intent)
+        finish()
     }
 }

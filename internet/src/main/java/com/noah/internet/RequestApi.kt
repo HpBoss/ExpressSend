@@ -91,6 +91,17 @@ interface RequestApi {
     @DELETE(Constant.DELETE_ADDRESS_BOOK)
     suspend fun deleteAddressBook(@Path("id") id: String?): BackResultData<*>
 
+    @FormUrlEncoded
     @PUT(Constant.EDIT_ADDRESS_BOOK)
-    suspend fun editAddressBook(@Path("id") id: String?): BackResultData<*>
+    suspend fun editAddressBook(
+        @Path("id") id: String?,
+        @Field("addressName") addressName: String
+    ): BackResultData<*>
+
+    @FormUrlEncoded
+    @POST(Constant.CREATE_ADDRESS_BOOK)
+    suspend fun createAddressBook(
+        @Field("phoneNum") phoneNum: String?,
+        @Field("addressName") addressName: String
+    ): BackResultData<*>
 }

@@ -14,29 +14,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/release_toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="@color/blue_364"
-            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-            app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
+        <include layout="@layout/item_status_bar"/>
 
-            <TextView
-                android:id="@+id/tv_topTitle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAlignment="center"
-                android:layout_gravity="center"
-                android:text="@string/release"
-                android:textColor="@color/white"
-                android:textSize="18sp"/>
-            <ImageView
-                android:id="@+id/iconBack"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ic_baseline_arrow_back_24"/>
-        </androidx.appcompat.widget.Toolbar>
+        <include layout="@layout/item_action_bar"/>
     </LinearLayout>
 
 
@@ -101,28 +81,29 @@
         android:layout_below="@id/divider">
 
         <EditText
-            android:id="@+id/detail_address"
+            android:id="@+id/et_addressName"
             android:layout_width="0dp"
             android:layout_height="50dp"
             android:autofillHints=""
             android:layout_weight="1"
             android:background="@color/white"
             android:gravity="center|start"
-            android:hint="请输入驿站的详细地址"
+            android:hint="@string/detailNameHint"
             android:inputType="text"
             android:maxLines="2"
             android:paddingStart="50dp"
-            android:textSize="14sp"
+            android:textSize="16sp"
             android:layout_marginTop="8dp"
             android:layout_marginBottom="8dp"
             tools:ignore="RtlSymmetry" />
+
         <View
-            android:layout_width="1dp"
+            android:layout_width="3dp"
             android:layout_height="35dp"
             android:layout_gravity="center"
-            android:background="@color/light_grey"
             android:layout_marginStart="16dp"
-            android:layout_marginEnd="16dp"/>
+            android:layout_marginEnd="16dp"
+            android:background="@color/light_grey" />
         <TextView
             android:id="@+id/btn_addressBook"
             android:layout_width="wrap_content"

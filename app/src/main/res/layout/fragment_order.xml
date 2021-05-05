@@ -165,6 +165,16 @@
                         android:layout_marginTop="16dp"
                         android:layout_marginBottom="8dp"
                         android:textSize="18sp"/>
+                    <TextView
+                        android:id="@+id/tv_allReceiveOrder"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/View_all"
+                        android:gravity="center"
+                        android:layout_marginTop="16dp"
+                        android:textSize="12sp"
+                        android:layout_alignParentEnd="true"
+                        app:drawableEndCompat="@drawable/ic_baseline_chevron_right_24" />
                     <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -180,10 +190,19 @@
                             android:visibility="visible"
                             app:drawableTopCompat="@drawable/ic_no_find_order" />
 
-                        <include
-                            android:id="@+id/bestNewOrder"
-                            android:visibility="gone"
-                            layout="@layout/item_order_info_message"/>
+                        <androidx.viewpager2.widget.ViewPager2
+                            android:id="@+id/viewPager"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"/>
+
+                        <LinearLayout
+                            android:id="@+id/indicate"
+                            android:layout_width="match_parent"
+                            android:layout_height="30dp"
+                            android:gravity="center"
+                            android:layout_marginBottom="8dp"
+                            android:layout_below="@+id/viewPager"
+                            android:orientation="horizontal"/>
                     </RelativeLayout>
                 </RelativeLayout>
             </androidx.cardview.widget.CardView>
