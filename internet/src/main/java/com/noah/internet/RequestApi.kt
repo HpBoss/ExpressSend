@@ -1,5 +1,6 @@
 package com.noah.internet
 
+import com.noah.internet.request.RequestCommentEntity
 import com.noah.internet.request.RequestLoginUser
 import com.noah.internet.request.RequestOrderEntity
 import com.noah.internet.response.ResponseOrderOfUser
@@ -76,8 +77,8 @@ interface RequestApi {
     @GET(Constant.QUERY_TO_BE_COMMENT)
     suspend fun queryToBeComment(@Path("phoneNum") phoneNum: String?): BackResultData<List<BestNewOrderEntity>>
 
-    @GET(Constant.COMMENT_ORDER)
-    suspend fun commentOrder(@Path("id") id: String?): BackResultData<*>
+    @POST(Constant.COMMENT_ORDER)
+    suspend fun commentOrder(@Body requestCommentEntity: RequestCommentEntity): BackResultData<*>
 
     @POST(Constant.RECEIVE_ORDER)
     suspend fun receiveOrder(
@@ -104,4 +105,7 @@ interface RequestApi {
         @Field("phoneNum") phoneNum: String?,
         @Field("addressName") addressName: String
     ): BackResultData<*>
+
+    @GET(Constant.GET_ALL_COMMENT_CHIPS)
+    suspend fun getAllCommentChips(): BackResultData<ArrayList<ResponseChipEntity>>
 }

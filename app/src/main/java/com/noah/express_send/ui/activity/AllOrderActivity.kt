@@ -34,8 +34,6 @@ class AllOrderActivity : BaseActivity(), IOrderOperate {
     private lateinit var adapter: AllOrderAdapter
     private var curUser: User? = null
     private var position: Int = -1
-    private lateinit var changeOrderState: TextView
-    private lateinit var disOrderState: TextView
     private val promptDialog by lazy {
         PromptDialog(this)
     }

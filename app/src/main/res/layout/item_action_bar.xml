@@ -26,5 +26,17 @@
             android:text="@string/action_bar_title"
             android:textColor="@color/white"
             android:textSize="20sp" />
+        <TextView
+            android:id="@+id/button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="发表"
+            android:textColor="@color/blue_364"
+            android:textSize="16sp"
+            android:gravity="center"
+            android:layout_gravity="end"
+            android:layout_marginEnd="16dp"
+            android:visibility="gone"
+            android:background="@drawable/rectangle_button_change_order_grey"/>
     </androidx.appcompat.widget.Toolbar>
 </LinearLayout>

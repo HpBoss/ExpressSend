@@ -31,4 +31,9 @@
         <item name="detail.toolbar.bg">@color/sl_detail_toolbar_bg_custom</item>
         <item name="detail.toolbar.title.color">@color/sl_detail_toolbar_title_custom</item>
     </style>
+
+
+    <style name="ChipTextAppearance" parent="Widget.MaterialComponents.Chip.Choice">
+        <item name="android:textSize">14sp</item>
+    </style>
 </resources>

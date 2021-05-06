@@ -37,7 +37,8 @@
         android:theme="@style/Theme.ExpressSend"
         android:usesCleartextTraffic="true"
         tools:targetApi="m">
-        <activity android:name=".ui.activity.OrderDetailsActivity"/>
+        <activity android:name=".ui.activity.UserHomePageActivity"></activity>
+        <activity android:name=".ui.activity.OrderDetailsActivity" />
         <activity android:name=".ui.activity.EditAddressActivity" />
         <activity android:name=".ui.activity.AddressBookActivity" />
         <activity android:name=".ui.activity.CommentActivity" />

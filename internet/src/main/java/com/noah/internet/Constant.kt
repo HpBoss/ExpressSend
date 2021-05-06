@@ -27,17 +27,19 @@ object Constant {
 
     const val DELIVERY_ORDER = "order/deliveryOrder/{oid}"
     const val RECEIVE_ORDER = "order/receiveOrder/{phoneNum}/{id}"
-    const val COMMENT_ORDER = "order/commentOrder/{phoneNum}/{id}"
-
     const val QUERY_TO_BE_RECEIVE = "order/queryToBeReceive/{phoneNum}"
+
     const val QUERY_TO_BE_SEND = "order/queryToBeSend/{phoneNum}"
     const val QUERY_COMPLETED = "order/queryCompleted/{phoneNum}"
     const val QUERY_RECEIVED = "order/queryReceived/{phoneNum}"
     const val QUERY_TO_BE_FETCH = "order/queryToBeFetch/{phoneNum}"
     const val QUERY_TO_BE_COMMENT = "order/queryToBeComment/{phoneNum}"
-
     const val GET_PERSONAL_ADDRESS_BOOK = "address/getPersonalAddressBook/{phoneNum}"
+
     const val DELETE_ADDRESS_BOOK = "address/deleteAddressBook/{id}"
     const val EDIT_ADDRESS_BOOK = "address/editAddressBook/{id}"
     const val CREATE_ADDRESS_BOOK = "address/createAddressBook"
+
+    const val COMMENT_ORDER = "comment/commentOrder"
+    const val GET_ALL_COMMENT_CHIPS = "comment/getAllCommentChips"
 }

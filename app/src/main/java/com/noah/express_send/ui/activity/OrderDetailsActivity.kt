@@ -42,6 +42,7 @@ class OrderDetailsActivity : BaseActivity() {
         dormitory.text = bestNewOrderEntity?.dormitory
         tv_address.text = bestNewOrderEntity?.addressName
         tv_operateTime.text = bestNewOrderEntity?.operateTime
+        tv_typeName.text = bestNewOrderEntity?.typeName
         tv_orderState.visibility = View.INVISIBLE
 
         Glide.with(this).load(bestNewOrderEntity?.avatarUrl)

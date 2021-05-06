@@ -28,7 +28,4 @@ class AllOrderRepository {
 
     suspend fun queryToBeComment(phoneNum: String?) =
         RetrofitClient.instance!!.service.queryToBeComment(phoneNum)
-
-    suspend fun commentOrder(id: String?) =
-        RetrofitClient.instance!!.service.commentOrder(id)
 }
