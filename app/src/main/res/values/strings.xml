@@ -35,7 +35,7 @@
     <string name="modify">修改</string>
     <string name="please_login">请先登录!</string>
     <string name="no_nickname">无昵称</string>
-    <string name="contact_he">联系他</string>
+    <string name="contact">联系</string>
     <string name="receive_order">接受订单</string>
     <string name="modify_order">修改订单</string>
     <string name="cancel">取消</string>
@@ -84,8 +84,10 @@
     <string name="comment">评论</string>
     <string name="comment_success">评论成功</string>
     <string name="comment_failure">评论失败</string>
-    <string name="no_release_comment">未发表任何评论</string>
+    <string name="no_release_comment">暂未发现评论</string>
     <string name="pay_integral_set_wrong">支付积分设置错误</string>
     <string name="release_comment">发表评论</string>
     <string name="comment_hint">聊聊本次快递待取的感受吧！</string>
+    <string name="high_comment">好评</string>
+    <string name="personal_page">个人主页</string>
 </resources>

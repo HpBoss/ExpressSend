@@ -28,6 +28,9 @@ interface RequestApi {
     @GET(Constant.GET_PROFILE)
     suspend fun requestUserProfile(@Path("phoneNum") phoneNum: String?): BackResultData<ResponseProfile>
 
+    @GET(Constant.GET_USER_PAGE_INFO)
+    suspend fun getUserPageInfo(@Path("phoneNum") phoneNum: String?): BackResultData<ResponseUserPageEntity>
+
     @Multipart
     @POST(Constant.UPDATE_AVATAR_URL)
     suspend fun updateAvatarUrl(
@@ -108,4 +111,7 @@ interface RequestApi {
 
     @GET(Constant.GET_ALL_COMMENT_CHIPS)
     suspend fun getAllCommentChips(): BackResultData<ArrayList<ResponseChipEntity>>
+
+    @GET(Constant.GET_COMMENT_BY_OID)
+    suspend fun getCommentByOid(@Path("oid") oid: String?): BackResultData<CommentAllInfoEntity>
 }

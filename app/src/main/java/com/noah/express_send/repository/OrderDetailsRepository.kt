@@ -8,6 +8,6 @@ import com.noah.internet.RetrofitClient
  * @Description:
  */
 class OrderDetailsRepository {
-    suspend fun deliveryOrder(oid: String?) =
-        RetrofitClient.instance!!.service.deliveryOrder(oid)
+    suspend fun getCommentByOid(oid: String?) =
+        RetrofitClient.instance!!.service.getCommentByOid(oid)
 }

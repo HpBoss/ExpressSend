@@ -9,21 +9,17 @@
     tools:context=".ui.activity.OrderDetailsActivity">
 
     <include
-        android:id="@+id/orderDetails_status_bar"
-        layout="@layout/item_status_bar"/>
-
-    <include
-        android:id="@+id/orderDetails_actionBar"
+        android:id="@+id/topView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/orderDetails_status_bar"
-        layout="@layout/item_action_bar"/>
+        android:layout_alignParentTop="true"
+        layout="@layout/item_top_view"/>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="150dp"
         android:orientation="vertical"
-        android:layout_below="@id/orderDetails_actionBar"
+        android:layout_below="@id/topView"
         android:background="@color/blue_364">
 
         <com.noah.express_send.ui.view.PointProcessBar
@@ -41,7 +37,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="85dp"
-        android:layout_below="@+id/orderDetails_actionBar"/>
+        android:layout_below="@+id/topView"/>
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
@@ -80,7 +76,7 @@
             </LinearLayout>
 
             <TextView
-                android:id="@+id/commentHint"
+                android:id="@+id/commentPlaceHolderHint"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/no_release_comment"
@@ -88,20 +84,22 @@
                 android:layout_gravity="center"
                 android:visibility="visible"
                 app:drawableTopCompat="@drawable/ic_no_find_order" />
+
             <LinearLayout
                 android:id="@+id/linearLayout_comment"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_below="@+id/linearLayoutTitle"
-                android:orientation="vertical"
                 android:layout_marginStart="16dp"
+                android:layout_marginTop="4dp"
                 android:layout_marginEnd="16dp"
-                android:layout_marginBottom="16dp">
+                android:layout_marginBottom="16dp"
+                android:orientation="vertical">
 
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/comment_recycleView"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
+                <include
+                    android:id="@+id/itemSingleComment"
+                    android:visibility="invisible"
+                    layout="@layout/item_single_comment_info"/>
 
             </LinearLayout>
         </RelativeLayout>

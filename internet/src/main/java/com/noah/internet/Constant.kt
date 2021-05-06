@@ -6,15 +6,18 @@ package com.noah.internet
  * @Description:
  */
 object Constant {
+    // 172.20.10.4
+    // 192.168.31.222
     const val CODE_SUCCESS = 200
     const val CODE_FAILURE = 0
-    const val BASE_URL = "http://192.168.31.222:9090/"
+    const val BASE_URL = "http://172.20.10.4:9090/"
     const val LOGIN_API = "sign/signIn"
     const val SIGN_OUT = "sign/signOut/{phoneNum}"
     const val UPDATE_PROFILE = "profile/modify/{phoneNum}"
     const val GET_PROFILE = "profile/getProfile/{phoneNum}"
     const val GET_AVATAR_URL = "profile/getAvatarUrl/{phoneNum}"
     const val UPDATE_AVATAR_URL = "profile/updateAvatarUrl/{phoneNum}"
+    const val GET_USER_PAGE_INFO = "profile/getUserPageInfo/{phoneNum}"
 
     const val RELEASE_ORDER = "order/release"
     const val GET_ORDER_PAGE_NO_CUR = "order/getAllOrderNoCur/{page}/{phoneNum}"
@@ -42,4 +45,5 @@ object Constant {
 
     const val COMMENT_ORDER = "comment/commentOrder"
     const val GET_ALL_COMMENT_CHIPS = "comment/getAllCommentChips"
+    const val GET_COMMENT_BY_OID = "comment/getCommentByOid/{oid}"
 }

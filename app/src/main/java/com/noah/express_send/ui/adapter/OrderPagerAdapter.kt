@@ -22,7 +22,8 @@ import com.noah.internet.response.BestNewOrderEntity
 class OrderPagerAdapter(
     private val orderList: ArrayList<BestNewOrderEntity>,
     private val mContext: Context,
-    private val iOrderDetails: IOrderDetails
+    private val iOrderDetails: IOrderDetails,
+    private val layoutView: Int
 ) :
     RecyclerView.Adapter<OrderPagerAdapter.ViewHolder>() {
     inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
@@ -46,10 +47,7 @@ class OrderPagerAdapter(
         viewType: Int
     ): OrderPagerAdapter.ViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(
-            R.layout.item_order_info_messages,
-            parent,
-            false
-        )
+            layoutView, parent, false)
         val viewHolder = ViewHolder(view)
         viewHolder.itemView.setOnClickListener {
             iOrderDetails.entryOrderDetails(orderList[viewHolder.layoutPosition])
@@ -73,6 +71,9 @@ class OrderPagerAdapter(
         holder.dormitory.text = orderInfo.dormitory
         holder.operateTime.text = orderInfo.operateTime
 
+        holder.username.setOnClickListener {
+            iOrderDetails.browseUserPageInfo(orderInfo.phoneNum, orderInfo.nickName)
+        }
         Glide.with(mContext).load(orderInfo.avatarUrl)
             .apply(RequestOptions().diskCacheStrategy(DiskCacheStrategy.RESOURCE))
             .preload()

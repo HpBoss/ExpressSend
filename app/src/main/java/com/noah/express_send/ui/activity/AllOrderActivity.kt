@@ -34,6 +34,7 @@ class AllOrderActivity : BaseActivity(), IOrderOperate {
     private lateinit var adapter: AllOrderAdapter
     private var curUser: User? = null
     private var position: Int = -1
+    private var isCancelOrder = true
     private val promptDialog by lazy {
         PromptDialog(this)
     }
@@ -87,12 +88,20 @@ class AllOrderActivity : BaseActivity(), IOrderOperate {
         })
         allOrderViewModel.isCancelOrderSuccess.observe(this, {
             if (!it) {
-                promptDialog.showError("取消订单失败")
+                if (!isCancelOrder) {
+                    promptDialog.showError("删除订单失败")
+                } else {
+                    promptDialog.showError("取消订单失败")
+                }
                 return@observe
             }
             orderInfoList.removeAt(position)
             adapter.notifyItemRemoved(position)
-            promptDialog.showSuccess("取消订单成功")
+            if (!isCancelOrder) {
+                promptDialog.showSuccess("删除订单成功")
+            } else {
+                promptDialog.showSuccess("取消订单成功")
+            }
         })
         allOrderViewModel.isConfirmOrderSuccess.observe(this, {
             if (!it) {
@@ -174,10 +183,11 @@ class AllOrderActivity : BaseActivity(), IOrderOperate {
         }
     }
 
-    override fun cancelOrder(oid: String?, position: Int) {
+    override fun cancelOrder(oid: String?, position: Int, isCancelOrder: Boolean) {
         promptDialog.showLoading("")
         allOrderViewModel.cancelUserOrder(oid)
         this.position = position
+        this.isCancelOrder = isCancelOrder
     }
 
     override fun confirmOrder(oid: String?, position: Int) {
@@ -194,37 +204,19 @@ class AllOrderActivity : BaseActivity(), IOrderOperate {
         startActivity(intent)
     }
 
-    override fun contactUser(oid: String?, phoneNum: String?, nickname: String?) {
-        val intent = Intent(this, ChatActivity::class.java)
-        intent.putExtra("targetUser", phoneNum)
-        intent.putExtra("mode", 1)
-        intent.putExtra("nickname", nickname)
-        JMessageClient.getUserInfo(phoneNum, object : GetUserInfoCallback() {
-            override fun gotResult(p0: Int, p1: String?, p2: UserInfo?) {
-                if (p0 == 0) {
-                    p2?.getAvatarBitmap(object : GetAvatarBitmapCallback() {
-                        override fun gotResult(p0: Int, p1: String?, p2: Bitmap?) {
-                            if (p0 == 0) intent.putExtra("receiverBitmap", p2)
-                            JMessageClient.getMyInfo().getAvatarBitmap(object :
-                                GetAvatarBitmapCallback() {
-                                override fun gotResult(p0: Int, p1: String?, p2: Bitmap?) {
-                                    if (p0 == 0) intent.putExtra("myselfBitmap", p2)
-                                    startActivity(intent)
-                                }
-                            })
-                        }
-                    })
-                }
-            }
-        })
-    }
-
     override fun modifyOrder(oid: String?, phoneNum: String?, orderInfo: BestNewOrderEntity) {
         val intent = Intent(this, ReleaseActivity::class.java)
         val extras = Bundle()
         extras.putParcelable("orderInfo", orderInfo)
         intent.putExtra("mode", 1)
         intent.putExtras(extras)
+        startActivity(intent)
+    }
+
+    override fun browseUserPageInfo(phoneNum: String?, nickname: String?) {
+        val intent = Intent(this, UserHomePageActivity::class.java)
+        intent.putExtra("phoneNum", phoneNum)
+        intent.putExtra("nickname", nickname)
         startActivity(intent)
     }
 }

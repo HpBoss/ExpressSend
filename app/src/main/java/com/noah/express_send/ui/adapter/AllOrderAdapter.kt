@@ -64,16 +64,12 @@ class AllOrderAdapter(
         } else {
             holder.tvNickName.text = orderInfo.nickName
         }
-        holder.tvFuncOperate.setOnClickListener {
-            iOrderOperate.contactUser(
-                orderInfo.oid.toString(),
-                orderInfo.phoneNum,
-                orderInfo.nickName
-            )
+
+        holder.tvNickName.setOnClickListener {
+            iOrderOperate.browseUserPageInfo(orderInfo.phoneNum, orderInfo.nickName)
         }
         holder.tvChangeOrderState.visibility = View.VISIBLE
-        holder.tvFuncOperate.visibility = View.VISIBLE
-        holder.tvFuncOperate.text = "联系"
+        holder.tvFuncOperate.visibility = View.INVISIBLE
         holder.imgAvatarUrl.visibility = View.VISIBLE
         holder.tvNickName.visibility = View.VISIBLE
         holder.tvOrderState.visibility = View.VISIBLE
@@ -82,9 +78,10 @@ class AllOrderAdapter(
                 holder.imgAvatarUrl.visibility = View.GONE
                 holder.tvNickName.visibility = View.GONE
                 holder.tvOrderState.visibility = View.GONE
+                holder.tvFuncOperate.visibility = View.VISIBLE
                 holder.tvChangeOrderState.text = "取消订单"
                 holder.tvChangeOrderState.setOnClickListener {
-                    iOrderOperate.cancelOrder(orderInfo.oid.toString(), position)
+                    iOrderOperate.cancelOrder(orderInfo.oid.toString(), position, true)
                 }
                 holder.tvFuncOperate.text = "编辑"
                 holder.tvFuncOperate.setOnClickListener {
@@ -114,8 +111,10 @@ class AllOrderAdapter(
                 holder.tvOrderState.text = "待评价"
             }
             "已完成" -> {
-                // 显示评论
-
+                holder.tvChangeOrderState.text = "删除订单"
+                holder.tvChangeOrderState.setOnClickListener {
+                    iOrderOperate.cancelOrder(orderInfo.oid.toString(), position, false)
+                }
             }
         }
         Glide.with(mContext).load(orderInfo.avatarUrl)

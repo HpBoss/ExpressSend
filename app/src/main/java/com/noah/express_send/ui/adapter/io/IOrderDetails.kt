@@ -11,4 +11,5 @@ import com.noah.internet.response.ResponseAddressBook
 interface IOrderDetails {
     fun entryOrderDetails(bestNewOrderEntity: BestNewOrderEntity)
     fun startDeliverOrder(bestNewOrderEntity: BestNewOrderEntity)
+    fun browseUserPageInfo(phoneNum: String?, nickname: String?)
 }

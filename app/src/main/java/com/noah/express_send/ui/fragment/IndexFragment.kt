@@ -1,13 +1,9 @@
 package com.noah.express_send.ui.fragment
 
-import android.content.BroadcastReceiver
-import android.content.Context
 import android.content.Intent
-import android.content.IntentFilter
 import android.graphics.Bitmap
 import android.graphics.Color
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
@@ -16,19 +12,14 @@ import cn.jpush.im.android.api.JMessageClient
 import cn.jpush.im.android.api.callback.GetAvatarBitmapCallback
 import cn.jpush.im.android.api.callback.GetUserInfoCallback
 import cn.jpush.im.android.api.model.UserInfo
-import cn.jpush.im.api.BasicCallback
-import com.noah.database.User
 import com.noah.express_send.R
 import com.noah.express_send.ui.activity.ChatActivity
 import com.noah.express_send.ui.activity.ReleaseActivity
 import com.noah.express_send.ui.adapter.IndexFragmentAdapter
 import com.noah.express_send.ui.adapter.SimpleAdapter
 import com.noah.express_send.ui.adapter.io.IOrderInfo
-import com.noah.express_send.ui.adapter.io.IReturnLoginToken
 import com.noah.express_send.ui.base.BaseFragment
-import com.noah.express_send.ui.view.AutoLoginView
 import com.noah.express_send.ui.view.CustomHeader
-import com.noah.express_send.utils.MD5Utils
 import com.noah.express_send.utils.NetWorkAvailableUtil
 import com.noah.express_send.viewModle.IndexViewModel
 import com.scwang.smart.refresh.footer.ClassicsFooter
@@ -202,7 +193,7 @@ class IndexFragment : BaseFragment(), IOrderInfo{
         promptDialog.showAlertSheet(
             "", true, cancel,
             PromptButton(
-                resources.getString(R.string.contact_he)
+                resources.getString(R.string.contact)
             ) {
                 openChatRoom(true)
             },

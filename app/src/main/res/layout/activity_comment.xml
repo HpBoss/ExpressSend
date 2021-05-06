@@ -7,24 +7,18 @@
     android:background="@color/light_grey"
     tools:context=".ui.activity.CommentActivity">
 
-    <LinearLayout
-        android:id="@+id/topLinearLayout"
+    <include
+        android:id="@+id/topView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:orientation="vertical">
-
-        <include layout="@layout/item_status_bar" />
-
-        <include layout="@layout/item_action_bar" />
-
-    </LinearLayout>
+        layout="@layout/item_top_view"/>
 
     <androidx.cardview.widget.CardView
         style="@style/Widget.MaterialComponents.CardView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/topLinearLayout"
+        android:layout_below="@+id/topView"
         android:layout_margin="16dp"
         app:cardCornerRadius="10dp">
 

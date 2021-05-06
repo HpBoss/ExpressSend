@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="16dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/iv_avatarComment"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:src="@drawable/ic_place_holder"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_nickname"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginBottom="16dp"
+        app:layout_constraintBottom_toBottomOf="@+id/iv_avatarComment"
+        app:layout_constraintStart_toEndOf="@+id/iv_avatarComment"
+        app:layout_constraintTop_toTopOf="@+id/iv_avatarComment" />
+
+    <TextView
+        android:id="@+id/tv_commentContent"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/tv_nickname"
+        app:layout_constraintTop_toBottomOf="@+id/tv_nickname" />
+
+    <TextView
+        android:id="@+id/tv_createTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/tv_commentContent"
+        app:layout_constraintTop_toBottomOf="@+id/chipGroup" />
+
+    <TextView
+        android:id="@+id/symbol_high"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:background="@drawable/rectangle_button_login_light_small"
+        android:gravity="center"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
+        android:textSize="12sp"
+        android:visibility="invisible"
+        android:text="@string/high_comment"
+        android:textColor="@color/white"
+        app:drawableEndCompat="@drawable/ic_high_opinion_16"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/tv_nickname" />
+
+    <com.google.android.material.chip.ChipGroup
+        android:id="@+id/chipGroup"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/tv_commentContent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_commentContent">
+
+    </com.google.android.material.chip.ChipGroup>
+</androidx.constraintlayout.widget.ConstraintLayout>

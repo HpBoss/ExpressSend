@@ -20,6 +20,7 @@ import com.noah.internet.response.ResponseChipEntity
 import kotlinx.android.synthetic.main.activity_comment.*
 import kotlinx.android.synthetic.main.fragment_order.*
 import kotlinx.android.synthetic.main.item_action_bar.*
+import kotlinx.android.synthetic.main.item_status_bar.*
 import me.leefeng.promptlibrary.PromptDialog
 
 class CommentActivity : BaseActivity(), View.OnClickListener {
@@ -47,8 +48,8 @@ class CommentActivity : BaseActivity(), View.OnClickListener {
 
     override fun initView() {
         immersionBar {
-            statusBarColor(R.color.blue_364)
-            fitsSystemWindows(true)
+            statusBarView(status_bar_view)
+            statusBarDarkFont(false)
         }
         actionBar_title.text = getString(R.string.release_comment)
         button.visibility = View.VISIBLE
@@ -85,7 +86,7 @@ class CommentActivity : BaseActivity(), View.OnClickListener {
         button.setOnClickListener(this)
     }
 
-    private fun addChipToChipGroup(chipList: ArrayList<ResponseChipEntity>, type: Int) {
+    private fun addChipToChipGroup(chipList: ArrayList<ResponseChipEntity>) {
         chipGroup.removeAllViews()
         var count = 0
         for (chipEntity in chipList) {
@@ -100,7 +101,7 @@ class CommentActivity : BaseActivity(), View.OnClickListener {
     override fun onClick(v: View?) {
         when (v?.id) {
             R.id.tv_highOpinion -> {
-                addChipToChipGroup(highChipsList, HIGH_OPINION)
+                addChipToChipGroup(highChipsList)
                 chipGroup.visibility = View.VISIBLE
                 commentState = HIGH_OPINION
                 tv_highOpinion.background =
@@ -109,7 +110,7 @@ class CommentActivity : BaseActivity(), View.OnClickListener {
                     ContextCompat.getDrawable(this, R.drawable.rectangle_button_login_grey)
             }
             R.id.tv_lowOpinion -> {
-                addChipToChipGroup(lowChipsList, LOW_OPINION)
+                addChipToChipGroup(lowChipsList)
                 chipGroup.visibility = View.VISIBLE
                 commentState = LOW_OPINION
                 tv_lowOpinion.background =
