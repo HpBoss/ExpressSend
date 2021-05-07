@@ -90,4 +90,6 @@
     <string name="comment_hint">聊聊本次快递待取的感受吧！</string>
     <string name="high_comment">好评</string>
     <string name="personal_page">个人主页</string>
+    <string name="delete_success">删除成功</string>
+    <string name="delete_failure">删除失败</string>
 </resources>

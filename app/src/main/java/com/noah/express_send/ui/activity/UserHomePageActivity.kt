@@ -44,14 +44,16 @@ class UserHomePageActivity : BaseActivity() {
             statusBarView(status_bar_view)
             statusBarDarkFont(false)
         }
-        button.visibility = View.VISIBLE
-        button.text = getString(R.string.contact)
         initRecycleView()
     }
 
     override fun initData() {
         val nickname = intent.getStringExtra("nickname")
         val phoneNum = intent.getStringExtra("phoneNum")
+        if (userHomeViewModel.queryIsLoginUser()?.phoneNum != phoneNum) {
+            button.visibility = View.VISIBLE
+            button.text = getString(R.string.contact)
+        }
         actionBar_title.text = getString(R.string.personal_page)
         tv_nickname.text = nickname
         tv_phoneNumber.text = phoneNum

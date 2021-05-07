@@ -12,4 +12,5 @@ interface IOrderDetails {
     fun entryOrderDetails(bestNewOrderEntity: BestNewOrderEntity)
     fun startDeliverOrder(bestNewOrderEntity: BestNewOrderEntity)
     fun browseUserPageInfo(phoneNum: String?, nickname: String?)
+    fun deleteOrder(oid: String?, position: Int)
 }

@@ -10,7 +10,8 @@ import com.noah.internet.response.BestNewOrderEntity
  * @Description:
  */
 interface IOrderOperate {
-    fun cancelOrder(oid: String?, position: Int, isCancelOrder: Boolean)
+    fun cancelOrder(oid: String?, position: Int)
+    fun deleteOrder(oid: String?, position: Int)
     fun confirmOrder(oid: String?, position: Int)
     fun commentOrder(orderInfo: BestNewOrderEntity)
     fun modifyOrder(oid: String?, phoneNum: String?, orderInfo: BestNewOrderEntity)

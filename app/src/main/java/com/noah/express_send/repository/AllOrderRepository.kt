@@ -28,4 +28,7 @@ class AllOrderRepository {
 
     suspend fun queryToBeComment(phoneNum: String?) =
         RetrofitClient.instance!!.service.queryToBeComment(phoneNum)
+
+    suspend fun deleteUserOrder(oid: String?, isReceiveInvisible: Boolean) =
+        RetrofitClient.instance!!.service.deleteUserOrder(oid, isReceiveInvisible)
 }

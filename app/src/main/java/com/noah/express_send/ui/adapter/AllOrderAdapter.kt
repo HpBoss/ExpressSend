@@ -20,7 +20,7 @@ import de.hdodenhof.circleimageview.CircleImageView
  * @Description:
  */
 class AllOrderAdapter(
-    private val orderInfoList: List<BestNewOrderEntity>,
+    private val orderInfoList: ArrayList<BestNewOrderEntity>,
     private val mContext: Context,
     private val iOrderOperate: IOrderOperate
 ) : RecyclerView.Adapter<AllOrderAdapter.ViewHolder>() {
@@ -81,7 +81,7 @@ class AllOrderAdapter(
                 holder.tvFuncOperate.visibility = View.VISIBLE
                 holder.tvChangeOrderState.text = "取消订单"
                 holder.tvChangeOrderState.setOnClickListener {
-                    iOrderOperate.cancelOrder(orderInfo.oid.toString(), position, true)
+                    iOrderOperate.cancelOrder(orderInfo.oid.toString(), position)
                 }
                 holder.tvFuncOperate.text = "编辑"
                 holder.tvFuncOperate.setOnClickListener {
@@ -113,7 +113,7 @@ class AllOrderAdapter(
             "已完成" -> {
                 holder.tvChangeOrderState.text = "删除订单"
                 holder.tvChangeOrderState.setOnClickListener {
-                    iOrderOperate.cancelOrder(orderInfo.oid.toString(), position, false)
+                    iOrderOperate.deleteOrder(orderInfo.oid.toString(), position)
                 }
             }
         }
@@ -124,6 +124,11 @@ class AllOrderAdapter(
             .load(orderInfo.avatarUrl).placeholder(R.drawable.ic_place_holder)
             .apply(RequestOptions().diskCacheStrategy(DiskCacheStrategy.RESOURCE))
             .into(holder.imgAvatarUrl)
+    }
+
+    fun removeAt(position: Int) {
+        orderInfoList.removeAt(position)
+        notifyItemRemoved(position)
     }
 
     override fun getItemCount(): Int {

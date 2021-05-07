@@ -1,6 +1,7 @@
 package com.noah.express_send.ui.fragment
 
 import android.content.Intent
+import android.util.Log
 import android.view.View
 import android.widget.LinearLayout
 import android.widget.Toast
@@ -39,8 +40,10 @@ import q.rorbin.badgeview.QBadgeView
 
 class OrderFragment : BaseFragment(), View.OnClickListener, IOrderDetails {
     private var mCurrentItem = 0
+    private var position: Int = -1
     private var curUser: User? = null
     private var receiveOrderList = ArrayList<BestNewOrderEntity>()
+    private var filterReceiveOrderList = ArrayList<BestNewOrderEntity>()
     private val badges by lazy {
         ArrayList<Badge>()
     }
@@ -84,6 +87,9 @@ class OrderFragment : BaseFragment(), View.OnClickListener, IOrderDetails {
             intent.putExtra("receiveOrderList", receiveOrderList)
             startActivity(intent)
         }
+        circleAvatar.setOnClickListener {
+            browseUserPageInfo(curUser?.phoneNum, curUser?.nickName)
+        }
     }
 
     private fun createIndicator(size: Int) {
@@ -113,10 +119,10 @@ class OrderFragment : BaseFragment(), View.OnClickListener, IOrderDetails {
         orderModelView.responseOrderEntity.observe(viewLifecycleOwner, Observer {
             if (it == null) return@Observer
             refreshBadgeData(it)
-            createIndicator(it.bestNewOrderEntities.size)
+            filterOrderClassify(it.bestNewOrderEntities)
+            createIndicator(filterReceiveOrderList.size)
             indicate.getChildAt(mCurrentItem).isEnabled = true
             hintPlaceHolder.visibility = View.GONE
-            receiveOrderList.addAll(it.bestNewOrderEntities)
             viewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
                 override fun onPageSelected(position: Int) {
                     indicate.getChildAt(mCurrentItem).isEnabled = false
@@ -124,15 +130,23 @@ class OrderFragment : BaseFragment(), View.OnClickListener, IOrderDetails {
                     mCurrentItem = position
                 }
             })
-            viewPager.adapter = OrderPagerAdapter(
-                it.bestNewOrderEntities,
-                requireContext(),
-                this,
-                R.layout.item_order_info_messages
-            )
+            val adapter = OrderPagerAdapter(requireContext(), this, R.layout.item_order_info_messages)
+            adapter.setAdapter(filterReceiveOrderList)
+            viewPager.adapter = adapter
+            receiveOrderList.clear()
+            receiveOrderList.addAll(it.bestNewOrderEntities)
             // 刷新成功关闭refresh
             refreshLayout.finishRefresh()
         })
+    }
+
+    private fun filterOrderClassify(bestNewOrderEntities: ArrayList<BestNewOrderEntity>) {
+        filterReceiveOrderList.clear()
+        for (bestNewOrderEntity in bestNewOrderEntities) {
+            if (bestNewOrderEntity.stateName == "待派送" || bestNewOrderEntity.stateName == "待收货") {
+                filterReceiveOrderList.add(bestNewOrderEntity)
+            }
+        }
     }
 
     private fun refreshBadgeData(responseOrderOfUser: ResponseOrderOfUser) {
@@ -257,5 +271,10 @@ class OrderFragment : BaseFragment(), View.OnClickListener, IOrderDetails {
         intent.putExtra("phoneNum", phoneNum)
         intent.putExtra("nickname", nickname)
         startActivity(intent)
+    }
+
+    override fun deleteOrder(oid: String?, position: Int) {
+        this.position = position
+        orderModelView.deleteUserOrder(oid, true)
     }
 }

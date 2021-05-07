@@ -34,7 +34,6 @@ class AllOrderActivity : BaseActivity(), IOrderOperate {
     private lateinit var adapter: AllOrderAdapter
     private var curUser: User? = null
     private var position: Int = -1
-    private var isCancelOrder = true
     private val promptDialog by lazy {
         PromptDialog(this)
     }
@@ -88,20 +87,11 @@ class AllOrderActivity : BaseActivity(), IOrderOperate {
         })
         allOrderViewModel.isCancelOrderSuccess.observe(this, {
             if (!it) {
-                if (!isCancelOrder) {
-                    promptDialog.showError("删除订单失败")
-                } else {
-                    promptDialog.showError("取消订单失败")
-                }
+                promptDialog.showError("取消订单失败")
                 return@observe
             }
-            orderInfoList.removeAt(position)
-            adapter.notifyItemRemoved(position)
-            if (!isCancelOrder) {
-                promptDialog.showSuccess("删除订单成功")
-            } else {
-                promptDialog.showSuccess("取消订单成功")
-            }
+            adapter.removeAt(position)
+            promptDialog.showSuccess("取消订单成功")
         })
         allOrderViewModel.isConfirmOrderSuccess.observe(this, {
             if (!it) {
@@ -113,9 +103,16 @@ class AllOrderActivity : BaseActivity(), IOrderOperate {
                 user.integralNum = user.integralNum?.minus(1)
                 allOrderViewModel.updateUser(user)
             }
-            orderInfoList.removeAt(position)
-            adapter.notifyItemRemoved(position)
+            adapter.removeAt(position)
             promptDialog.showSuccess("确认收货成功")
+        })
+        allOrderViewModel.isSuccessDeleteUserOrder.observe(this, {
+            if (!it) {
+                promptDialog.showError(getString(R.string.delete_failure))
+                return@observe
+            }
+            adapter.removeAt(position)
+            promptDialog.showSuccess(getString(R.string.delete_success))
         })
     }
 
@@ -183,17 +180,22 @@ class AllOrderActivity : BaseActivity(), IOrderOperate {
         }
     }
 
-    override fun cancelOrder(oid: String?, position: Int, isCancelOrder: Boolean) {
+    override fun cancelOrder(oid: String?, position: Int) {
         promptDialog.showLoading("")
-        allOrderViewModel.cancelUserOrder(oid)
         this.position = position
-        this.isCancelOrder = isCancelOrder
+        allOrderViewModel.cancelUserOrder(oid)
+    }
+
+    override fun deleteOrder(oid: String?, position: Int) {
+        promptDialog.showLoading("")
+        this.position = position
+        allOrderViewModel.deleteUserOrder(oid, false)
     }
 
     override fun confirmOrder(oid: String?, position: Int) {
         promptDialog.showLoading("")
-        allOrderViewModel.confirmOrder(oid)
         this.position = position
+        allOrderViewModel.confirmOrder(oid)
     }
 
     override fun commentOrder(orderInfo: BestNewOrderEntity) {

@@ -13,4 +13,7 @@ class OrderRepository {
 
     suspend fun deliveryOrder(oid: String?) =
         RetrofitClient.instance!!.service.deliveryOrder(oid)
+
+    suspend fun deleteUserOrder(oid: String?, isReceiveInvisible: Boolean) =
+        RetrofitClient.instance!!.service.deleteUserOrder(oid, isReceiveInvisible)
 }

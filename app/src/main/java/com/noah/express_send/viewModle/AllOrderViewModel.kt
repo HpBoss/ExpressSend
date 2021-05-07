@@ -68,4 +68,14 @@ class AllOrderViewModel(application: Application) : BaseViewModel(application) {
             orderInfoComment.value = allOrderRepository.queryToBeComment(phoneNum).data
         }
     }
+
+    val isSuccessDeleteUserOrder = MutableLiveData<Boolean>()
+    fun deleteUserOrder(oid: String?, isReceiveInvisible: Boolean) {
+        viewModelScope.launch {
+            isSuccessDeleteUserOrder.value = allOrderRepository.deleteUserOrder(
+                oid,
+                isReceiveInvisible
+            ).resultCode == Constant.CODE_SUCCESS
+        }
+    }
 }

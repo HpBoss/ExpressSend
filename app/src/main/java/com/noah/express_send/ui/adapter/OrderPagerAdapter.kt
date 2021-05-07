@@ -13,6 +13,7 @@ import com.bumptech.glide.request.RequestOptions
 import com.noah.express_send.R
 import com.noah.express_send.ui.adapter.io.IOrderDetails
 import com.noah.internet.response.BestNewOrderEntity
+import com.noah.internet.response.ResponseOrderEntity
 
 /**
  * @Auther: 何飘
@@ -20,12 +21,13 @@ import com.noah.internet.response.BestNewOrderEntity
  * @Description:
  */
 class OrderPagerAdapter(
-    private val orderList: ArrayList<BestNewOrderEntity>,
     private val mContext: Context,
     private val iOrderDetails: IOrderDetails,
     private val layoutView: Int
 ) :
     RecyclerView.Adapter<OrderPagerAdapter.ViewHolder>() {
+    private val orderList = ArrayList<BestNewOrderEntity>()
+
     inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val avatar: ImageView = view.findViewById(R.id.avatar)
         val username: TextView = view.findViewById(R.id.tv_nickNameRight)
@@ -47,7 +49,8 @@ class OrderPagerAdapter(
         viewType: Int
     ): OrderPagerAdapter.ViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(
-            layoutView, parent, false)
+            layoutView, parent, false
+        )
         val viewHolder = ViewHolder(view)
         viewHolder.itemView.setOnClickListener {
             iOrderDetails.entryOrderDetails(orderList[viewHolder.layoutPosition])
@@ -96,11 +99,36 @@ class OrderPagerAdapter(
             }
             "待评价" -> {
                 holder.orderState.text = "已收货"
+                displayDeleteButton(holder, orderInfo, position)
             }
             "已完成" -> {
                 holder.orderState.text = "已完成"
+                displayDeleteButton(holder, orderInfo, position)
             }
         }
+    }
+
+    private fun displayDeleteButton(
+        holder: OrderPagerAdapter.ViewHolder,
+        orderInfo: BestNewOrderEntity,
+        position: Int
+    ) {
+        holder.btnChangeOrderState.visibility = View.VISIBLE
+        holder.btnChangeOrderState.text = "删除订单"
+        holder.btnChangeOrderState.setOnClickListener {
+            iOrderDetails.deleteOrder(orderInfo.oid.toString(), position)
+        }
+    }
+
+    fun setAdapter(orderList: ArrayList<BestNewOrderEntity>) {
+        this.orderList.clear()
+        this.orderList.addAll(orderList)
+        notifyDataSetChanged()
+    }
+
+    fun removeAt(position: Int) {
+        orderList.removeAt(position)
+        notifyItemRemoved(position)
     }
 
     override fun getItemCount(): Int {

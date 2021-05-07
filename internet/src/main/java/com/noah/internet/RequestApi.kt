@@ -56,6 +56,13 @@ interface RequestApi {
     @PUT(Constant.CANCEL_ORDER)
     suspend fun cancelUserOrder(@Path("oid") oid: String?): BackResultData<*>
 
+    @FormUrlEncoded
+    @PUT(Constant.DELETE_ORDER)
+    suspend fun deleteUserOrder(
+        @Field("oid") oid: String?,
+        @Field("isReceiveInvisible") isReceiveInvisible: Boolean
+    ): BackResultData<*>
+
     @PUT(Constant.CONFIRM_ORDER)
     suspend fun confirmOrder(@Path("oid") oid: String?): BackResultData<*>
 

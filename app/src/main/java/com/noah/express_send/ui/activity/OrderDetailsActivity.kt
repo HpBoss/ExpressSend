@@ -44,6 +44,9 @@ class OrderDetailsActivity : BaseActivity() {
         btn_changeOrderState.visibility = View.INVISIBLE
 
         orderDetailsViewModel.commentInfoWithChip.observe(this, {
+            if (it == null) return@observe
+            commentPlaceHolderHint.visibility = View.GONE
+            itemSingleComment.visibility = View.VISIBLE
             tv_nickname.text = it.nickname
             tv_commentContent.text = it.content
             tv_createTime.text = it.createTime
@@ -103,11 +106,9 @@ class OrderDetailsActivity : BaseActivity() {
         when (stateName) {
             "待派送" -> { set = hashSetOf(0) }
             "待收货" -> { set = hashSetOf(0, 1) }
-            "已完成" -> { set = hashSetOf(0, 1, 2, 3) }
-            "待评价" -> {
-                set = hashSetOf(0, 1, 2)
-                commentPlaceHolderHint.visibility = View.GONE
-                itemSingleComment.visibility = View.VISIBLE
+            "待评价" -> { set = hashSetOf(0, 1, 2) }
+            "已完成" -> {
+                set = hashSetOf(0, 1, 2, 3)
                 orderDetailsViewModel.getCommentByOid(oid.toString())
             }
         }

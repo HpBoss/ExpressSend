@@ -33,4 +33,14 @@ class OrderModelView(application: Application) : BaseViewModel(application) {
                 orderRepository.deliveryOrder(oid).resultCode == Constant.CODE_SUCCESS
         }
     }
+
+    val isSuccessDeleteUserOrder = MutableLiveData<Boolean>()
+    fun deleteUserOrder(oid: String?, isReceiveInvisible: Boolean) {
+        viewModelScope.launch {
+            isSuccessDeleteUserOrder.value = orderRepository.deleteUserOrder(
+                oid,
+                isReceiveInvisible
+            ).resultCode == Constant.CODE_SUCCESS
+        }
+    }
 }
