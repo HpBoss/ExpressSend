@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import cn.jpush.im.android.api.JMessageClient
 import cn.jpush.im.android.api.callback.GetAvatarBitmapCallback
 import cn.jpush.im.android.api.content.TextContent
+import cn.jpush.im.android.api.enums.ContentType
 import cn.jpush.im.android.api.model.Conversation
 import cn.jpush.im.android.api.model.UserInfo
 import com.noah.express_send.R
@@ -58,7 +59,11 @@ class MessageAdapter(
                 holder.nickname.text = targetInfo.nickname
             }
             if (conversation.latestMessage != null) {
-                holder.content.text = (conversation.latestMessage?.content as TextContent).text
+                if (conversation.latestMessage.contentType == ContentType.image) {
+                    holder.content.text = "[图片]"
+                } else if (conversation.latestMessage.contentType == ContentType.text){
+                    holder.content.text = (conversation.latestMessage?.content as TextContent).text
+                }
             }
             targetInfo.getAvatarBitmap(object : GetAvatarBitmapCallback() {
                 override fun gotResult(p0: Int, p1: String?, p2: Bitmap?) {

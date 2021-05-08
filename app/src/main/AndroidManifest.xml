@@ -35,9 +35,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.ExpressSend"
+        tools:replace="icon,label,allowBackup,theme"
         android:usesCleartextTraffic="true"
         tools:targetApi="m">
-        <activity android:name=".ui.activity.AllReceiveOrderActivity"></activity>
+        <activity android:name=".ui.activity.AllReceiveOrderActivity"/>
         <activity android:name=".ui.activity.UserHomePageActivity" />
         <activity android:name=".ui.activity.OrderDetailsActivity" />
         <activity android:name=".ui.activity.EditAddressActivity" />

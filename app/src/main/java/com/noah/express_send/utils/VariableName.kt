@@ -15,5 +15,7 @@ class VariableName {
         const val CREATE_ADDRESS = 0
         const val EDIT_ADDRESS = 1
         const val ADDRESS_BOOK = "addressBook"
+        const val IMG = "IMG"
+        const val REQUEST_CODE_ONE = 101;
     }
 }
