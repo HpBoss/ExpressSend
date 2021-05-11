@@ -92,4 +92,5 @@
     <string name="personal_page">个人主页</string>
     <string name="delete_success">删除成功</string>
     <string name="delete_failure">删除失败</string>
+    <string name="start_send_order">删除失败</string>
 </resources>

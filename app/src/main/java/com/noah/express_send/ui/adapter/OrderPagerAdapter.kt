@@ -85,9 +85,9 @@ class OrderPagerAdapter(
             .apply(RequestOptions().diskCacheStrategy(DiskCacheStrategy.RESOURCE))
             .into(holder.avatar)
         when (orderInfo.stateName) {
-            "待派送" -> {
-                holder.orderState.text = "已接单"
-                holder.btnChangeOrderState.text = "开始派送"
+            mContext.getString(R.string.Order_toBeSend) -> {
+                holder.orderState.text = mContext.getString(R.string.Order_received)
+                holder.btnChangeOrderState.text = mContext.getString(R.string.start_send_order)
                 holder.btnChangeOrderState.visibility = View.VISIBLE
                 holder.btnFuncOperate.visibility = View.INVISIBLE
                 holder.btnChangeOrderState.setOnClickListener {

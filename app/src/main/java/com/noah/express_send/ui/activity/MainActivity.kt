@@ -233,21 +233,17 @@ class MainActivity : BaseActivity(), IReturnLoginToken {
                 drawerLayout.openDrawer(GravityCompat.START)
                 loadPageData()
             }
-            R.id.search_badge -> {
-                val intent = Intent(this, SearchActivity::class.java)
-                startActivity(intent)
-            }
         }
         return true
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.index_toolbar_menu, menu)
+//        menuInflater.inflate(R.menu.index_toolbar_menu, menu)
         return true
     }
 
     override fun onPrepareOptionsMenu(menu: Menu?): Boolean {
-        menu!!.findItem(R.id.search_badge).isVisible = isVisibilitySearch
+//        menu!!.findItem(R.id.search_badge).isVisible = isVisibilitySearch
         return super.onPrepareOptionsMenu(menu)
     }
 
