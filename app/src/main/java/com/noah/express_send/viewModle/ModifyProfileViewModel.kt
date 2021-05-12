@@ -7,7 +7,7 @@ import androidx.lifecycle.viewModelScope
 import com.noah.express_send.repository.ModifyProfileRepository
 import com.noah.express_send.ui.base.BaseViewModel
 import com.noah.internet.Constant
-import com.noah.internet.request.RequestUserEntity
+import com.noah.internet.request.RequestUser
 import kotlinx.coroutines.launch
 
 /**
@@ -51,10 +51,10 @@ class ModifyProfileViewModel(application: Application) : BaseViewModel(applicati
     }
 
     var isUpdateSuccess = MutableLiveData<Boolean>()
-    fun updateUserProfile(phoneNum: String?, requestUserEntity: RequestUserEntity) {
+    fun updateUserProfile(phoneNum: String?, requestUser: RequestUser) {
         viewModelScope.launch {
             isUpdateSuccess.value =
-                modifyProfileRepository.updateUserProfile(phoneNum, requestUserEntity).resultCode == Constant.CODE_SUCCESS
+                modifyProfileRepository.updateUserProfile(phoneNum, requestUser).resultCode == Constant.CODE_SUCCESS
         }
     }
 }

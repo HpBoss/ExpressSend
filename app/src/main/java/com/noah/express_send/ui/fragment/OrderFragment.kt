@@ -1,7 +1,6 @@
 package com.noah.express_send.ui.fragment
 
 import android.content.Intent
-import android.util.Log
 import android.view.View
 import android.widget.LinearLayout
 import android.widget.Toast
@@ -22,10 +21,9 @@ import com.noah.express_send.ui.adapter.OrderPagerAdapter
 import com.noah.express_send.ui.adapter.io.IOrderDetails
 import com.noah.express_send.ui.base.BaseFragment
 import com.noah.express_send.ui.view.CustomHeader
-import com.noah.express_send.ui.view.OrderInfoView
 import com.noah.express_send.utils.NetWorkAvailableUtil
 import com.noah.express_send.viewModle.OrderModelView
-import com.noah.internet.response.BestNewOrderEntity
+import com.noah.internet.response.BestNewOrder
 import com.noah.internet.response.ResponseOrderOfUser
 import kotlinx.android.synthetic.main.fragment_order.*
 import kotlinx.android.synthetic.main.fragment_order.view.*
@@ -42,8 +40,8 @@ class OrderFragment : BaseFragment(), View.OnClickListener, IOrderDetails {
     private var mCurrentItem = 0
     private var position: Int = -1
     private var curUser: User? = null
-    private var receiveOrderList = ArrayList<BestNewOrderEntity>()
-    private var filterReceiveOrderList = ArrayList<BestNewOrderEntity>()
+    private var receiveOrderList = ArrayList<BestNewOrder>()
+    private var filterReceiveOrderList = ArrayList<BestNewOrder>()
     private val badges by lazy {
         ArrayList<Badge>()
     }
@@ -119,7 +117,7 @@ class OrderFragment : BaseFragment(), View.OnClickListener, IOrderDetails {
         orderModelView.responseOrderEntity.observe(viewLifecycleOwner, Observer {
             if (it == null) return@Observer
             refreshBadgeData(it)
-            filterOrderClassify(it.bestNewOrderEntities)
+            filterOrderClassify(it.bestNewOrders)
             createIndicator(filterReceiveOrderList.size)
             indicate.getChildAt(mCurrentItem).isEnabled = true
             hintPlaceHolder.visibility = View.GONE
@@ -134,15 +132,15 @@ class OrderFragment : BaseFragment(), View.OnClickListener, IOrderDetails {
             adapter.setAdapter(filterReceiveOrderList)
             viewPager.adapter = adapter
             receiveOrderList.clear()
-            receiveOrderList.addAll(it.bestNewOrderEntities)
+            receiveOrderList.addAll(it.bestNewOrders)
             // 刷新成功关闭refresh
             refreshLayout.finishRefresh()
         })
     }
 
-    private fun filterOrderClassify(bestNewOrderEntities: ArrayList<BestNewOrderEntity>) {
+    private fun filterOrderClassify(bestNewOrders: ArrayList<BestNewOrder>) {
         filterReceiveOrderList.clear()
-        for (bestNewOrderEntity in bestNewOrderEntities) {
+        for (bestNewOrderEntity in bestNewOrders) {
             if (bestNewOrderEntity.stateName == "待派送" || bestNewOrderEntity.stateName == "待收货") {
                 filterReceiveOrderList.add(bestNewOrderEntity)
             }
@@ -255,15 +253,15 @@ class OrderFragment : BaseFragment(), View.OnClickListener, IOrderDetails {
         )*/
     }
 
-    override fun entryOrderDetails(bestNewOrderEntity: BestNewOrderEntity) {
+    override fun entryOrderDetails(bestNewOrder: BestNewOrder) {
         val intent = Intent(requireActivity(), OrderDetailsActivity::class.java)
-        intent.putExtra("bestNewOrderEntity", bestNewOrderEntity)
+        intent.putExtra("bestNewOrderEntity", bestNewOrder)
         startActivity(intent)
     }
 
-    override fun startDeliverOrder(bestNewOrderEntity: BestNewOrderEntity) {
+    override fun startDeliverOrder(bestNewOrder: BestNewOrder) {
         promptDialog.showLoading("")
-        orderModelView.deliveryOrder(bestNewOrderEntity.oid.toString())
+        orderModelView.deliveryOrder(bestNewOrder.oid.toString())
     }
 
     override fun browseUserPageInfo(phoneNum: String?, nickname: String?) {

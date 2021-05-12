@@ -6,8 +6,8 @@ import androidx.lifecycle.viewModelScope
 import com.noah.express_send.repository.CommentRepository
 import com.noah.express_send.ui.base.BaseViewModel
 import com.noah.internet.Constant
-import com.noah.internet.request.RequestCommentEntity
-import com.noah.internet.response.ResponseChipEntity
+import com.noah.internet.request.RequestComment
+import com.noah.internet.response.ResponseChip
 import kotlinx.coroutines.launch
 
 /**
@@ -20,7 +20,7 @@ class CommentViewModel(application: Application) : BaseViewModel(application) {
         CommentRepository()
     }
 
-    var chipsList = MutableLiveData<ArrayList<ResponseChipEntity>>()
+    var chipsList = MutableLiveData<ArrayList<ResponseChip>>()
     fun getAllCommentChips() {
         viewModelScope.launch {
             chipsList.value = commentRepository.getAllCommentChips().data
@@ -28,9 +28,9 @@ class CommentViewModel(application: Application) : BaseViewModel(application) {
     }
 
     val isSuccessCommentOrder = MutableLiveData<Boolean>()
-    fun commentOrder(requestCommentEntity: RequestCommentEntity) {
+    fun commentOrder(requestComment: RequestComment) {
         viewModelScope.launch {
-            isSuccessCommentOrder.value = commentRepository.commentOrder(requestCommentEntity).resultCode == Constant.CODE_SUCCESS
+            isSuccessCommentOrder.value = commentRepository.commentOrder(requestComment).resultCode == Constant.CODE_SUCCESS
         }
     }
 }

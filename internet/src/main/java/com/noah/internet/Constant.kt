@@ -47,4 +47,7 @@ object Constant {
     const val COMMENT_ORDER = "comment/commentOrder"
     const val GET_ALL_COMMENT_CHIPS = "comment/getAllCommentChips"
     const val GET_COMMENT_BY_OID = "comment/getCommentByOid/{oid}"
+
+    const val GET_ALL_EXPRESS_NAME = "filter/getAllExpressName"
+    const val GET_ALL_FILTER_ORDER = "filter/getALlFilterOrder"
 }

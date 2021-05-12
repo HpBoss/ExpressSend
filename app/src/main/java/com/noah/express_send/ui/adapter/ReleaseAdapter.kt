@@ -92,9 +92,9 @@ class ReleaseAdapter(
             .setTitleBgColor(ContextCompat.getColor(mContext, R.color.blue_364))
             .setTitleColor(Color.WHITE)
             .setCancelColor(Color.WHITE)
-            .setCancelText("取消")
+            .setCancelText(mContext.getString(R.string.cancel))
             .setSubmitColor(Color.WHITE)
-            .setSubmitText("完成")
+            .setSubmitText(mContext.getString(R.string.complete))
             .setTextColorCenter(Color.BLACK)
             .isRestoreItem(true)//切换时是否还原，设置默认选中第一项。
             .build<String>()

@@ -1,18 +1,10 @@
 package com.noah.express_send.ui.activity
 
 import android.content.Intent
-import android.graphics.Bitmap
 import android.os.Bundle
-import android.util.Log
-import android.view.View
-import android.widget.TextView
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import cn.jpush.im.android.api.JMessageClient
-import cn.jpush.im.android.api.callback.GetAvatarBitmapCallback
-import cn.jpush.im.android.api.callback.GetUserInfoCallback
-import cn.jpush.im.android.api.model.UserInfo
 import com.google.android.material.tabs.TabLayout
 import com.gyf.immersionbar.ktx.immersionBar
 import com.noah.database.User
@@ -23,8 +15,7 @@ import com.noah.express_send.ui.base.BaseActivity
 import com.noah.express_send.ui.view.CustomHeader
 import com.noah.express_send.utils.NetWorkAvailableUtil
 import com.noah.express_send.viewModle.AllOrderViewModel
-import com.noah.internet.response.BestNewOrderEntity
-import com.scwang.smart.refresh.footer.ClassicsFooter
+import com.noah.internet.response.BestNewOrder
 import kotlinx.android.synthetic.main.activity_all_order.*
 import kotlinx.android.synthetic.main.activity_all_order.refreshLayout
 import kotlinx.android.synthetic.main.item_status_bar.*
@@ -38,7 +29,7 @@ class AllOrderActivity : BaseActivity(), IOrderOperate {
         PromptDialog(this)
     }
     private val orderInfoList by lazy {
-        ArrayList<BestNewOrderEntity>()
+        ArrayList<BestNewOrder>()
     }
     private val allOrderViewModel by lazy {
         ViewModelProvider(this).get(AllOrderViewModel::class.java)
@@ -162,7 +153,7 @@ class AllOrderActivity : BaseActivity(), IOrderOperate {
         recycleView.adapter = adapter
     }
 
-    private fun initOrderInfo(dataList: List<BestNewOrderEntity>) {
+    private fun initOrderInfo(dataList: List<BestNewOrder>) {
         orderInfoList.clear()
         for (index in dataList.indices) {
             orderInfoList.add(dataList[index])
@@ -198,7 +189,7 @@ class AllOrderActivity : BaseActivity(), IOrderOperate {
         allOrderViewModel.confirmOrder(oid)
     }
 
-    override fun commentOrder(orderInfo: BestNewOrderEntity) {
+    override fun commentOrder(orderInfo: BestNewOrder) {
         val intent = Intent(this, CommentActivity::class.java)
         val extras = Bundle()
         extras.putParcelable("orderInfo", orderInfo)
@@ -206,7 +197,7 @@ class AllOrderActivity : BaseActivity(), IOrderOperate {
         startActivity(intent)
     }
 
-    override fun modifyOrder(oid: String?, phoneNum: String?, orderInfo: BestNewOrderEntity) {
+    override fun modifyOrder(oid: String?, phoneNum: String?, orderInfo: BestNewOrder) {
         val intent = Intent(this, ReleaseActivity::class.java)
         val extras = Bundle()
         extras.putParcelable("orderInfo", orderInfo)

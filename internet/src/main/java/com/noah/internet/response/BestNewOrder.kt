@@ -9,12 +9,12 @@ import kotlinx.android.parcel.Parcelize
  * @Description:
  */
 @Parcelize
-data class BestNewOrderEntity(
+data class BestNewOrder(
     val oid: Long? = null,
     val avatarUrl: String? = null,
     val nickName: String? = null,
     val dormitory: String? = null,
-    val express: String? = null,
+    val expressName: String? = null,
     val typeName: String? = null,
     val weight: String? = null,
     val addressName: String? = null,

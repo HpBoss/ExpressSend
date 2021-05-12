@@ -1,7 +1,6 @@
 package com.noah.express_send.ui.activity
 
 import android.content.Context
-import android.os.Bundle
 import android.text.Editable
 import android.text.InputType
 import android.text.TextWatcher
@@ -18,7 +17,7 @@ import com.gyf.immersionbar.ktx.immersionBar
 import com.noah.express_send.R
 import com.noah.express_send.ui.base.BaseActivity
 import com.noah.express_send.viewModle.ModifyProfileViewModel
-import com.noah.internet.request.RequestUserEntity
+import com.noah.internet.request.RequestUser
 import kotlinx.android.synthetic.main.activity_modify_profile.*
 
 class ModifyProfileActivity : BaseActivity(), TextWatcher, View.OnClickListener {
@@ -106,7 +105,7 @@ class ModifyProfileActivity : BaseActivity(), TextWatcher, View.OnClickListener 
                         "room_number" -> user.roomNumber = editText.text.toString()
                     }
                     modifyProfileViewModel.updateUserProfile(
-                        user.phoneNum, RequestUserEntity(
+                        user.phoneNum, RequestUser(
                             user.nickName,
                             user.schoolName,
                             user.email,

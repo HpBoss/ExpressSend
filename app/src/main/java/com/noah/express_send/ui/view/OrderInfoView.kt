@@ -9,7 +9,7 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.RequestOptions
 import com.noah.express_send.R
-import com.noah.internet.response.BestNewOrderEntity
+import com.noah.internet.response.BestNewOrder
 
 /**
  * @Auther: 何飘
@@ -17,7 +17,7 @@ import com.noah.internet.response.BestNewOrderEntity
  * @Description:
  */
 class OrderInfoView(
-    private val bestNewOrderEntity: BestNewOrderEntity,
+    private val bestNewOrder: BestNewOrder,
     private val mContext: Context
 ) {
     private lateinit var avatar: ImageView
@@ -58,24 +58,24 @@ class OrderInfoView(
         btnFuncOperate.visibility = View.GONE
         horizontalDividing.visibility = View.VISIBLE
 
-        orderState.text = bestNewOrderEntity.stateName
-        express.text = bestNewOrderEntity.express
-        location.text = bestNewOrderEntity.addressName
-        username.text = bestNewOrderEntity.nickName
-        weight.text = bestNewOrderEntity.weight
-        classify.text = bestNewOrderEntity.typeName
+        orderState.text = bestNewOrder.stateName
+        express.text = bestNewOrder.expressName
+        location.text = bestNewOrder.addressName
+        username.text = bestNewOrder.nickName
+        weight.text = bestNewOrder.weight
+        classify.text = bestNewOrder.typeName
         integralNum.text =
-            mContext.getString(R.string.payIntegralNum, bestNewOrderEntity.payIntegralNum)
-        dormitory.text = bestNewOrderEntity.dormitory
+            mContext.getString(R.string.payIntegralNum, bestNewOrder.payIntegralNum)
+        dormitory.text = bestNewOrder.dormitory
 
-        Glide.with(mContext).load(bestNewOrderEntity.avatarUrl)
+        Glide.with(mContext).load(bestNewOrder.avatarUrl)
             .apply(RequestOptions().diskCacheStrategy(DiskCacheStrategy.RESOURCE))
             .preload()
-        Glide.with(mContext).load(bestNewOrderEntity.avatarUrl)
+        Glide.with(mContext).load(bestNewOrder.avatarUrl)
             .placeholder(R.drawable.ic_place_holder)
             .apply(RequestOptions().diskCacheStrategy(DiskCacheStrategy.RESOURCE))
             .into(avatar)
-        when (bestNewOrderEntity.stateName) {
+        when (bestNewOrder.stateName) {
             "待派送" -> {
                 orderState.text = "已接单"
                 btnChangeOrderState.text = "开始派送"

@@ -6,7 +6,7 @@ import androidx.lifecycle.viewModelScope
 import com.noah.express_send.repository.ReleaseRepository
 import com.noah.express_send.ui.base.BaseViewModel
 import com.noah.internet.Constant
-import com.noah.internet.request.RequestOrderEntity
+import com.noah.internet.request.RequestOrder
 import kotlinx.coroutines.launch
 
 class ReleaseViewModel(application: Application) : BaseViewModel(application) {
@@ -17,10 +17,10 @@ class ReleaseViewModel(application: Application) : BaseViewModel(application) {
 
     val isReleaseSuccess = MutableLiveData<Boolean>()
 
-    fun releasePersonalOrder(requestOrderEntity: RequestOrderEntity) {
+    fun releasePersonalOrder(requestOrder: RequestOrder) {
         viewModelScope.launch {
             isReleaseSuccess.value =
-                releaseRepository.releasePersonalOrder(requestOrderEntity).resultCode == Constant.CODE_SUCCESS
+                releaseRepository.releasePersonalOrder(requestOrder).resultCode == Constant.CODE_SUCCESS
         }
     }
 }

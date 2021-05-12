@@ -1,7 +1,7 @@
 package com.noah.express_send.repository
 
 import com.noah.internet.RetrofitClient
-import com.noah.internet.request.RequestLoginUser
+import com.noah.internet.request.RequestFilterOrder
 
 /**
  * @Auther: 何飘
@@ -15,4 +15,10 @@ class IndexRepository {
 
     suspend fun receiveOrder(id: String?, phoneNum: String?) =
         RetrofitClient.instance!!.service.receiveOrder(id, phoneNum)
+
+    suspend fun getAllExpressName() =
+        RetrofitClient.instance!!.service.getAllExpressName()
+
+    suspend fun getAllFilterOrder(requestFilterOrder: RequestFilterOrder) =
+        RetrofitClient.instance!!.service.getALlFilterOrder(requestFilterOrder)
 }

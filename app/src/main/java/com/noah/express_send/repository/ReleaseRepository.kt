@@ -1,7 +1,7 @@
 package com.noah.express_send.repository
 
 import com.noah.internet.RetrofitClient
-import com.noah.internet.request.RequestOrderEntity
+import com.noah.internet.request.RequestOrder
 
 /**
  * @Auther: 何飘
@@ -9,6 +9,6 @@ import com.noah.internet.request.RequestOrderEntity
  * @Description:
  */
 class ReleaseRepository {
-    suspend fun releasePersonalOrder(requestOrderEntity: RequestOrderEntity) =
-        RetrofitClient.instance!!.service.releasePersonalOrder(requestOrderEntity)
+    suspend fun releasePersonalOrder(requestOrder: RequestOrder) =
+        RetrofitClient.instance!!.service.releasePersonalOrder(requestOrder)
 }

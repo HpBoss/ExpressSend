@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.noah.express_send.repository.UserHomeRepository
 import com.noah.express_send.ui.base.BaseViewModel
-import com.noah.internet.response.ResponseUserPageEntity
+import com.noah.internet.response.ResponseUserPage
 import kotlinx.coroutines.launch
 
 /**
@@ -18,7 +18,7 @@ class UserHomeViewModel(application: Application) :BaseViewModel(application) {
         UserHomeRepository()
     }
 
-    val pageInfo = MutableLiveData<ResponseUserPageEntity>()
+    val pageInfo = MutableLiveData<ResponseUserPage>()
     fun getUserPageInfo(phoneNum: String?) {
         viewModelScope.launch {
             pageInfo.value = userHomeRepository.getUserPageInfo(phoneNum).data

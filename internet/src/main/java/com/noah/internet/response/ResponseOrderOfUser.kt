@@ -1,7 +1,5 @@
 package com.noah.internet.response
 
-import com.noah.internet.response.BestNewOrderEntity
-
 /**
  * @Auther: 何飘
  * @Date: 4/2/21 18:05
@@ -13,5 +11,5 @@ data class ResponseOrderOfUser(
     val toBeSendNum: Int,
     val toBeFetchNum: Int,
     val toBeCommentNum: Int,
-    val bestNewOrderEntities: ArrayList<BestNewOrderEntity>
+    val bestNewOrders: ArrayList<BestNewOrder>
 )

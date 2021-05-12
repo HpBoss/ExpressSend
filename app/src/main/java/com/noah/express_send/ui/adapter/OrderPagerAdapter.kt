@@ -12,8 +12,7 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.RequestOptions
 import com.noah.express_send.R
 import com.noah.express_send.ui.adapter.io.IOrderDetails
-import com.noah.internet.response.BestNewOrderEntity
-import com.noah.internet.response.ResponseOrderEntity
+import com.noah.internet.response.BestNewOrder
 
 /**
  * @Auther: 何飘
@@ -26,7 +25,7 @@ class OrderPagerAdapter(
     private val layoutView: Int
 ) :
     RecyclerView.Adapter<OrderPagerAdapter.ViewHolder>() {
-    private val orderList = ArrayList<BestNewOrderEntity>()
+    private val orderList = ArrayList<BestNewOrder>()
 
     inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val avatar: ImageView = view.findViewById(R.id.avatar)
@@ -64,7 +63,7 @@ class OrderPagerAdapter(
         holder.btnFuncOperate.visibility = View.INVISIBLE
 
         holder.orderState.text = orderInfo.stateName
-        holder.express.text = orderInfo.express
+        holder.express.text = orderInfo.expressName
         holder.location.text = orderInfo.addressName
         holder.username.text = orderInfo.nickName
         holder.weight.text = orderInfo.weight
@@ -110,7 +109,7 @@ class OrderPagerAdapter(
 
     private fun displayDeleteButton(
         holder: OrderPagerAdapter.ViewHolder,
-        orderInfo: BestNewOrderEntity,
+        orderInfo: BestNewOrder,
         position: Int
     ) {
         holder.btnChangeOrderState.visibility = View.VISIBLE
@@ -120,7 +119,7 @@ class OrderPagerAdapter(
         }
     }
 
-    fun setAdapter(orderList: ArrayList<BestNewOrderEntity>) {
+    fun setAdapter(orderList: ArrayList<BestNewOrder>) {
         this.orderList.clear()
         this.orderList.addAll(orderList)
         notifyDataSetChanged()

@@ -8,7 +8,6 @@ import androidx.lifecycle.viewModelScope
 import com.noah.express_send.repository.MainRepository
 import com.noah.express_send.ui.base.BaseViewModel
 import com.noah.internet.Constant
-import com.noah.internet.request.RequestUserEntity
 import com.noah.internet.response.ResponseProfile
 import kotlinx.coroutines.launch
 

@@ -28,93 +28,99 @@
             android:id="@+id/scrollView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:fillViewport="true"
             android:overScrollMode="never">
 
-            <RelativeLayout
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/relativeLayout3"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@color/light_grey">
 
-                <RelativeLayout
+                <LinearLayout
                     android:id="@+id/parent_bannerView"
                     android:layout_width="wrap_content"
-                    android:background="@color/white"
+                    android:layout_height="wrap_content"
                     android:layout_marginBottom="5dp"
-                    android:layout_height="wrap_content">
+                    android:background="@color/white"
+                    app:layout_constraintBottom_toTopOf="@+id/relativeLayout4"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
 
                     <com.zhpan.bannerview.BannerViewPager
                         android:id="@+id/bannerView"
                         android:layout_width="match_parent"
                         android:layout_height="160dp"
                         android:layout_margin="16dp"
-                        app:bvp_round_corner="10dp"
                         app:bvp_indicator_checked_color="@color/red_checked_color"
                         app:bvp_indicator_normal_color="@color/red_normal_color"
+                        app:bvp_indicator_slide_mode="smooth"
                         app:bvp_indicator_style="round_rect"
-                        app:bvp_indicator_slide_mode="smooth" />
+                        app:bvp_round_corner="10dp" />
 
-                </RelativeLayout>
-                <com.noah.express_send.ui.view.RoundRelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_below="@+id/parent_bannerView"
-                    android:background="@drawable/bg_set_top_radius">
+                </LinearLayout>
+
+                <RelativeLayout
+                    android:id="@+id/relativeLayout4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="0dp"
+                    android:background="@drawable/bg_set_top_radius"
+                    app:layout_constraintStart_toStartOf="@+id/parent_bannerView"
+                    app:layout_constraintTop_toBottomOf="@+id/parent_bannerView">
 
                     <TextView
                         android:id="@+id/title_express"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="16dp"
                         android:text="领取快递"
+                        android:textAlignment="center"
                         android:textColor="@color/black"
                         android:textSize="21sp"
-                        android:textStyle="bold"
-                        android:textAlignment="center"
-                        android:layout_margin="16dp"/>
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/multiple_sort"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignBaseline="@+id/title_express"
+                        android:layout_toStartOf="@+id/express_filter"
+                        android:drawablePadding="8dp"
+                        android:layout_marginEnd="30dp"
+                        android:textColor="@color/black"
+                        android:text="@string/multiple_sort" />
+
+                    <TextView
+                        android:id="@+id/express_filter"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignBaseline="@+id/title_express"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginEnd="16dp"
+                        android:drawablePadding="8dp"
+                        android:text="@string/delivery"
+                        app:drawableEndCompat="@drawable/ic_display_up" />
 
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/recycleView"
-                        android:overScrollMode="never"
                         android:layout_width="match_parent"
-                        android:layout_below="@+id/title_express"
                         android:layout_height="match_parent"
-                        android:layout_centerInParent="true"
+                        android:layout_below="@+id/title_express"
                         android:layout_marginStart="11dp"
-                        android:layout_marginEnd="11dp"/>
-                </com.noah.express_send.ui.view.RoundRelativeLayout>
-            </RelativeLayout>
+                        android:layout_marginTop="16dp"
+                        android:layout_marginEnd="11dp"
+                        android:overScrollMode="never" />
+
+                    <include
+                        android:id="@+id/filterParent"
+                        layout="@layout/item_express_filter"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/title_express" />
+                </RelativeLayout>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.core.widget.NestedScrollView>
     </com.scwang.smart.refresh.layout.SmartRefreshLayout>
-
-    <LinearLayout
-        android:id="@+id/loginHints"
-        android:layout_width="match_parent"
-        android:layout_height="45dp"
-        android:layout_alignParentBottom="true"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
-        android:orientation="horizontal"
-        android:background="@drawable/rectangle_transparent_grey"
-        android:layout_marginBottom="20dp">
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:text="登录发布你的快递订单"
-            android:textSize="15dp"
-            android:layout_marginStart="20dp"
-            android:textColor="@color/white"
-            android:layout_weight="1"
-            android:layout_gravity="center"/>
-
-        <TextView
-            android:id="@+id/btnLogin"
-            android:layout_width="wrap_content"
-            android:layout_height="32dp"
-            android:padding="0dp"
-            android:layout_gravity="center"
-            android:gravity="center"
-            android:background="@drawable/rectangle_button_login_light"
-            android:layout_marginEnd="16dp"
-            android:text="立即登录"/>
-    </LinearLayout>
 </RelativeLayout>

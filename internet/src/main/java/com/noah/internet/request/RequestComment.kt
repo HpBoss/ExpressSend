@@ -5,7 +5,7 @@ package com.noah.internet.request
  * @Date: 5/6/21 00:25
  * @Description:
  */
-data class RequestCommentEntity(
+data class RequestComment(
     val phoneNum: String?,
     val oid: Int,
     val type: Int,

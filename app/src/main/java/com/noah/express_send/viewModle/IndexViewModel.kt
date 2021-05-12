@@ -1,14 +1,13 @@
 package com.noah.express_send.viewModle
 
 import android.app.Application
-import android.content.Context
-import android.util.Log
 import androidx.lifecycle.*
 import com.noah.express_send.repository.IndexRepository
 import com.noah.express_send.ui.base.BaseViewModel
 import com.noah.internet.Constant
-import com.noah.internet.response.ResponseOrderEntity
-import com.noah.internet.response.ResponseProfile
+import com.noah.internet.request.RequestFilterOrder
+import com.noah.internet.response.ResponseExpress
+import com.noah.internet.response.ResponseOrder
 import kotlinx.coroutines.launch
 
 /**
@@ -21,7 +20,7 @@ class IndexViewModel(application: Application) : BaseViewModel(application) {
         IndexRepository()
     }
 
-    var dataList = MutableLiveData<ArrayList<ResponseOrderEntity>>()
+    var dataList = MutableLiveData<ArrayList<ResponseOrder>>()
     private var _totalPage = 1
     fun getPageOrderNoCur(page: Int, phoneNum: String?) {
         viewModelScope.launch {
@@ -32,7 +31,26 @@ class IndexViewModel(application: Application) : BaseViewModel(application) {
             val pageQuery = pageOrder.data
             _totalPage = pageQuery.totalPage!!
             val data = pageQuery.dataList
-            val oldValue = dataList.value ?: ArrayList<ResponseOrderEntity>()
+            val oldValue = dataList.value ?: ArrayList<ResponseOrder>()
+            oldValue.addAll(data)
+            dataList.value = oldValue
+        }
+    }
+
+    fun getAllFilterOrder(requestFilterOrder: RequestFilterOrder) {
+        viewModelScope.launch {
+            if (requestFilterOrder.page == 1) dataList.value?.clear()
+            if (requestFilterOrder.page > _totalPage) return@launch
+            val pageOrder =
+                indexRepository.getAllFilterOrder(requestFilterOrder)
+            if (pageOrder.resultCode == 0) {
+                dataList.value = ArrayList<ResponseOrder>()
+                return@launch
+            }
+            val pageQuery = pageOrder.data
+            _totalPage = pageQuery.totalPage!!
+            val data = pageQuery.dataList
+            val oldValue = dataList.value ?: ArrayList<ResponseOrder>()
             oldValue.addAll(data)
             dataList.value = oldValue
         }
@@ -43,6 +61,13 @@ class IndexViewModel(application: Application) : BaseViewModel(application) {
         viewModelScope.launch {
             isReceiveOrderSuccess.value =
                 indexRepository.receiveOrder(id, phoneNum).resultCode == Constant.CODE_SUCCESS
+        }
+    }
+
+    var expressList = MutableLiveData<ArrayList<ResponseExpress>>()
+    fun getAllExpressName() {
+        viewModelScope.launch {
+            expressList.value = indexRepository.getAllExpressName().data
         }
     }
 }

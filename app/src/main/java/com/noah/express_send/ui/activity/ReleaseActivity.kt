@@ -3,7 +3,6 @@ package com.noah.express_send.ui.activity
 import android.content.Intent
 import android.os.Handler
 import android.os.Looper
-import android.util.Log
 import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -19,8 +18,8 @@ import com.noah.express_send.ui.dialog.PayIntegralDialog
 import com.noah.express_send.ui.dialog.PriceKeyBoardDialog
 import com.noah.express_send.utils.VariableName
 import com.noah.express_send.viewModle.ReleaseViewModel
-import com.noah.internet.request.RequestOrderEntity
-import com.noah.internet.response.BestNewOrderEntity
+import com.noah.internet.request.RequestOrder
+import com.noah.internet.response.BestNewOrder
 import com.noah.internet.response.ResponseAddressBook
 import kotlinx.android.synthetic.main.activity_release.*
 import kotlinx.android.synthetic.main.item_action_bar.*
@@ -35,7 +34,7 @@ class ReleaseActivity : BaseActivity(), IReleaseInfo,
     private lateinit var payIntegralDialog: PayIntegralDialog
     private val resultList = ArrayList<String>()
     private lateinit var promptDialog: PromptDialog
-    private var orderInfo: BestNewOrderEntity? = null
+    private var orderInfo: BestNewOrder? = null
     private var maxPayIntegralNum: Int? = null
     private var mode: Int = RELEASE_ORDER
     private lateinit var loadingMsg: String
@@ -73,7 +72,7 @@ class ReleaseActivity : BaseActivity(), IReleaseInfo,
             loadingMsg = getString(R.string.modify_loading)
             resultSuccessMsg = getString(R.string.modify_success)
             resultFailureMsg = getString(R.string.modify_failure)
-            orderInfo = intent.getParcelableExtra<BestNewOrderEntity>("orderInfo")
+            orderInfo = intent.getParcelableExtra<BestNewOrder>("orderInfo")
         }
         init(orderInfo)
 
@@ -106,7 +105,7 @@ class ReleaseActivity : BaseActivity(), IReleaseInfo,
                 resultList.add(et_addressName.text.toString())
                 // 提交resultList
                 val user = releaseViewModel.queryIsLoginUser()
-                val requestOrderEntity = RequestOrderEntity(
+                val requestOrderEntity = RequestOrder(
                     orderInfo?.oid,
                     user?.phoneNum,
                     resultList[0],
@@ -134,7 +133,7 @@ class ReleaseActivity : BaseActivity(), IReleaseInfo,
         }
     }
 
-    private fun init(orderInfo: BestNewOrderEntity?) {
+    private fun init(orderInfo: BestNewOrder?) {
         if (orderInfo == null) {
             releaseList.add(ReleaseInfo(R.drawable.ic_express, "快递品牌", "请选择"))
             releaseList.add(ReleaseInfo(R.drawable.ic_category, "快递分类", "请选择"))
@@ -143,7 +142,7 @@ class ReleaseActivity : BaseActivity(), IReleaseInfo,
             maxPayIntegralNum = queryIsLoginUser?.integralNum
             releaseList.add(ReleaseInfo(R.drawable.ic_integral_16, "支付积分", "请输入"))
         } else {
-            releaseList.add(ReleaseInfo(R.drawable.ic_express, "快递品牌", orderInfo.express!!))
+            releaseList.add(ReleaseInfo(R.drawable.ic_express, "快递品牌", orderInfo.expressName!!))
             releaseList.add(ReleaseInfo(R.drawable.ic_category, "快递分类", orderInfo.typeName!!))
             releaseList.add(ReleaseInfo(R.drawable.ic_weight, "预估重量", orderInfo.weight!!))
             releaseList.add(

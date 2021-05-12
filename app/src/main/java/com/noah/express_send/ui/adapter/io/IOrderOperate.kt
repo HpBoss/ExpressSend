@@ -1,8 +1,6 @@
 package com.noah.express_send.ui.adapter.io
 
-import android.view.View
-import android.widget.TextView
-import com.noah.internet.response.BestNewOrderEntity
+import com.noah.internet.response.BestNewOrder
 
 /**
  * @Auther: 何飘
@@ -13,7 +11,7 @@ interface IOrderOperate {
     fun cancelOrder(oid: String?, position: Int)
     fun deleteOrder(oid: String?, position: Int)
     fun confirmOrder(oid: String?, position: Int)
-    fun commentOrder(orderInfo: BestNewOrderEntity)
-    fun modifyOrder(oid: String?, phoneNum: String?, orderInfo: BestNewOrderEntity)
+    fun commentOrder(orderInfo: BestNewOrder)
+    fun modifyOrder(oid: String?, phoneNum: String?, orderInfo: BestNewOrder)
     fun browseUserPageInfo(phoneNum: String?, nickname: String?)
 }

@@ -1,18 +1,16 @@
 package com.noah.express_send.ui.activity
 
 import android.content.Intent
-import android.util.Log
 import android.view.View
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.gyf.immersionbar.ktx.immersionBar
 import com.noah.express_send.R
-import com.noah.express_send.ui.adapter.HistoryCommentAdapter
 import com.noah.express_send.ui.adapter.OrderPagerAdapter
 import com.noah.express_send.ui.adapter.io.IOrderDetails
 import com.noah.express_send.ui.base.BaseActivity
 import com.noah.express_send.viewModle.OrderModelView
-import com.noah.internet.response.BestNewOrderEntity
+import com.noah.internet.response.BestNewOrder
 import kotlinx.android.synthetic.main.activity_all_receive_order.*
 import kotlinx.android.synthetic.main.activity_user_home_page.*
 import kotlinx.android.synthetic.main.item_action_bar.*
@@ -21,7 +19,7 @@ import kotlinx.android.synthetic.main.item_status_bar.*
 import me.leefeng.promptlibrary.PromptDialog
 
 class AllReceiveOrderActivity : BaseActivity(), IOrderDetails {
-    private var receiveOrderList = ArrayList<BestNewOrderEntity>()
+    private var receiveOrderList = ArrayList<BestNewOrder>()
     private lateinit var adapter: OrderPagerAdapter
     private var position: Int = -1
     private val promptDialog by lazy {
@@ -42,8 +40,8 @@ class AllReceiveOrderActivity : BaseActivity(), IOrderDetails {
         }
         actionBar_title.text = getString(R.string.receive_my_order)
         receiveOrderList =
-            intent.getParcelableArrayListExtra<BestNewOrderEntity>("receiveOrderList")
-                    as ArrayList<BestNewOrderEntity>
+            intent.getParcelableArrayListExtra<BestNewOrder>("receiveOrderList")
+                    as ArrayList<BestNewOrder>
         initRecycleView()
     }
 
@@ -78,15 +76,15 @@ class AllReceiveOrderActivity : BaseActivity(), IOrderDetails {
         }
     }
 
-    override fun entryOrderDetails(bestNewOrderEntity: BestNewOrderEntity) {
+    override fun entryOrderDetails(bestNewOrder: BestNewOrder) {
         val intent = Intent(this, OrderDetailsActivity::class.java)
-        intent.putExtra("bestNewOrderEntity", bestNewOrderEntity)
+        intent.putExtra("bestNewOrderEntity", bestNewOrder)
         startActivity(intent)
     }
 
-    override fun startDeliverOrder(bestNewOrderEntity: BestNewOrderEntity) {
+    override fun startDeliverOrder(bestNewOrder: BestNewOrder) {
         promptDialog.showLoading("")
-        orderModelView.deliveryOrder(bestNewOrderEntity.oid.toString())
+        orderModelView.deliveryOrder(bestNewOrder.oid.toString())
     }
 
     override fun browseUserPageInfo(phoneNum: String?, nickname: String?) {

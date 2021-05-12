@@ -1,6 +1,5 @@
 package com.noah.express_send.ui.activity
 
-import android.view.LayoutInflater
 import android.view.View
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
@@ -11,7 +10,7 @@ import com.gyf.immersionbar.ktx.immersionBar
 import com.noah.express_send.R
 import com.noah.express_send.ui.base.BaseActivity
 import com.noah.express_send.viewModle.OrderDetailsViewModel
-import com.noah.internet.response.BestNewOrderEntity
+import com.noah.internet.response.BestNewOrder
 import kotlinx.android.synthetic.main.activity_comment.*
 import kotlinx.android.synthetic.main.activity_order_details.*
 import kotlinx.android.synthetic.main.item_action_bar.*
@@ -78,10 +77,10 @@ class OrderDetailsActivity : BaseActivity() {
     }
 
     override fun initData() {
-        val bestNewOrderEntity = intent.getParcelableExtra<BestNewOrderEntity>("bestNewOrderEntity")
+        val bestNewOrderEntity = intent.getParcelableExtra<BestNewOrder>("bestNewOrderEntity")
         initPointProgressView(bestNewOrderEntity?.stateName, bestNewOrderEntity?.oid)
 
-        tv_express.text = bestNewOrderEntity?.express
+        tv_express.text = bestNewOrderEntity?.expressName
         tv_weights.text = bestNewOrderEntity?.weight
         tv_nickNameRight.text = bestNewOrderEntity?.nickName
         tv_payIntegralNum.text = bestNewOrderEntity?.payIntegralNum.toString()

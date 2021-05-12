@@ -5,7 +5,7 @@ package com.noah.internet.response
  * @Date: 5/6/21 16:11
  * @Description:
  */
-data class ResponseUserPageEntity(
+data class ResponseUserPage(
     val avatarUrl: String,
     val nickname: String,
     val dormitory: String,
@@ -13,5 +13,5 @@ data class ResponseUserPageEntity(
     val phoneNum: String,
     val receiveNum: Int,
     val schoolName: String,
-    val commentList: ArrayList<CommentAllInfoEntity>
+    val commentList: ArrayList<CommentAllInfo>
 )

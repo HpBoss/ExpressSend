@@ -5,12 +5,12 @@ package com.noah.internet.response
  * @Date: 5/6/21 16:15
  * @Description:
  */
-data class CommentAllInfoEntity(
+data class CommentAllInfo(
     val id: Long,
     val avatarUrl: String,
     val nickname: String,
     val type: Int,
-    val chipList: ArrayList<ResponseChipEntity>,
+    val chipList: ArrayList<ResponseChip>,
     val content: String,
     val createTime: String
 )

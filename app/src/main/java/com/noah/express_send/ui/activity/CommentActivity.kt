@@ -1,12 +1,8 @@
 package com.noah.express_send.ui.activity
 
-import androidx.appcompat.app.AppCompatActivity
-import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.util.Log
 import android.view.View
-import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.chip.Chip
@@ -14,20 +10,19 @@ import com.gyf.immersionbar.ktx.immersionBar
 import com.noah.express_send.R
 import com.noah.express_send.ui.base.BaseActivity
 import com.noah.express_send.viewModle.CommentViewModel
-import com.noah.internet.request.RequestCommentEntity
-import com.noah.internet.response.BestNewOrderEntity
-import com.noah.internet.response.ResponseChipEntity
+import com.noah.internet.request.RequestComment
+import com.noah.internet.response.BestNewOrder
+import com.noah.internet.response.ResponseChip
 import kotlinx.android.synthetic.main.activity_comment.*
-import kotlinx.android.synthetic.main.fragment_order.*
 import kotlinx.android.synthetic.main.item_action_bar.*
 import kotlinx.android.synthetic.main.item_status_bar.*
 import me.leefeng.promptlibrary.PromptDialog
 
 class CommentActivity : BaseActivity(), View.OnClickListener {
-    private var highChipsList = ArrayList<ResponseChipEntity>()
-    private var lowChipsList = ArrayList<ResponseChipEntity>()
+    private var highChipsList = ArrayList<ResponseChip>()
+    private var lowChipsList = ArrayList<ResponseChip>()
     private var commentState: Int = -1
-    private var orderInfo: BestNewOrderEntity? = null
+    private var orderInfo: BestNewOrder? = null
     private val promptDialog by lazy {
         PromptDialog(this)
     }
@@ -74,8 +69,8 @@ class CommentActivity : BaseActivity(), View.OnClickListener {
 
     override fun initData() {
         commentViewModel.getAllCommentChips()
-        orderInfo = intent.getParcelableExtra<BestNewOrderEntity>("orderInfo")
-        tv_express.text = orderInfo?.express
+        orderInfo = intent.getParcelableExtra<BestNewOrder>("orderInfo")
+        tv_express.text = orderInfo?.expressName
         tv_weight.text = orderInfo?.weight
         tv_typeName.text = orderInfo?.typeName
         tv_payIntegralNum.text = getString(R.string.payIntegralNum, orderInfo?.payIntegralNum)
@@ -86,7 +81,7 @@ class CommentActivity : BaseActivity(), View.OnClickListener {
         button.setOnClickListener(this)
     }
 
-    private fun addChipToChipGroup(chipList: ArrayList<ResponseChipEntity>) {
+    private fun addChipToChipGroup(chipList: ArrayList<ResponseChip>) {
         chipGroup.removeAllViews()
         var count = 0
         for (chipEntity in chipList) {
@@ -133,7 +128,7 @@ class CommentActivity : BaseActivity(), View.OnClickListener {
                     }
                 }
                 commentViewModel.commentOrder(
-                    RequestCommentEntity(
+                    RequestComment(
                         commentViewModel.queryIsLoginUser()?.phoneNum,
                         orderInfo?.oid!!.toInt(),
                         commentState,

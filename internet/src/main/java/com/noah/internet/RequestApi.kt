@@ -1,17 +1,16 @@
 package com.noah.internet
 
-import com.noah.internet.request.RequestCommentEntity
-import com.noah.internet.request.RequestLoginUser
-import com.noah.internet.request.RequestOrderEntity
+import com.noah.internet.request.*
 import com.noah.internet.response.ResponseOrderOfUser
-import com.noah.internet.request.RequestUserEntity
 import com.noah.internet.response.*
 import okhttp3.MultipartBody
 import retrofit2.http.*
 
 interface RequestApi {
     @POST(Constant.LOGIN_API)
-    suspend fun phoneNumLogin(@Body requestLoginUser: RequestLoginUser): BackResultData<ResponsePhone>
+    suspend fun phoneNumLogin(
+        @Body requestLoginUser: RequestLoginUser
+    ): BackResultData<ResponsePhone>
 
     @POST(Constant.SIGN_OUT)
     suspend fun signOut(@Path("phoneNum") phoneNum: String?): BackResultData<*>
@@ -19,17 +18,23 @@ interface RequestApi {
     @POST(Constant.UPDATE_PROFILE)
     suspend fun updateUserProfile(
         @Path("phoneNum") phoneNum: String?,
-        @Body requestUserEntity: RequestUserEntity
+        @Body requestUser: RequestUser
     ): BackResultData<*>
 
     @GET(Constant.GET_AVATAR_URL)
-    suspend fun requestAvatarUrl(@Path("phoneNum") phoneNum: String?): BackResultData<String>
+    suspend fun requestAvatarUrl(
+        @Path("phoneNum") phoneNum: String?
+    ): BackResultData<String>
 
     @GET(Constant.GET_PROFILE)
-    suspend fun requestUserProfile(@Path("phoneNum") phoneNum: String?): BackResultData<ResponseProfile>
+    suspend fun requestUserProfile(
+        @Path("phoneNum") phoneNum: String?
+    ): BackResultData<ResponseProfile>
 
     @GET(Constant.GET_USER_PAGE_INFO)
-    suspend fun getUserPageInfo(@Path("phoneNum") phoneNum: String?): BackResultData<ResponseUserPageEntity>
+    suspend fun getUserPageInfo(
+        @Path("phoneNum") phoneNum: String?
+    ): BackResultData<ResponseUserPage>
 
     @Multipart
     @POST(Constant.UPDATE_AVATAR_URL)
@@ -39,19 +44,25 @@ interface RequestApi {
     ): BackResultData<String>
 
     @POST(Constant.RELEASE_ORDER)
-    suspend fun releasePersonalOrder(@Body requestOrderEntity: RequestOrderEntity): BackResultData<*>
+    suspend fun releasePersonalOrder(
+        @Body requestOrder: RequestOrder
+    ): BackResultData<*>
 
     @GET(Constant.GET_ORDER_PAGE_NO_CUR)
     suspend fun getPageOrderNoCur(
         @Path("page") page: String?,
         @Path("phoneNum") phoneNum: String?
-    ): BackResultData<PageQuery<ResponseOrderEntity>>
+    ): BackResultData<PageQuery<ResponseOrder>>
 
     @GET(Constant.REQUEST_USER_ORDER_INFO)
-    suspend fun getOrderOfUserInfo(@Path("phoneNum") phoneNum: String?): BackResultData<ResponseOrderOfUser>
+    suspend fun getOrderOfUserInfo(
+        @Path("phoneNum") phoneNum: String?
+    ): BackResultData<ResponseOrderOfUser>
 
     @GET(Constant.REQUEST_USER_ALL_ORDER_INFO)
-    suspend fun getAllOrderOfUserInfo(@Path("phoneNum") phoneNum: String?): BackResultData<List<BestNewOrderEntity>>
+    suspend fun getAllOrderOfUserInfo(
+        @Path("phoneNum") phoneNum: String?
+    ): BackResultData<List<BestNewOrder>>
 
     @PUT(Constant.CANCEL_ORDER)
     suspend fun cancelUserOrder(@Path("oid") oid: String?): BackResultData<*>
@@ -70,25 +81,37 @@ interface RequestApi {
     suspend fun deliveryOrder(@Path("oid") oid: String?): BackResultData<*>
 
     @GET(Constant.QUERY_TO_BE_RECEIVE)
-    suspend fun queryToBeReceive(@Path("phoneNum") phoneNum: String?): BackResultData<List<BestNewOrderEntity>>
+    suspend fun queryToBeReceive(
+        @Path("phoneNum") phoneNum: String?
+    ): BackResultData<List<BestNewOrder>>
 
     @GET(Constant.QUERY_RECEIVED)
-    suspend fun queryReceived(@Path("phoneNum") phoneNum: String?): BackResultData<List<BestNewOrderEntity>>
+    suspend fun queryReceived(
+        @Path("phoneNum") phoneNum: String?
+    ): BackResultData<List<BestNewOrder>>
 
     @GET(Constant.QUERY_TO_BE_FETCH)
-    suspend fun queryToBeFetch(@Path("phoneNum") phoneNum: String?): BackResultData<List<BestNewOrderEntity>>
+    suspend fun queryToBeFetch(
+        @Path("phoneNum") phoneNum: String?
+    ): BackResultData<List<BestNewOrder>>
 
     @GET(Constant.QUERY_TO_BE_SEND)
-    suspend fun queryToBeSend(@Path("phoneNum") phoneNum: String?): BackResultData<List<BestNewOrderEntity>>
+    suspend fun queryToBeSend(
+        @Path("phoneNum") phoneNum: String?
+    ): BackResultData<List<BestNewOrder>>
 
     @GET(Constant.QUERY_COMPLETED)
-    suspend fun queryCompleted(@Path("phoneNum") phoneNum: String?): BackResultData<List<BestNewOrderEntity>>
+    suspend fun queryCompleted(
+        @Path("phoneNum") phoneNum: String?
+    ): BackResultData<List<BestNewOrder>>
 
     @GET(Constant.QUERY_TO_BE_COMMENT)
-    suspend fun queryToBeComment(@Path("phoneNum") phoneNum: String?): BackResultData<List<BestNewOrderEntity>>
+    suspend fun queryToBeComment(
+        @Path("phoneNum") phoneNum: String?
+    ): BackResultData<List<BestNewOrder>>
 
     @POST(Constant.COMMENT_ORDER)
-    suspend fun commentOrder(@Body requestCommentEntity: RequestCommentEntity): BackResultData<*>
+    suspend fun commentOrder(@Body requestComment: RequestComment): BackResultData<*>
 
     @POST(Constant.RECEIVE_ORDER)
     suspend fun receiveOrder(
@@ -97,7 +120,9 @@ interface RequestApi {
     ): BackResultData<*>
 
     @GET(Constant.GET_PERSONAL_ADDRESS_BOOK)
-    suspend fun getPersonalAddressBook(@Path("phoneNum") phoneNum: String?): BackResultData<ArrayList<ResponseAddressBook>>
+    suspend fun getPersonalAddressBook(
+        @Path("phoneNum") phoneNum: String?
+    ): BackResultData<ArrayList<ResponseAddressBook>>
 
     @DELETE(Constant.DELETE_ADDRESS_BOOK)
     suspend fun deleteAddressBook(@Path("id") id: String?): BackResultData<*>
@@ -117,8 +142,18 @@ interface RequestApi {
     ): BackResultData<*>
 
     @GET(Constant.GET_ALL_COMMENT_CHIPS)
-    suspend fun getAllCommentChips(): BackResultData<ArrayList<ResponseChipEntity>>
+    suspend fun getAllCommentChips(): BackResultData<ArrayList<ResponseChip>>
 
     @GET(Constant.GET_COMMENT_BY_OID)
-    suspend fun getCommentByOid(@Path("oid") oid: String?): BackResultData<CommentAllInfoEntity>
+    suspend fun getCommentByOid(
+        @Path("oid") oid: String?
+    ): BackResultData<CommentAllInfo>
+
+    @GET(Constant.GET_ALL_EXPRESS_NAME)
+    suspend fun getAllExpressName(): BackResultData<ArrayList<ResponseExpress>>
+
+    @POST(Constant.GET_ALL_FILTER_ORDER)
+    suspend fun getALlFilterOrder(
+        @Body responseFilterOrder: RequestFilterOrder
+    ): BackResultData<PageQuery<ResponseOrder>>
 }

@@ -1,7 +1,6 @@
 package com.noah.express_send.ui.adapter.io
 
-import com.noah.internet.response.BestNewOrderEntity
-import com.noah.internet.response.ResponseAddressBook
+import com.noah.internet.response.BestNewOrder
 
 /**
  * @Auther: 何飘
@@ -9,8 +8,8 @@ import com.noah.internet.response.ResponseAddressBook
  * @Description:
  */
 interface IOrderDetails {
-    fun entryOrderDetails(bestNewOrderEntity: BestNewOrderEntity)
-    fun startDeliverOrder(bestNewOrderEntity: BestNewOrderEntity)
+    fun entryOrderDetails(bestNewOrder: BestNewOrder)
+    fun startDeliverOrder(bestNewOrder: BestNewOrder)
     fun browseUserPageInfo(phoneNum: String?, nickname: String?)
     fun deleteOrder(oid: String?, position: Int)
 }

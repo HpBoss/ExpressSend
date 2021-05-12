@@ -11,7 +11,7 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.RequestOptions
 import com.noah.express_send.R
 import com.noah.express_send.ui.adapter.io.IOrderOperate
-import com.noah.internet.response.BestNewOrderEntity
+import com.noah.internet.response.BestNewOrder
 import de.hdodenhof.circleimageview.CircleImageView
 
 /**
@@ -20,7 +20,7 @@ import de.hdodenhof.circleimageview.CircleImageView
  * @Description:
  */
 class AllOrderAdapter(
-    private val orderInfoList: ArrayList<BestNewOrderEntity>,
+    private val orderInfoList: ArrayList<BestNewOrder>,
     private val mContext: Context,
     private val iOrderOperate: IOrderOperate
 ) : RecyclerView.Adapter<AllOrderAdapter.ViewHolder>() {
@@ -51,7 +51,7 @@ class AllOrderAdapter(
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val orderInfo = orderInfoList[position]
-        holder.tvExpress.text = orderInfo.express
+        holder.tvExpress.text = orderInfo.expressName
         holder.tvTypeName.text = orderInfo.typeName
         holder.tvWeight.text = orderInfo.weight
         holder.tvDormitory.text = orderInfo.dormitory

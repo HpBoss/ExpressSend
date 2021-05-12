@@ -6,7 +6,7 @@ import androidx.lifecycle.viewModelScope
 import com.noah.express_send.repository.AllOrderRepository
 import com.noah.express_send.ui.base.BaseViewModel
 import com.noah.internet.Constant
-import com.noah.internet.response.BestNewOrderEntity
+import com.noah.internet.response.BestNewOrder
 import kotlinx.coroutines.launch
 
 /**
@@ -19,7 +19,7 @@ class AllOrderViewModel(application: Application) : BaseViewModel(application) {
         AllOrderRepository()
     }
 
-    val allOrderInfo = MutableLiveData<List<BestNewOrderEntity>>()
+    val allOrderInfo = MutableLiveData<List<BestNewOrder>>()
 
     fun getAllOrderOfUserInfo(phoneNum: String?) {
         viewModelScope.launch {
@@ -27,42 +27,42 @@ class AllOrderViewModel(application: Application) : BaseViewModel(application) {
         }
     }
 
-    val orderInfoToBeReceive = MutableLiveData<List<BestNewOrderEntity>>()
+    val orderInfoToBeReceive = MutableLiveData<List<BestNewOrder>>()
     fun queryToBeReceive(phoneNum: String?) {
         viewModelScope.launch {
             orderInfoToBeReceive.value = allOrderRepository.queryToBeReceive(phoneNum).data
         }
     }
 
-    val orderInfoCompleted = MutableLiveData<List<BestNewOrderEntity>>()
+    val orderInfoCompleted = MutableLiveData<List<BestNewOrder>>()
     fun queryCompleted(phoneNum: String?) {
         viewModelScope.launch {
             orderInfoCompleted.value = allOrderRepository.queryCompleted(phoneNum).data
         }
     }
 
-    val orderInfoReceived = MutableLiveData<List<BestNewOrderEntity>>()
+    val orderInfoReceived = MutableLiveData<List<BestNewOrder>>()
     fun queryReceived(phoneNum: String?) {
         viewModelScope.launch {
             orderInfoReceived.value = allOrderRepository.queryReceived(phoneNum).data
         }
     }
 
-    val orderInfoFetch = MutableLiveData<List<BestNewOrderEntity>>()
+    val orderInfoFetch = MutableLiveData<List<BestNewOrder>>()
     fun queryToBeFetch(phoneNum: String?) {
         viewModelScope.launch {
             orderInfoFetch.value = allOrderRepository.queryToBeFetch(phoneNum).data
         }
     }
 
-    val orderInfoSend = MutableLiveData<List<BestNewOrderEntity>>()
+    val orderInfoSend = MutableLiveData<List<BestNewOrder>>()
     fun queryToBeSend(phoneNum: String?) {
         viewModelScope.launch {
             orderInfoSend.value = allOrderRepository.queryToBeSend(phoneNum).data
         }
     }
 
-    val orderInfoComment = MutableLiveData<List<BestNewOrderEntity>>()
+    val orderInfoComment = MutableLiveData<List<BestNewOrder>>()
     fun queryToBeComment(phoneNum: String?) {
         viewModelScope.launch {
             orderInfoComment.value = allOrderRepository.queryToBeComment(phoneNum).data

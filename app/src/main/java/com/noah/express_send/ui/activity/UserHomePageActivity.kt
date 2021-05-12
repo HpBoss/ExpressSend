@@ -2,8 +2,6 @@ package com.noah.express_send.ui.activity
 
 import android.content.Intent
 import android.graphics.Bitmap
-import androidx.appcompat.app.AppCompatActivity
-import android.os.Bundle
 import android.view.View
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -16,21 +14,17 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.RequestOptions
 import com.gyf.immersionbar.ktx.immersionBar
 import com.noah.express_send.R
-import com.noah.express_send.ui.adapter.AllOrderAdapter
 import com.noah.express_send.ui.adapter.HistoryCommentAdapter
 import com.noah.express_send.ui.base.BaseActivity
 import com.noah.express_send.viewModle.UserHomeViewModel
-import com.noah.internet.response.CommentAllInfoEntity
-import kotlinx.android.synthetic.main.activity_all_order.*
-import kotlinx.android.synthetic.main.activity_all_order.recycleView
+import com.noah.internet.response.CommentAllInfo
 import kotlinx.android.synthetic.main.activity_user_home_page.*
-import kotlinx.android.synthetic.main.fragment_index.*
 import kotlinx.android.synthetic.main.item_action_bar.*
 import kotlinx.android.synthetic.main.item_status_bar.*
 
 class UserHomePageActivity : BaseActivity() {
     private lateinit var adapter: HistoryCommentAdapter
-    private var commentList = ArrayList<CommentAllInfoEntity>()
+    private var commentList = ArrayList<CommentAllInfo>()
     private val userHomeViewModel by lazy {
         ViewModelProvider(this).get(UserHomeViewModel::class.java)
     }

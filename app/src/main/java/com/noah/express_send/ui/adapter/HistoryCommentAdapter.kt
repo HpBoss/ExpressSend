@@ -3,7 +3,6 @@ package com.noah.express_send.ui.adapter
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
-import android.view.View.inflate
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
@@ -13,15 +12,8 @@ import com.bumptech.glide.request.RequestOptions
 import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
 import com.noah.express_send.R
-import com.noah.express_send.ui.adapter.io.IOrderOperate
-import com.noah.internet.response.BestNewOrderEntity
-import com.noah.internet.response.CommentAllInfoEntity
-import com.noah.internet.response.ResponseChipEntity
-import com.noah.internet.response.ResponseOrderEntity
+import com.noah.internet.response.CommentAllInfo
 import de.hdodenhof.circleimageview.CircleImageView
-import kotlinx.android.synthetic.main.activity_comment.*
-import org.w3c.dom.Comment
-import org.w3c.dom.Text
 import java.util.ArrayList
 
 /**
@@ -32,7 +24,7 @@ import java.util.ArrayList
 class HistoryCommentAdapter(
     private val mContext: Context,
 ) : RecyclerView.Adapter<HistoryCommentAdapter.ViewHolder>() {
-    private val commentInfoList = ArrayList<CommentAllInfoEntity>()
+    private val commentInfoList = ArrayList<CommentAllInfo>()
 
     inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val avatar: CircleImageView = view.findViewById(R.id.iv_avatarComment)
@@ -90,7 +82,7 @@ class HistoryCommentAdapter(
         return commentInfoList.size
     }
 
-    fun setAdapter(commentInfoList: ArrayList<CommentAllInfoEntity>) {
+    fun setAdapter(commentInfoList: ArrayList<CommentAllInfo>) {
         this.commentInfoList.clear()
         this.commentInfoList.addAll(commentInfoList)
         notifyDataSetChanged()

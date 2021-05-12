@@ -12,7 +12,7 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.RequestOptions
 import com.noah.express_send.R
 import com.noah.express_send.ui.adapter.io.IOrderInfo
-import com.noah.internet.response.ResponseOrderEntity
+import com.noah.internet.response.ResponseOrder
 import java.util.ArrayList
 
 /**
@@ -24,7 +24,7 @@ class IndexFragmentAdapter(
     private val mContext: Context,
     private val iOrderInfo: IOrderInfo
 ) : RecyclerView.Adapter<IndexFragmentAdapter.ViewHolder>(){
-    private val orderInfoList = ArrayList<ResponseOrderEntity>()
+    private val orderInfoList = ArrayList<ResponseOrder>()
 
     inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val tvBrand: TextView = view.findViewById(R.id.tv_brand)
@@ -48,7 +48,7 @@ class IndexFragmentAdapter(
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val orderInfo = orderInfoList[position]
-        holder.tvBrand.text = orderInfo.express
+        holder.tvBrand.text = orderInfo.expressName
         holder.tvClassify.text = orderInfo.typeName
         holder.tvWeight.text = orderInfo.weight
         holder.tvDetailAddress.text = orderInfo.addressName
@@ -72,7 +72,7 @@ class IndexFragmentAdapter(
         return orderInfoList.size
     }
 
-    fun setAdapter(orderList: ArrayList<ResponseOrderEntity>) {
+    fun setAdapter(orderList: ArrayList<ResponseOrder>) {
         orderInfoList.clear()
         orderInfoList.addAll(orderList)
         notifyDataSetChanged()

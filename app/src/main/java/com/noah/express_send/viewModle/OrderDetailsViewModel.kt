@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.noah.express_send.repository.OrderDetailsRepository
 import com.noah.express_send.ui.base.BaseViewModel
-import com.noah.internet.response.CommentAllInfoEntity
+import com.noah.internet.response.CommentAllInfo
 import kotlinx.coroutines.launch
 
 /**
@@ -19,7 +19,7 @@ class OrderDetailsViewModel(application: Application) : BaseViewModel(applicatio
     }
 
 
-    var commentInfoWithChip = MutableLiveData<CommentAllInfoEntity>()
+    var commentInfoWithChip = MutableLiveData<CommentAllInfo>()
     fun getCommentByOid(oid: String?) {
         viewModelScope.launch {
             commentInfoWithChip.value = orderDetailsRepository.getCommentByOid(oid).data

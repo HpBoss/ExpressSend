@@ -1,7 +1,7 @@
 package com.noah.express_send.repository
 
 import com.noah.internet.RetrofitClient
-import com.noah.internet.request.RequestCommentEntity
+import com.noah.internet.request.RequestComment
 
 /**
  * @Auther: 何飘
@@ -12,6 +12,6 @@ class CommentRepository {
     suspend fun getAllCommentChips() =
         RetrofitClient.instance!!.service.getAllCommentChips()
 
-    suspend fun commentOrder(requestCommentEntity: RequestCommentEntity) =
-        RetrofitClient.instance!!.service.commentOrder(requestCommentEntity)
+    suspend fun commentOrder(requestComment: RequestComment) =
+        RetrofitClient.instance!!.service.commentOrder(requestComment)
 }
