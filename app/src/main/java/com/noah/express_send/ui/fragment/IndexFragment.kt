@@ -43,7 +43,7 @@ import java.util.*
 import kotlin.collections.ArrayList
 
 
-class IndexFragment : BaseFragment(), IOrderInfo, View.OnClickListener {
+class IndexFragment : BaseFragment(), IOrderInfo,  View.OnClickListener {
     private lateinit var mViewPager: BannerViewPager<Int>
     private lateinit var adapter: IndexFragmentAdapter
     private lateinit var promptDialog: PromptDialog
@@ -51,7 +51,7 @@ class IndexFragment : BaseFragment(), IOrderInfo, View.OnClickListener {
     private lateinit var requestFilterOrder: RequestFilterOrder
     private var mixHeight: Int = 0
     private var maxHeight: Int = 0
-    private var filterMode = 0
+    private var filterMode = 1
     private val indexViewModel by lazy {
         ViewModelProvider(this).get(IndexViewModel::class.java)
     }
@@ -59,6 +59,7 @@ class IndexFragment : BaseFragment(), IOrderInfo, View.OnClickListener {
         const val FILTER_MODE_EXPRESS = 0
         const val FILTER_MODE_MULTIPLE = 1
     }
+
     private var position: Int = 0
     private var curPage = 1
 

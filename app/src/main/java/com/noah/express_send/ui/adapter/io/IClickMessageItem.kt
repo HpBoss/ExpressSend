@@ -8,5 +8,5 @@ import android.graphics.Bitmap
  * @Description:
  */
 interface IClickMessageItem {
-    fun setOnClickMessageItem(position: Int, bitmap: Bitmap?, targetId: String?, nickname: String?)
+    fun setOnClickMessageItem(bitmap: Bitmap?, targetId: String?, nickname: String?)
 }

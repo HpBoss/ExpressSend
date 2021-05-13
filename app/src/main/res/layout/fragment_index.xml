@@ -15,9 +15,9 @@
         android:layout_alignParentBottom="true"
         android:layout_marginEnd="20dp"
         android:layout_marginBottom="30dp"
-        android:visibility="gone"
+        android:contentDescription="@string/release_order"
         android:src="@drawable/ic_baseline_add_24"
-        android:contentDescription="@string/release_order" />
+        android:visibility="visible" />
 
     <com.scwang.smart.refresh.layout.SmartRefreshLayout
         android:id="@+id/refreshLayout"

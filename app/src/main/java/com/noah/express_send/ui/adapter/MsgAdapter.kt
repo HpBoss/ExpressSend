@@ -81,13 +81,11 @@ class MsgAdapter(
                 }
             }
             is RightViewHolder -> {
-                Log.d("hepiao", "RightViewHolder")
                 if (msg.type == Msg.TEXT_SENT) {
                     holder.rightMsg.text = (msg.message.content as TextContent).text
                     holder.rightImg.visibility = View.GONE
                     holder.rightMsg.visibility = View.VISIBLE
                 } else {
-                    Log.d("hepiao", "loadRightImg")
                     Glide.with(mContext)
                         .load((msg.message.content as ImageContent).localThumbnailPath)
                         .apply(RequestOptions().diskCacheStrategy(DiskCacheStrategy.RESOURCE))
@@ -130,7 +128,6 @@ class MsgAdapter(
     fun addOneMsg(msg: Msg) {
         msgList.add(msg)
         notifyItemInserted(msgList.size - 1)
-        Log.d("hepiao", "addOneMsg")
     }
 
 }

@@ -28,7 +28,7 @@ class MessageAdapter(
     private val iClickMessageItem: IClickMessageItem
 ) : RecyclerView.Adapter<MessageAdapter.ViewHolder>() {
     private val conversationList: MutableList<Conversation> = mutableListOf()
-    private var bitmap: Bitmap? = null
+    private var bitmapList = ArrayList<Bitmap?>()
 
     inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val avatar: CircleImageView = view.findViewById(R.id.message_avatar)
@@ -67,23 +67,23 @@ class MessageAdapter(
             }
             targetInfo.getAvatarBitmap(object : GetAvatarBitmapCallback() {
                 override fun gotResult(p0: Int, p1: String?, p2: Bitmap?) {
-                    bitmap = if (p0 == 0) {
+                    val bitmap = if (p0 == 0) {
                         holder.avatar.setImageBitmap(p2)
                         p2
                     } else {
                         holder.avatar.setImageResource(R.drawable.ic_place_holder)
                         null
                     }
+                    bitmapList.add(bitmap)
                 }
             })
 
             holder.itemView.setOnClickListener {
                 conversation.updateConversationExtra("")
                 iClickMessageItem.setOnClickMessageItem(
-                    position,
-                    bitmap,
+                    bitmapList[position],
                     conversation.targetId,
-                    targetInfo.nickname
+                    targetInfo.nickname,
                 )
             }
         }

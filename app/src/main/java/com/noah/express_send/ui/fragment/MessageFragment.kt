@@ -2,6 +2,7 @@ package com.noah.express_send.ui.fragment
 
 import android.content.Intent
 import android.graphics.Bitmap
+import android.util.Log
 import androidx.lifecycle.ViewModelProvider
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -24,6 +25,7 @@ import kotlinx.android.synthetic.main.fragment_message.refreshLayout
 class MessageFragment : BaseFragment(), IClickMessageItem{
     private lateinit var adapter: MessageAdapter
     private lateinit var conversationList: MutableList<Conversation>
+    private var targetId: String? = null
     private val messageViewModel by lazy {
         ViewModelProvider(this).get(MessageViewModel::class.java)
     }
@@ -45,7 +47,6 @@ class MessageFragment : BaseFragment(), IClickMessageItem{
 
     private fun refreshConversation() {
         // 获取本地会话列表, 添加到adapter中
-//        JMessageClient.deleteSingleConversation("19980492664")
         conversationList = JMessageClient.getConversationList() ?: return
         adapter.setAdapter(conversationList)
     }
@@ -68,13 +69,14 @@ class MessageFragment : BaseFragment(), IClickMessageItem{
         }
     }
 
-    override fun setOnClickMessageItem(position: Int, bitmap: Bitmap?, targetId: String?, nickname: String?) {
+    override fun setOnClickMessageItem(bitmap: Bitmap?, targetId: String?, nickname: String?) {
         val intent = Intent(requireActivity(), ChatActivity::class.java)
         // 获取点击的会话item的phoneNum
         intent.putExtra("targetUser", targetId)
         intent.putExtra("receiverBitmap", bitmap)
         intent.putExtra("mode", 1)
         intent.putExtra("nickname", nickname)
+        this.targetId = targetId
         JMessageClient.getMyInfo().getAvatarBitmap(object : GetAvatarBitmapCallback() {
             override fun gotResult(p0: Int, p1: String?, p2: Bitmap?) {
                 if (p0 == 0) {
@@ -93,12 +95,18 @@ class MessageFragment : BaseFragment(), IClickMessageItem{
     fun onEventMainThread(event: MessageEvent) {
         val msg = event.message
         val userInfo = msg.targetInfo as UserInfo
+        // 防止从聊天页面退出时，当前对话仍然有未读消息提示
+        if (msg.targetID.equals(this.targetId)) {
+            conversationList = JMessageClient.getConversationList() ?: return
+            adapter.setAdapter(conversationList)
+            return
+        }
         for (conversation in conversationList) {
             val userI = conversation.targetInfo as UserInfo
             if (userI.userName.equals(userInfo.userName)) {
                 conversationList = JMessageClient.getConversationList() ?: return
                 conversation.updateConversationExtra("new_message")
-                conversationList.indexOf(conversation)
+                //conversationList.indexOf(conversation)
                 adapter.setAdapter(conversationList)
             }
         }

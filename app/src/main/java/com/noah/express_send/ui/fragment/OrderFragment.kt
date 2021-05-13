@@ -96,19 +96,21 @@ class OrderFragment : BaseFragment(), View.OnClickListener, IOrderDetails {
         var count: Int = size
         if (size > 4) {
             count = 4
+        } else if (size == 1){ // 当只接受一个订单信息时订单，不添加指示器
+            return
         }
         for (i in 0 until count) {
-            //创建底部指示器(小圆点)
+            // 创建底部指示器(小圆点)
             view = View(requireContext())
             view.setBackgroundResource(R.drawable.indicator)
             view.isEnabled = false
-            //设置宽高
+            // 设置宽高
             val layoutParams = LinearLayout.LayoutParams(15, 15)
-            //设置间隔
+            // 设置间隔
             if (i != 0) {
                 layoutParams.leftMargin = 30
             }
-            //添加到LinearLayout
+            // 添加到LinearLayout
             indicate.addView(view, layoutParams)
         }
     }
@@ -180,7 +182,7 @@ class OrderFragment : BaseFragment(), View.OnClickListener, IOrderDetails {
     override fun onStart() {
         super.onStart()
         // activity跳转回来时，页面可以自动刷新
-        refreshAllPageInfo()
+         refreshAllPageInfo()
     }
 
     private fun refreshAllPageInfo() {
