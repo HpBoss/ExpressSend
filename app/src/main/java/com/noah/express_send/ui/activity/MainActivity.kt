@@ -49,7 +49,6 @@ import me.leefeng.promptlibrary.PromptDialog
 
 class MainActivity : BaseActivity(), IReturnLoginToken {
     var mNavController: NavController? = null
-    private var isVisibilitySearch = true
     private lateinit var btnEditProfile: Button
     private lateinit var iconImage: CircleImageView
     private lateinit var autoLoginView: AutoLoginView
@@ -128,15 +127,12 @@ class MainActivity : BaseActivity(), IReturnLoginToken {
             when (it.itemId) {
                 R.id.navigation_index -> {
                     tv_topTitle.text = resources.getString(R.string.icon_index)
-                    isVisibilitySearch = true
                 }
                 R.id.navigation_message -> {
                     tv_topTitle.text = resources.getString(R.string.icon_message)
-                    isVisibilitySearch = false
                 }
                 R.id.navigation_history -> {
                     tv_topTitle.text = resources.getString(R.string.icon_order)
-                    isVisibilitySearch = false
                 }
             }
             invalidateOptionsMenu()

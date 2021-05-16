@@ -55,7 +55,6 @@ class IndexFragment : BaseFragment(), IOrderInfo,  View.OnClickListener {
     private var position: Int = 0
     private var curPage = 1
     private var oid = 0L
-    private var isCompletedDraw = false
     private val indexViewModel by lazy {
         ViewModelProvider(this).get(IndexViewModel::class.java)
     }

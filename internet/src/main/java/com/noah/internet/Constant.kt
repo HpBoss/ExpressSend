@@ -10,6 +10,7 @@ object Constant {
     // 192.168.31.222
     const val CODE_SUCCESS = 200
     const val CODE_FAILURE = 0
+    // 别搞我服务器，各位大哥
     const val BASE_URL = "http://47.102.206.167:9090/"
     const val LOGIN_API = "sign/signIn"
     const val SIGN_OUT = "sign/signOut/{phoneNum}"
