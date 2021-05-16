@@ -63,6 +63,8 @@ class MessageAdapter(
                     holder.content.text = "[图片]"
                 } else if (conversation.latestMessage.contentType == ContentType.text){
                     holder.content.text = (conversation.latestMessage?.content as TextContent).text
+                } else {
+                    holder.content.text = "[系统提示]"
                 }
             }
             targetInfo.getAvatarBitmap(object : GetAvatarBitmapCallback() {

@@ -13,12 +13,12 @@ class IndexRepository {
     suspend fun getPageOrderNoCur(page: String?, phoneNum: String?) =
         RetrofitClient.instance!!.service.getPageOrderNoCur(page, phoneNum)
 
-    suspend fun receiveOrder(id: String?, phoneNum: String?) =
-        RetrofitClient.instance!!.service.receiveOrder(id, phoneNum)
-
     suspend fun getAllExpressName() =
         RetrofitClient.instance!!.service.getAllExpressName()
 
     suspend fun getAllFilterOrder(requestFilterOrder: RequestFilterOrder) =
         RetrofitClient.instance!!.service.getALlFilterOrder(requestFilterOrder)
+
+    suspend fun applyOrder(oid: String?) =
+        RetrofitClient.instance!!.service.applyOrder(oid)
 }

@@ -47,6 +47,10 @@ class MessageFragment : BaseFragment(), IClickMessageItem{
 
     private fun refreshConversation() {
         // 获取本地会话列表, 添加到adapter中
+        // 18281970267
+        // 13330708212
+        // 18664710215
+        // JMessageClient.deleteSingleConversation("18281970267")
         conversationList = JMessageClient.getConversationList() ?: return
         adapter.setAdapter(conversationList)
     }

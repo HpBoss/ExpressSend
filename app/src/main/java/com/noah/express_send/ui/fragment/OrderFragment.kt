@@ -1,6 +1,7 @@
 package com.noah.express_send.ui.fragment
 
 import android.content.Intent
+import android.util.Log
 import android.view.View
 import android.widget.LinearLayout
 import android.widget.Toast
@@ -42,6 +43,7 @@ class OrderFragment : BaseFragment(), View.OnClickListener, IOrderDetails {
     private var curUser: User? = null
     private var receiveOrderList = ArrayList<BestNewOrder>()
     private var filterReceiveOrderList = ArrayList<BestNewOrder>()
+    private lateinit var adapter: OrderPagerAdapter
     private val badges by lazy {
         ArrayList<Badge>()
     }
@@ -80,6 +82,20 @@ class OrderFragment : BaseFragment(), View.OnClickListener, IOrderDetails {
             tv_orderState.text = "已派单"
             promptDialog.showSuccess("派送订单成功")
         })
+        orderModelView.isSuccessDeleteUserOrder.observe(this, {
+            if (!it) {
+                promptDialog.showError(getString(R.string.delete_failure))
+                return@observe
+            }
+            promptDialog.showSuccess(getString(R.string.delete_success))
+            adapter.removeAt(position)
+            receiveOrderList.removeAt(position)
+            if (receiveOrderList.size == 0) {
+                hintPlaceHolder.visibility = View.VISIBLE
+            } else {
+                createIndicator(receiveOrderList.size)
+            }
+        })
         tv_allReceiveOrder.setOnClickListener {
             val intent = Intent(requireActivity(), AllReceiveOrderActivity::class.java)
             intent.putExtra("receiveOrderList", receiveOrderList)
@@ -91,12 +107,13 @@ class OrderFragment : BaseFragment(), View.OnClickListener, IOrderDetails {
     }
 
     private fun createIndicator(size: Int) {
+        if (indicate == null) return
         indicate.removeAllViews()
         var view: View
         var count: Int = size
         if (size > 4) {
             count = 4
-        } else if (size == 1){ // 当只接受一个订单信息时订单，不添加指示器
+        } else if (size <= 1){ // 当只接受一个订单信息时订单，不添加指示器
             return
         }
         for (i in 0 until count) {
@@ -113,25 +130,27 @@ class OrderFragment : BaseFragment(), View.OnClickListener, IOrderDetails {
             // 添加到LinearLayout
             indicate.addView(view, layoutParams)
         }
+        indicate.getChildAt(0).isEnabled = true
     }
 
     private fun initObserver() {
         orderModelView.responseOrderEntity.observe(viewLifecycleOwner, Observer {
             if (it == null) return@Observer
             refreshBadgeData(it)
-            filterOrderClassify(it.bestNewOrders)
-            createIndicator(filterReceiveOrderList.size)
-            indicate.getChildAt(mCurrentItem).isEnabled = true
-            hintPlaceHolder.visibility = View.GONE
+            //filterOrderClassify(it.bestNewOrders)
+            createIndicator(it.bestNewOrders.size)
+            if (it.bestNewOrders.size > 0) hintPlaceHolder.visibility = View.GONE
             viewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
                 override fun onPageSelected(position: Int) {
-                    indicate.getChildAt(mCurrentItem).isEnabled = false
-                    indicate.getChildAt(position).isEnabled = true
+                    if (it.bestNewOrders.size > 1) {
+                        indicate.getChildAt(mCurrentItem).isEnabled = false
+                        indicate.getChildAt(position).isEnabled = true
+                    }
                     mCurrentItem = position
                 }
             })
-            val adapter = OrderPagerAdapter(requireContext(), this, R.layout.item_order_info_messages)
-            adapter.setAdapter(filterReceiveOrderList)
+            adapter = OrderPagerAdapter(requireContext(), this, R.layout.item_order_info_messages)
+            adapter.setAdapter(it.bestNewOrders)
             viewPager.adapter = adapter
             receiveOrderList.clear()
             receiveOrderList.addAll(it.bestNewOrders)
@@ -182,7 +201,7 @@ class OrderFragment : BaseFragment(), View.OnClickListener, IOrderDetails {
     override fun onStart() {
         super.onStart()
         // activity跳转回来时，页面可以自动刷新
-         refreshAllPageInfo()
+        refreshAllPageInfo()
     }
 
     private fun refreshAllPageInfo() {
@@ -274,6 +293,7 @@ class OrderFragment : BaseFragment(), View.OnClickListener, IOrderDetails {
     }
 
     override fun deleteOrder(oid: String?, position: Int) {
+        promptDialog.showLoading("")
         this.position = position
         orderModelView.deleteUserOrder(oid, true)
     }

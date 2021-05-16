@@ -9,6 +9,6 @@ import com.noah.internet.response.ResponseExpress
  */
 data class RequestFilterOrder(
     var page: Int,
-    val phoneNum: String?,
-    val expressEntities: ArrayList<ResponseExpress>
+    val expressEntities: ArrayList<ResponseExpress>,
+    val phoneNum: String?
 )

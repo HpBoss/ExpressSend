@@ -8,6 +8,7 @@ import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import cn.jpush.im.android.api.JMessageClient
+import cn.jpush.im.android.api.content.CustomContent
 import cn.jpush.im.android.api.content.ImageContent
 import cn.jpush.im.android.api.content.TextContent
 import cn.jpush.im.android.api.enums.ContentType
@@ -23,24 +24,31 @@ import com.luck.picture.lib.entity.LocalMedia
 import com.noah.express_send.R
 import com.noah.express_send.bean.Msg
 import com.noah.express_send.ui.adapter.MsgAdapter
+import com.noah.express_send.ui.adapter.io.IReceiveOrderOperate
 import com.noah.express_send.ui.base.BaseActivity
 import com.noah.express_send.utils.VariableName
 import com.noah.express_send.viewModle.ChatViewModel
 import kotlinx.android.synthetic.main.activity_chat.*
 import kotlinx.android.synthetic.main.item_action_bar.*
+import me.leefeng.promptlibrary.PromptDialog
 import java.io.File
 
 
-class ChatActivity : BaseActivity(), View.OnClickListener {
+class ChatActivity : BaseActivity(), View.OnClickListener, IReceiveOrderOperate {
     private val msgList = ArrayList<Msg>()
     private lateinit var adapter: MsgAdapter
     private var targetUser: String? = null
     private lateinit var conversation: Conversation
     private var receiverBitmap: Bitmap? = null
     private var myselfBitmap: Bitmap? = null
-    private var url: String = ""
+    private var oid: String? = ""
+    private var nickname: String? = ""
     private val chatViewModel by lazy {
         ViewModelProvider(this).get(ChatViewModel::class.java)
+    }
+
+    private val promptDialog by lazy {
+        PromptDialog(this)
     }
 
     override fun getLayoutId(): Int {
@@ -54,8 +62,9 @@ class ChatActivity : BaseActivity(), View.OnClickListener {
         setStatusBar(this, ContextCompat.getColor(this, R.color.blue_364))
         JMessageClient.registerEventReceiver(this)
         targetUser = intent.getStringExtra("targetUser")
-        val nickname = intent.getStringExtra("nickname")
-        if (nickname == null || nickname.isEmpty()) {
+        nickname = intent.getStringExtra("nickname")
+        oid = intent.getStringExtra("oid")
+        if (nickname == null || nickname.equals("")) {
             actionBar_title.text = resources.getString(R.string.no_nickname)
         } else {
             actionBar_title.text = nickname
@@ -63,7 +72,7 @@ class ChatActivity : BaseActivity(), View.OnClickListener {
         val layoutManager = LinearLayoutManager(this)
         chatRecycleView.layoutManager = layoutManager
         if (!::adapter.isInitialized) {
-            adapter = MsgAdapter(this, this)
+            adapter = MsgAdapter(this, this, this)
         }
         chatRecycleView.adapter = adapter
         receiverBitmap = intent.getParcelableExtra("receiverBitmap")
@@ -89,11 +98,25 @@ class ChatActivity : BaseActivity(), View.OnClickListener {
         getMessageHistory()
         // mode为0，则开启的Activity, 需要自动先向对方发送一个消息
         val mode = intent.getIntExtra("mode", 0)
+        val phoneNum = chatViewModel.queryIsLoginUser()?.phoneNum
         if (mode == 0) {
-            val message =
-                conversation.createSendMessage(TextContent(getString(R.string.message_hints)))
-            sendMessage(message, Msg.TEXT_SENT)
+            sendCustomMessage("request", "等待对方同意", phoneNum)
         }
+        chatViewModel.isReceiveOrderSuccess.observe(this, {
+            sendCustomMessage("hint", "对方已同意你的接受订单请求", phoneNum)
+        })
+        chatViewModel.isRefuseOrderSuccess.observe(this, {
+            sendCustomMessage("hint", "你的接受订单请求已被拒绝", phoneNum)
+        })
+    }
+
+    private fun sendCustomMessage(key: String, content: String, phoneNum: String?) {
+        val customContent = CustomContent()
+        customContent.setStringValue(key, content)
+        customContent.setStringValue("phoneNum", phoneNum)
+        customContent.setStringValue("oid", oid)
+        val message = conversation.createSendMessage(customContent)
+        sendMessage(message, Msg.ORDER_REQUEST_SENT)
     }
 
     override fun onResume() {
@@ -117,9 +140,27 @@ class ChatActivity : BaseActivity(), View.OnClickListener {
                     }
                 } else {
                     if (bean.contentType == ContentType.text) {
+
                         msgList.add(Msg(bean, Msg.TEXT_RECEIVED, receiverBitmap))
                     } else if (bean.contentType == ContentType.image) {
                         msgList.add(Msg(bean, Msg.IMG_RECEIVED, receiverBitmap))
+                    } else {
+                        val customContent = bean.content as CustomContent
+                        if (customContent.getStringValue("request") != null &&
+                            customContent.getStringValue("phoneNum")
+                                .equals(chatViewModel.queryIsLoginUser()?.phoneNum)) {
+                            msgList.add(Msg(bean, Msg.ORDER_REQUEST_SENT, myselfBitmap))
+                        } else if (customContent.getStringValue("hint") != null &&
+                            !customContent.getStringValue("phoneNum")
+                                .equals(chatViewModel.queryIsLoginUser()?.phoneNum)
+                        ) {
+                            msgList.add(Msg(bean, Msg.ORDER_REQUEST_SENT, myselfBitmap))
+                        } else if (customContent.getStringValue("request") != null &&
+                            !customContent.getStringValue("phoneNum")
+                                .equals(chatViewModel.queryIsLoginUser()?.phoneNum)
+                        ) {
+                            msgList.add(Msg(bean, Msg.ORDER_REQUEST_RECEIVED, receiverBitmap))
+                        }
                     }
                 }
             }
@@ -135,9 +176,13 @@ class ChatActivity : BaseActivity(), View.OnClickListener {
 
     private fun sendMessage(message: Message, messageType: Int) {
         JMessageClient.sendMessage(message)
-        val msg = Msg(message, messageType, myselfBitmap)
-        msgList.add(msg)
-        adapter.addOneMsg(msg)
+        if (message.contentType != ContentType.custom ||
+            (message.contentType == ContentType.custom &&
+                    (message.content as CustomContent).getStringValue("request") != null)) {
+            val msg = Msg(message, messageType, myselfBitmap)
+            msgList.add(msg)
+            adapter.addOneMsg(msg)
+        }
         chatRecycleView.scrollToPosition(msgList.size - 1)
         message.setOnSendCompleteCallback(object : BasicCallback() {
             override fun gotResult(p0: Int, p1: String?) {
@@ -190,8 +235,10 @@ class ChatActivity : BaseActivity(), View.OnClickListener {
                                     imageContent: ImageContent?
                                 ) {
                                     if (responseCode == 0) {
-                                        Log.d("hepiao", "responseCode")
-                                        imageContent?.setStringExtra(VariableName.TYPE, VariableName.IMG)
+                                        imageContent?.setStringExtra(
+                                            VariableName.TYPE,
+                                            VariableName.IMG
+                                        )
                                         val msg = conversation.createSendMessage(imageContent)
                                         sendMessage(msg, Msg.IMG_SENT)
                                     }
@@ -207,7 +254,7 @@ class ChatActivity : BaseActivity(), View.OnClickListener {
      * 接收在线消息
      */
     fun onEventMainThread(event: MessageEvent) {
-        var messageType: Int = Msg.TEXT_RECEIVED
+        val messageType: Int
         when (event.message.content.contentType) {
             ContentType.image -> {
                 messageType = Msg.IMG_RECEIVED
@@ -215,7 +262,18 @@ class ChatActivity : BaseActivity(), View.OnClickListener {
             ContentType.text -> {
                 messageType = Msg.TEXT_RECEIVED
             }
-            else -> {
+            else -> { // custom
+                val customContent = event.message.content as CustomContent
+                if (customContent.getStringValue("request") != null) {
+                    messageType = Msg.ORDER_REQUEST_RECEIVED
+                } else if (customContent.getStringValue("hint") != null
+                    && !customContent.getStringValue("phoneNum")
+                        .equals(chatViewModel.queryIsLoginUser()?.phoneNum)
+                ) {
+                    messageType = Msg.ORDER_REQUEST_SENT
+                } else {
+                    messageType = Msg.OTHER
+                }
             }
         }
         val msg = Msg(event.message, messageType, receiverBitmap)
@@ -231,5 +289,21 @@ class ChatActivity : BaseActivity(), View.OnClickListener {
     override fun onDestroy() {
         super.onDestroy()
         JMessageClient.unRegisterEventReceiver(this)
+    }
+
+    override fun refuseRequest(oid: String?) {
+        chatViewModel.refuseOrder(oid)
+    }
+
+    override fun agreeRequest(oid: String?) {
+        promptDialog.showSuccess("同意成功")
+        chatViewModel.receiveOrder(oid, targetUser)
+    }
+
+    override fun clickAvatar() {
+        val intent = Intent(this, UserHomePageActivity::class.java)
+        intent.putExtra("phoneNum", targetUser)
+        intent.putExtra("nickname", nickname)
+        startActivity(intent)
     }
 }

@@ -10,7 +10,7 @@ object Constant {
     // 192.168.31.222
     const val CODE_SUCCESS = 200
     const val CODE_FAILURE = 0
-    const val BASE_URL = "http://192.168.31.222:9090/"
+    const val BASE_URL = "http://47.102.206.167:9090/"
     const val LOGIN_API = "sign/signIn"
     const val SIGN_OUT = "sign/signOut/{phoneNum}"
     const val UPDATE_PROFILE = "profile/modify/{phoneNum}"
@@ -31,6 +31,8 @@ object Constant {
 
     const val DELIVERY_ORDER = "order/deliveryOrder/{oid}"
     const val RECEIVE_ORDER = "order/receiveOrder/{phoneNum}/{id}"
+    const val APPLY_ORDER = "order/applyReceiveOrder/{id}"
+    const val REFUSE_ORDER = "order/refuseReceiveOrder/{id}"
     const val QUERY_TO_BE_RECEIVE = "order/queryToBeReceive/{phoneNum}"
 
     const val QUERY_TO_BE_SEND = "order/queryToBeSend/{phoneNum}"

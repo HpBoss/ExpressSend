@@ -92,6 +92,17 @@ class ReleaseActivity : BaseActivity(), IReleaseInfo,
             startActivityForResult(Intent(this, AddressBookActivity::class.java), 10)
         }
 
+        releaseViewModel.isReleaseSuccess.observe(this, Observer {
+            if (it) {
+                promptDialog.showSuccess(resultSuccessMsg)
+                Handler(Looper.getMainLooper()).postDelayed({
+                    onBackPressed()
+                }, 1000)
+            } else {
+                promptDialog.showError(resultFailureMsg)
+            }
+        })
+
         promptDialog = PromptDialog(this)
         btn_release?.setOnClickListener {
             resultList.clear()
@@ -106,27 +117,12 @@ class ReleaseActivity : BaseActivity(), IReleaseInfo,
                 // 提交resultList
                 val user = releaseViewModel.queryIsLoginUser()
                 val requestOrderEntity = RequestOrder(
-                    orderInfo?.oid,
-                    user?.phoneNum,
-                    resultList[0],
-                    user?.schoolName,
-                    resultList[1],
-                    resultList[2],
-                    resultList[3].substring(0, resultList[3].length - 2).toInt(),
-                    resultList[4]
-                )
+                    orderInfo?.oid, user?.phoneNum,
+                    resultList[0], user?.schoolName,
+                    resultList[1], resultList[2],
+                    resultList[3].substring(0, resultList[3].length - 2).toInt(), resultList[4])
                 releaseViewModel.releasePersonalOrder(requestOrderEntity)
                 promptDialog.showLoading(loadingMsg)
-                releaseViewModel.isReleaseSuccess.observe(this, Observer {
-                    if (it) {
-                        promptDialog.showSuccess(resultSuccessMsg)
-                        Handler(Looper.getMainLooper()).postDelayed({
-                            onBackPressed()
-                        }, 1000)
-                    } else {
-                        promptDialog.showError(resultFailureMsg)
-                    }
-                })
             } else {
                 promptDialog.showError(getString(R.string.incomplete_information))
             }

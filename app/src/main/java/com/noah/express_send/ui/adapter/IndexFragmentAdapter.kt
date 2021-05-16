@@ -35,6 +35,7 @@ class IndexFragmentAdapter(
         val imgAvatar: ImageView = view.findViewById(R.id.cardView_avatar)
         val imgMoreOption: ImageView = view.findViewById(R.id.btn_moreOption)
         val tvPayIntegralNum: TextView = view.findViewById(R.id.tv_payIntegralNum)
+        val tvNickname: TextView = view.findViewById(R.id.tv_userName)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -53,6 +54,7 @@ class IndexFragmentAdapter(
         holder.tvWeight.text = orderInfo.weight
         holder.tvDetailAddress.text = orderInfo.addressName
         holder.tvDormitory.text = orderInfo.dormitory
+        holder.tvNickname.text = orderInfo.nickName
         holder.tvPayIntegralNum.text = mContext.getString(R.string.payIntegralNum, orderInfo.payIntegralNum)
 
         Glide.with(mContext).load(orderInfo.avatarUrl)

@@ -9,5 +9,8 @@ class Msg(val message: Message, val type: Int, val bitmap: Bitmap?) {
         const val TEXT_SENT = 1
         const val IMG_RECEIVED = 2
         const val IMG_SENT = 3
+        const val ORDER_REQUEST_SENT = 4
+        const val ORDER_REQUEST_RECEIVED = 5
+        const val OTHER = 6
     }
 }

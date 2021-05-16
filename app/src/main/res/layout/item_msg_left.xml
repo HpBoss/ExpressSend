@@ -41,4 +41,15 @@
         app:layout_constraintStart_toEndOf="@+id/chatLeftAvatar"
         app:layout_constraintTop_toTopOf="@+id/chatLeftAvatar" />
 
+    <include
+        android:id="@+id/leftReceiveRequest"
+        layout="@layout/item_agree_receive_order"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/chatLeftAvatar"
+        app:layout_constraintTop_toTopOf="@+id/chatLeftAvatar" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

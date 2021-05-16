@@ -119,6 +119,16 @@ interface RequestApi {
         @Path("phoneNum") phoneNum: String?
     ): BackResultData<*>
 
+    @POST(Constant.APPLY_ORDER)
+    suspend fun applyOrder(
+        @Path("id") oid: String?
+    ): BackResultData<*>
+
+    @POST(Constant.REFUSE_ORDER)
+    suspend fun refuseOrder(
+        @Path("id") oid: String?
+    ): BackResultData<*>
+
     @GET(Constant.GET_PERSONAL_ADDRESS_BOOK)
     suspend fun getPersonalAddressBook(
         @Path("phoneNum") phoneNum: String?

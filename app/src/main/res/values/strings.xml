@@ -26,7 +26,7 @@
     <string name="all_order">全部</string>
     <string name="todo">TODO</string>
     <string name="send_message">发送</string>
-    <string name="message_hints">你好，我已接单。</string>
+    <string name="please_receive_order">请求接单</string>
     <string name="network_invalid">当前网络不可用</string>
     <string name="please_add_email">请添加邮箱</string>
     <string name="please_set_nickname">请设置昵称</string>
@@ -97,4 +97,8 @@
     <string name="delivery">快递</string>
     <string name="integral_not_enough">当前积分不足</string>
     <string name="multiple_sort">综合排序</string>
+    <string name="refuse">拒绝</string>
+    <string name="agree">同意</string>
+    <string name="request_receive_order">对方请求您的接单</string>
+    <string name="can_browe_history_comment">你可以查看对方历史评价</string>
 </resources>

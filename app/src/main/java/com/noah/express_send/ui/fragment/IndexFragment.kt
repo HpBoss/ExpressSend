@@ -52,16 +52,18 @@ class IndexFragment : BaseFragment(), IOrderInfo,  View.OnClickListener {
     private var mixHeight: Int = 0
     private var maxHeight: Int = 0
     private var filterMode = 1
+    private var position: Int = 0
+    private var curPage = 1
+    private var oid = 0L
+    private var isCompletedDraw = false
     private val indexViewModel by lazy {
         ViewModelProvider(this).get(IndexViewModel::class.java)
     }
+
     companion object{
         const val FILTER_MODE_EXPRESS = 0
         const val FILTER_MODE_MULTIPLE = 1
     }
-
-    private var position: Int = 0
-    private var curPage = 1
 
     override fun getLayoutId() = R.layout.fragment_index
 
@@ -77,7 +79,7 @@ class IndexFragment : BaseFragment(), IOrderInfo,  View.OnClickListener {
         filterParent.visibility = View.GONE
         maxHeight = TypedValue.applyDimension(
             TypedValue.COMPLEX_UNIT_DIP,
-            180f, resources.displayMetrics
+            200f, resources.displayMetrics
         ).toInt()
         btnFloating.setOnClickListener(this)
         express_filter.setOnClickListener(this)
@@ -128,8 +130,8 @@ class IndexFragment : BaseFragment(), IOrderInfo,  View.OnClickListener {
             }
             adapter.setAdapter(it)
         })
-        indexViewModel.isReceiveOrderSuccess.observe(viewLifecycleOwner, {
-            // promptDialog.showSuccess("接单成功")
+        indexViewModel.isApplyOrderSuccess.observe(viewLifecycleOwner, {
+            // promptDialog.showSuccess("申请成功")
             // 向被接单用户发送消息,先带着phoneNum打开ChatActivity
             openChatRoom(false)
         })
@@ -238,6 +240,7 @@ class IndexFragment : BaseFragment(), IOrderInfo,  View.OnClickListener {
         }
         intent.putExtra("targetUser", orderPhoneNum)
         intent.putExtra("mode", mode)
+        intent.putExtra("oid", oid.toString())
         JMessageClient.getUserInfo(orderPhoneNum, object : GetUserInfoCallback() {
             override fun gotResult(p0: Int, p1: String?, p2: UserInfo?) {
                 if (p0 == 0) {
@@ -261,6 +264,7 @@ class IndexFragment : BaseFragment(), IOrderInfo,  View.OnClickListener {
 
     override fun setOnClickItemMore(position: Int, id: Long) {
         this.position = position
+        oid = id
         val cancel = PromptButton(resources.getString(R.string.cancel), null)
         cancel.textColor = Color.parseColor("#0076ff")
         promptDialog = PromptDialog(requireActivity())
@@ -272,8 +276,8 @@ class IndexFragment : BaseFragment(), IOrderInfo,  View.OnClickListener {
                 openChatRoom(true)
             },
             PromptButton(resources.getString(R.string.receive_order)) {
-                val user = indexViewModel.queryIsLoginUser() ?: return@PromptButton
-                indexViewModel.receiveOrder(id.toString(), user.phoneNum)
+                indexViewModel.applyOrder(id.toString())
+                //openChatRoom(false)
             },
         )
     }
@@ -322,9 +326,8 @@ class IndexFragment : BaseFragment(), IOrderInfo,  View.OnClickListener {
                 }
                 curPage = 1
                 requestFilterOrder = RequestFilterOrder(
-                    curPage,
-                    indexViewModel.queryIsLoginUser()?.phoneNum,
-                    expressEntities
+                    curPage, expressEntities,
+                    indexViewModel.queryIsLoginUser()?.phoneNum
                 )
                 indexViewModel.getAllFilterOrder(requestFilterOrder)
                 filterMode = FILTER_MODE_EXPRESS
@@ -340,6 +343,7 @@ class IndexFragment : BaseFragment(), IOrderInfo,  View.OnClickListener {
                     curPage,
                     indexViewModel.queryIsLoginUser()?.phoneNum
                 )
+                filterMode = FILTER_MODE_MULTIPLE
                 multiple_sort.setTextColor(ContextCompat.getColor(requireContext(), R.color.black))
                 express_filter.setTextColor(Color.GRAY)
             }

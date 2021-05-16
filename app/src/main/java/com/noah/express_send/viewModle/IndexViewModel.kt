@@ -56,11 +56,11 @@ class IndexViewModel(application: Application) : BaseViewModel(application) {
         }
     }
 
-    var isReceiveOrderSuccess = MutableLiveData<Boolean>()
-    fun receiveOrder(id: String?, phoneNum: String?) {
+    var isApplyOrderSuccess = MutableLiveData<Boolean>()
+    fun applyOrder(id: String?) {
         viewModelScope.launch {
-            isReceiveOrderSuccess.value =
-                indexRepository.receiveOrder(id, phoneNum).resultCode == Constant.CODE_SUCCESS
+            isApplyOrderSuccess.value =
+                indexRepository.applyOrder(id).resultCode == Constant.CODE_SUCCESS
         }
     }
 

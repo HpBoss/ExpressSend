@@ -6,8 +6,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
+import cn.jpush.im.android.api.content.CustomContent
 import cn.jpush.im.android.api.content.ImageContent
 import cn.jpush.im.android.api.content.TextContent
 import com.bumptech.glide.Glide
@@ -15,12 +17,14 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.RequestOptions
 import com.noah.express_send.R
 import com.noah.express_send.bean.Msg
+import com.noah.express_send.ui.adapter.io.IReceiveOrderOperate
 import com.wanglu.photoviewerlibrary.PhotoViewer
 
 
 class MsgAdapter(
     private val mContext: Context,
-    private val activity: AppCompatActivity
+    private val activity: AppCompatActivity,
+    private val iReceiveOrderOperate: IReceiveOrderOperate
 ) :
     RecyclerView.Adapter<MsgViewHolder>() {
     private val msgList = ArrayList<Msg>()
@@ -30,20 +34,27 @@ class MsgAdapter(
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
-        if (viewType == Msg.TEXT_RECEIVED || viewType == Msg.IMG_RECEIVED) {
-            val view = LayoutInflater.from(parent.context).inflate(
-                R.layout.item_msg_left,
-                parent,
-                false
-            )
-            LeftViewHolder(view)
-        } else {
+        if (viewType == Msg.TEXT_SENT || viewType == Msg.IMG_SENT) {
             val view = LayoutInflater.from(parent.context).inflate(
                 R.layout.item_msg_right,
                 parent,
                 false
             )
             RightViewHolder(view)
+        } else if (viewType == Msg.ORDER_REQUEST_SENT){
+            val view = LayoutInflater.from(parent.context).inflate(
+                R.layout.item_middle_hint,
+                parent,
+                false
+            )
+            MiddleViewHolder(view)
+        } else {
+            val view = LayoutInflater.from(parent.context).inflate(
+                R.layout.item_msg_left,
+                parent,
+                false
+            )
+            LeftViewHolder(view)
         }
 
     override fun onBindViewHolder(holder: MsgViewHolder, position: Int) {
@@ -54,7 +65,10 @@ class MsgAdapter(
                     holder.leftMsg.text = (msg.message.content as TextContent).text
                     holder.leftImg.visibility = View.GONE
                     holder.leftMsg.visibility = View.VISIBLE
-                } else {
+                    holder.leftAvatar.setOnClickListener {
+                        iReceiveOrderOperate.clickAvatar()
+                    }
+                } else if (msg.type == Msg.IMG_RECEIVED){
                     Glide.with(mContext)
                         .load((msg.message.content as ImageContent).localThumbnailPath)
                         .apply(RequestOptions().diskCacheStrategy(DiskCacheStrategy.RESOURCE))
@@ -73,6 +87,25 @@ class MsgAdapter(
                                 }
                             }).start(activity)
                     }
+                    holder.leftAvatar.setOnClickListener {
+                        iReceiveOrderOperate.clickAvatar()
+                    }
+                } else {
+                    if (msg.type == Msg.OTHER) return
+                    holder.leftReceiveRequest.visibility = View.VISIBLE
+                    holder.leftMsg.visibility = View.INVISIBLE
+                    val tvRefuse: TextView = holder.leftReceiveRequest.findViewById(R.id.btn_refuse)
+                    val tvAgree: TextView = holder.leftReceiveRequest.findViewById(R.id.btn_agree)
+                    val customContent = msg.message.content as CustomContent
+                    tvRefuse.setOnClickListener {
+                        iReceiveOrderOperate.refuseRequest(customContent.getStringValue("oid"))
+                    }
+                    tvAgree.setOnClickListener {
+                        iReceiveOrderOperate.agreeRequest(customContent.getStringValue("oid"))
+                    }
+                    holder.leftAvatar.setOnClickListener {
+                        iReceiveOrderOperate.clickAvatar()
+                    }
                 }
                 if (msg.bitmap != null) {
                     holder.leftAvatar.setImageBitmap(msg.bitmap)
@@ -85,7 +118,7 @@ class MsgAdapter(
                     holder.rightMsg.text = (msg.message.content as TextContent).text
                     holder.rightImg.visibility = View.GONE
                     holder.rightMsg.visibility = View.VISIBLE
-                } else {
+                } else if (msg.type == Msg.IMG_SENT){
                     Glide.with(mContext)
                         .load((msg.message.content as ImageContent).localThumbnailPath)
                         .apply(RequestOptions().diskCacheStrategy(DiskCacheStrategy.RESOURCE))
@@ -105,14 +138,20 @@ class MsgAdapter(
                             }).start(activity)
                     }
                 }
-
                 if (msg.bitmap != null) {
                     holder.rightAvatar.setImageBitmap(msg.bitmap)
                 } else {
                     holder.rightAvatar.setImageResource(R.drawable.ic_place_holder)
                 }
             }
-
+            is MiddleViewHolder -> {
+                val customContent = msg.message.content as CustomContent
+                holder.hintInfo.text = if (customContent.getStringValue("request") != null) {
+                    customContent.getStringValue("request")
+                } else {
+                    customContent.getStringValue("hint")
+                }
+            }
         }
 
     }
