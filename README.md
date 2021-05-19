@@ -49,7 +49,7 @@ MVVM（ViewModel、Repository、Mode）、Room、Kotlin（Java）
 ## 运行结果展示
 
 <div style="text-align: center">                     
-  <img src="image/login.jpg" alt="login" width=24% />
+  <img src="image/login.jpg" alt="login" width=23% />
   <img src="image/indexPage.png" alt="indexPage" width=23% />
   <img src="image/message.png" alt="message" width=23% />
 </div>
