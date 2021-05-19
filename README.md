@@ -49,9 +49,9 @@ MVVM（ViewModel、Repository、Mode）、Room、Kotlin（Java）
 ## 运行结果展示
 
 <div style="text-align: center">                     
-  <img src="image/login.jpg" alt="login" style="zoom:33%;" align="left"/>
-  <img src="image/indexPage.png" alt="indexPage" style="zoom:33%;"/>
-  <img src="image/message.png" alt="message" style="zoom:33%;" align="right" />
+  <img src="image/login.jpg" alt="login" style="zoom:20%;" align="left"/>
+  <img src="image/indexPage.png" alt="indexPage" style="zoom:20%;"/>
+  <img src="image/message.png" alt="message" style="zoom:20%;" align="right" />
 </div>
 
 <div style="text-align: center">
