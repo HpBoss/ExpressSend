@@ -49,33 +49,33 @@ MVVM（ViewModel、Repository、Mode）、Room、Kotlin（Java）
 ## 运行结果展示
 
 <div style="text-align: center">                     
-  <img src="image/login.jpg" alt="login" width=24% align="left"/>
-  <img src="image/indexPage.png" alt="indexPage" width=23% align="center"/>
-  <img src="image/message.png" alt="message" width=23% align="right"/>
+  <img src="image/login.jpg" alt="login" width=24% />
+  <img src="image/indexPage.png" alt="indexPage" width=23% />
+  <img src="image/message.png" alt="message" width=23% />
 </div>
 
 <div style="text-align: center">
-  <img src="image/chat.png" alt="chat" width=23% align="left"/>                       	 
+  <img src="image/chat.png" alt="chat" width=23% />                       	 
   <img src="image/release.png" alt="comment" width=23% />
-  <img src="image/manageAddress.png" alt="orderDetails" width=23% align="right"/>
+  <img src="image/manageAddress.png" alt="orderDetails" width=23% />
 </div>
 
 <div style="text-align: center">
-  <img src="image/orderManager.png" alt="orderManager" width=23% align="left"/>
+  <img src="image/orderManager.png" alt="orderManager" width=23% />
   <img src="image/releaseOrder.png" alt="releaseOrder" width=23% />
-  <img src="image/receiveOrder.jpg" alt="receiveOrder" width=23% align="right"/>
+  <img src="image/receiveOrder.jpg" alt="receiveOrder" width=23% />
 </div>
 
 <div style="text-align: center">
-  <img src="image/orderDetails.png" alt="orderDetails" width=23% align="left"/>
+  <img src="image/orderDetails.png" alt="orderDetails" width=23% />
   <img src="image/userPage.png" alt="userPage" width=23% />
-  <img src="image/comment.png" alt="comment" width=23% align="right"/>
+  <img src="image/comment.png" alt="comment" width=23% />
 </div>
 
 <div style="text-align: center">
-  <img src="image/personalProfile.png" alt="personalProfile" width=23% align="left"/>
+  <img src="image/personalProfile.png" alt="personalProfile" width=23% />
   <img src="image/profile.png" alt="profile" width=23% />
-  <img src="image/modifyNickname.png" alt="modifyNickname" width=23% align="right"/>
+  <img src="image/modifyNickname.png" alt="modifyNickname" width=23% />
 </div>
 
 
